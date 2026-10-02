@@ -12,156 +12,213 @@
 
     <title>Perfil - AcompanhanteVirtual</title>
 
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="supabase.js"></script>
-
 
     <style>
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #f8f8f8;
-            min-height: 100vh;
-            padding-bottom: 80px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fdf5f9;
+            color: #333;
         }
 
-        .topo {
+        header {
             background: white;
-            padding: 15px 20px;
+            padding: 18px 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+        }
+
+        .header-conteudo {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #e91e63;
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .voltar {
-            color: #ff2f83;
+            text-decoration: none;
+            background: #fce4ec;
+            color: #e91e63;
+            padding: 9px 15px;
+            border-radius: 8px;
             font-weight: bold;
-            cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .conteudo {
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 15px 50px;
         }
 
-        .card {
+        .perfil {
             background: white;
             border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
         }
+
+        /* FOTO PRINCIPAL */
 
         .foto-principal {
             width: 100%;
-            max-height: 600px;
+            max-height: 650px;
             object-fit: cover;
+            display: block;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        /* GALERIA */
+
+        .titulo-galeria {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .foto-galeria {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
             display: block;
         }
 
-        .informacoes {
-            padding: 20px;
+        .foto-galeria:hover {
+            transform: scale(1.02);
         }
+
+        /* INFORMAÇÕES */
 
         .nome {
             font-size: 28px;
             font-weight: bold;
+            margin-top: 25px;
             color: #333;
         }
 
         .idade {
-            color: #ff2f83;
-            margin-left: 5px;
+            color: #e91e63;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 5px;
         }
 
         .descricao {
-            margin-top: 15px;
-            color: #666;
+            margin-top: 18px;
+            font-size: 16px;
             line-height: 1.6;
-            font-size: 15px;
+            color: #555;
             white-space: pre-line;
         }
 
-        .titulo-fotos {
-            margin-top: 25px;
-            margin-bottom: 12px;
-            font-size: 19px;
-            font-weight: bold;
-            color: #333;
-        }
+        /* WHATSAPP */
 
-        .outras-fotos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .outras-fotos img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .botao-whatsapp {
+        .whatsapp {
             display: block;
-            width: 100%;
-            margin-top: 25px;
-            padding: 16px;
-            border-radius: 12px;
-            background: #25D366;
-            color: white;
             text-align: center;
             text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(37,211,102,0.25);
-        }
-
-        .botao-whatsapp:hover {
-            background: #1ebe5d;
-        }
-
-        .sem-whatsapp {
-            margin-top: 20px;
-            padding: 12px;
-            background: #f1f1f1;
+            background: #25D366;
+            color: white;
+            padding: 15px;
             border-radius: 10px;
+            margin-top: 25px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .whatsapp:hover {
+            opacity: 0.9;
+        }
+
+        .carregando {
             text-align: center;
+            padding: 50px;
             color: #777;
         }
 
         .erro {
-            background: white;
-            padding: 30px;
+            background: #ffe5e5;
+            color: #c62828;
+            padding: 18px;
+            border-radius: 10px;
             text-align: center;
-            border-radius: 15px;
         }
 
-        .carregando {
-            background: white;
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
-            color: #777;
+        /* MODAL DA FOTO */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        @media (max-width: 600px) {
+        .modal img {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .fechar {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 650px) {
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .foto-galeria {
+                height: 220px;
+            }
 
             .foto-principal {
-                max-height: 500px;
+                max-height: 550px;
             }
 
             .nome {
@@ -174,232 +231,391 @@
 
 </head>
 
-
 <body>
 
 
-<div class="topo">
+<header>
 
-    <div
-        class="voltar"
-        onclick="window.location.href='inicio.html'"
-    >
+    <div class="header-conteudo">
 
-        ← Voltar para início
-
-    </div>
-
-</div>
-
-
-<div class="conteudo">
-
-    <div id="perfilPessoa">
-
-        <div class="carregando">
-
-            Carregando perfil...
-
+        <div class="logo">
+            AcompanhanteVirtual
         </div>
 
+        <a
+            href="inicio.html"
+            class="voltar"
+        >
+            ← Voltar
+        </a>
+
     </div>
 
+</header>
+
+
+<main class="container">
+
+    <div id="carregando" class="carregando">
+        Carregando perfil...
+    </div>
+
+    <div
+        id="erro"
+        class="erro"
+        style="display:none;"
+    ></div>
+
+
+    <div
+        id="perfil"
+        class="perfil"
+        style="display:none;"
+    >
+
+        <!-- FOTO PRINCIPAL -->
+
+        <img
+            id="fotoPrincipal"
+            class="foto-principal"
+            alt="Foto principal"
+        >
+
+
+        <!-- NOME -->
+
+        <div
+            id="nome"
+            class="nome"
+        ></div>
+
+
+        <!-- IDADE -->
+
+        <div
+            id="idade"
+            class="idade"
+        ></div>
+
+
+        <!-- DESCRIÇÃO -->
+
+        <div
+            id="descricao"
+            class="descricao"
+        ></div>
+
+
+        <!-- GALERIA -->
+
+        <div
+            id="tituloGaleria"
+            class="titulo-galeria"
+            style="display:none;"
+        >
+            Mais fotos
+        </div>
+
+        <div
+            id="galeria"
+            class="galeria"
+        ></div>
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            id="whatsapp"
+            class="whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            💬 Falar pelo WhatsApp
+        </a>
+
+    </div>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal"
+    onclick="fecharModal()"
+>
+
+    <span class="fechar">
+        ×
+    </span>
+
+    <img
+        id="imagemModal"
+        src=""
+        alt="Foto ampliada"
+        onclick="event.stopPropagation()"
+    >
+
 </div>
+
+
+<script src="supabase.js"></script>
 
 
 <script>
 
+    async function carregarPerfil() {
 
-function obterId() {
+        const carregando =
+            document.getElementById("carregando");
 
-    const parametros =
-        new URLSearchParams(
-            window.location.search
-        );
+        const erroElemento =
+            document.getElementById("erro");
 
-    return parametros.get("id");
+        const perfil =
+            document.getElementById("perfil");
 
-}
 
+        try {
 
-/* --------------------------------------------------
-   CARREGAR PERFIL
--------------------------------------------------- */
+            const parametros =
+                new URLSearchParams(
+                    window.location.search
+                );
 
-async function carregarPessoa() {
+            const id =
+                parametros.get("id");
 
-    const id = obterId();
 
-    const area =
-        document.getElementById(
-            "perfilPessoa"
-        );
+            if (!id) {
 
+                throw new Error(
+                    "Perfil não encontrado."
+                );
 
-    if (!id) {
+            }
 
-        area.innerHTML = `
 
-            <div class="erro">
+            // ==========================================
+            // BUSCAR ACOMPANHANTE
+            // ==========================================
 
-                <h2>
-                    Perfil não encontrado
-                </h2>
+            const resultado =
+                await supabaseClient
 
-                <p style="margin-top:10px;color:#777;">
-                    Nenhum perfil foi informado.
-                </p>
+                    .from("acompanhantes")
 
-            </div>
+                    .select(
+                        "id, nome, idade, descricao, whatsapp, foto_principal"
+                    )
 
-        `;
+                    .eq("id", id)
 
-        return;
+                    .eq("ativo", true)
 
-    }
+                    .maybeSingle();
 
 
-    try {
+            if (resultado.error) {
 
-        /* Buscar acompanhante */
+                throw resultado.error;
 
-        const { data: pessoa, error } =
+            }
 
-            await supabaseClient
 
-                .from("acompanhantes")
+            const acompanhante =
+                resultado.data;
 
-                .select("*")
 
-                .eq("id", id)
+            if (!acompanhante) {
 
-                .eq("ativo", true)
+                throw new Error(
+                    "Este perfil não existe ou não está disponível."
+                );
 
-                .single();
+            }
 
 
-        if (error) {
+            // ==========================================
+            // PREENCHER INFORMAÇÕES
+            // ==========================================
 
-            console.error(
-                "Erro ao buscar acompanhante:",
-                error
-            );
+            document.getElementById("nome")
+                .textContent =
+                acompanhante.nome;
 
-            throw error;
 
-        }
+            document.getElementById("idade")
+                .textContent =
+                acompanhante.idade + " anos";
 
 
-        if (!pessoa) {
+            document.getElementById("descricao")
+                .textContent =
+                acompanhante.descricao || "";
 
-            area.innerHTML = `
 
-                <div class="erro">
+            // ==========================================
+            // FOTO PRINCIPAL
+            // ==========================================
 
-                    <h2>
-                        Perfil não encontrado
-                    </h2>
+            const fotoPrincipal =
+                document.getElementById("fotoPrincipal");
 
-                    <p style="margin-top:10px;color:#777;">
-                        Esta pessoa não está mais disponível.
-                    </p>
 
-                </div>
+            if (acompanhante.foto_principal) {
 
-            `;
+                fotoPrincipal.src =
+                    acompanhante.foto_principal;
 
-            return;
+                fotoPrincipal.onclick =
+                    function() {
 
-        }
+                        abrirModal(
+                            acompanhante.foto_principal
+                        );
 
+                    };
 
-        /* ------------------------------------------
-           BUSCAR FOTOS ADICIONAIS
-        ------------------------------------------ */
+            } else {
 
-        const { data: fotos, error: erroFotos } =
+                fotoPrincipal.style.display =
+                    "none";
 
-            await supabaseClient
+            }
 
-                .from("fotos_acompanhantes")
 
-                .select("*")
+            // ==========================================
+            // BUSCAR TODAS AS FOTOS ADICIONAIS
+            // ==========================================
 
-                .eq("acompanhante_id", pessoa.id)
+            const resultadoFotos =
+                await supabaseClient
 
-                .order("ordem", {
-                    ascending: true
-                });
+                    .from("fotos_acompanhantes")
 
+                    .select(
+                        "id, foto_url, ordem"
+                    )
 
-        if (erroFotos) {
+                    .eq(
+                        "acompanhante_id",
+                        acompanhante.id
+                    )
 
-            console.error(
-                "Erro ao buscar fotos:",
-                erroFotos
-            );
+                    .order(
+                        "ordem",
+                        {
+                            ascending: true
+                        }
+                    );
 
-        }
 
+            if (resultadoFotos.error) {
 
-        /* ------------------------------------------
-           MONTAR GALERIA
-        ------------------------------------------ */
+                throw resultadoFotos.error;
 
-        let outrasFotos = "";
+            }
 
 
-        if (
-            fotos &&
-            fotos.length > 0
-        ) {
+            const fotos =
+                resultadoFotos.data || [];
 
-            outrasFotos =
 
-                fotos
+            const galeria =
+                document.getElementById("galeria");
 
-                .map(function(foto) {
+            const tituloGaleria =
+                document.getElementById(
+                    "tituloGaleria"
+                );
 
-                    return `
 
-                        <img
-                            src="${foto.foto_url}"
-                            alt="${pessoa.nome}"
-                            onclick="abrirFoto('${foto.foto_url}')"
-                        >
+            galeria.innerHTML = "";
 
-                    `;
 
-                })
+            // ==========================================
+            // MOSTRAR TODAS AS FOTOS
+            // ==========================================
 
-                .join("");
+            if (fotos.length > 0) {
 
-        }
+                tituloGaleria.style.display =
+                    "block";
 
 
-        /* ------------------------------------------
-           WHATSAPP
-        ------------------------------------------ */
+                fotos.forEach(
+                    function(foto) {
 
-        let whatsappHTML = "";
+                        if (!foto.foto_url) {
+                            return;
+                        }
 
 
-        if (pessoa.whatsapp) {
+                        const imagem =
+                            document.createElement(
+                                "img"
+                            );
+
+
+                        imagem.src =
+                            foto.foto_url;
+
+
+                        imagem.className =
+                            "foto-galeria";
+
+
+                        imagem.alt =
+                            acompanhante.nome;
+
+
+                        imagem.loading =
+                            "lazy";
+
+
+                        imagem.onclick =
+                            function() {
+
+                                abrirModal(
+                                    foto.foto_url
+                                );
+
+                            };
+
+
+                        galeria.appendChild(
+                            imagem
+                        );
+
+                    }
+                );
+
+            }
+
+
+            // ==========================================
+            // WHATSAPP
+            // ==========================================
 
             let numero =
-
-                String(pessoa.whatsapp)
-                    .replace(/\D/g, "");
+                acompanhante.whatsapp || "";
 
 
-            /*
-             * Se o número foi cadastrado sem
-             * o código do Brasil, adiciona 55.
-             */
+            numero =
+                numero.replace(
+                    /\D/g,
+                    ""
+                );
+
+
+            // Se o número não começar com 55,
+            // adiciona o código do Brasil.
 
             if (
-                numero.length === 10 ||
-                numero.length === 11
+                numero &&
+                !numero.startsWith("55")
             ) {
 
                 numero =
@@ -408,199 +624,99 @@ async function carregarPessoa() {
             }
 
 
-            const linkWhatsApp =
-                "https://wa.me/" + numero;
+            if (numero) {
+
+                document.getElementById(
+                    "whatsapp"
+                ).href =
+                    "https://wa.me/" + numero;
+
+            } else {
+
+                document.getElementById(
+                    "whatsapp"
+                ).style.display =
+                    "none";
+
+            }
 
 
-            whatsappHTML = `
+            // ==========================================
+            // MOSTRAR PERFIL
+            // ==========================================
 
-                <a
-                    class="botao-whatsapp"
-                    href="${linkWhatsApp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+            carregando.style.display =
+                "none";
 
-                    WHATSAPP
+            perfil.style.display =
+                "block";
 
-                </a>
 
-            `;
+        } catch (error) {
 
-        } else {
+            console.error(
+                "Erro ao carregar perfil:",
+                error
+            );
 
-            whatsappHTML = `
 
-                <div class="sem-whatsapp">
+            carregando.style.display =
+                "none";
 
-                    WhatsApp não informado.
 
-                </div>
+            erroElemento.style.display =
+                "block";
 
-            `;
+
+            erroElemento.textContent =
+                "Erro ao carregar o perfil: " +
+                error.message;
 
         }
-
-
-        /* ------------------------------------------
-           FOTO PRINCIPAL
-        ------------------------------------------ */
-
-        let fotoPrincipal =
-            pessoa.foto_principal;
-
-
-        if (!fotoPrincipal) {
-
-            fotoPrincipal =
-                "https://via.placeholder.com/700x700?text=Sem+foto";
-
-        }
-
-
-        /* ------------------------------------------
-           MOSTRAR PERFIL
-        ------------------------------------------ */
-
-        area.innerHTML = `
-
-            <div class="card">
-
-                <img
-                    class="foto-principal"
-                    src="${fotoPrincipal}"
-                    alt="${pessoa.nome}"
-                >
-
-
-                <div class="informacoes">
-
-                    <div class="nome">
-
-                        ${pessoa.nome}
-
-                        <span class="idade">
-
-                            ${pessoa.idade} anos
-
-                        </span>
-
-                    </div>
-
-
-                    ${
-                        pessoa.descricao
-                        ?
-
-                        `
-
-                        <div class="descricao">
-
-                            ${pessoa.descricao}
-
-                        </div>
-
-                        `
-
-                        :
-
-                        ""
-
-                    }
-
-
-                    ${
-                        fotos &&
-                        fotos.length > 0
-
-                        ?
-
-                        `
-
-                        <div class="titulo-fotos">
-
-                            Mais fotos
-
-                        </div>
-
-
-                        <div class="outras-fotos">
-
-                            ${outrasFotos}
-
-                        </div>
-
-                        `
-
-                        :
-
-                        ""
-
-                    }
-
-
-                    ${whatsappHTML}
-
-
-                </div>
-
-            </div>
-
-        `;
-
-
-    } catch (erro) {
-
-        console.error(
-            "ERRO AO CARREGAR PERFIL:",
-            erro
-        );
-
-
-        area.innerHTML = `
-
-            <div class="erro">
-
-                <h2>
-                    Erro ao carregar perfil
-                </h2>
-
-                <p style="margin-top:10px;color:#777;">
-
-                    Não foi possível carregar
-                    este perfil no momento.
-
-                </p>
-
-            </div>
-
-        `;
 
     }
 
-}
+
+    // ==========================================
+    // ABRIR FOTO
+    // ==========================================
+
+    function abrirModal(url) {
+
+        const modal =
+            document.getElementById("modal");
+
+        const imagem =
+            document.getElementById("imagemModal");
 
 
-/* --------------------------------------------------
-   ABRIR FOTO
--------------------------------------------------- */
+        imagem.src = url;
 
-function abrirFoto(foto) {
+        modal.style.display =
+            "flex";
 
-    window.open(
-        foto,
-        "_blank"
-    );
-
-}
+    }
 
 
-/* --------------------------------------------------
-   INICIAR
--------------------------------------------------- */
+    // ==========================================
+    // FECHAR FOTO
+    // ==========================================
 
-carregarPessoa();
+    function fecharModal() {
 
+        document.getElementById(
+            "modal"
+        ).style.display =
+            "none";
+
+    }
+
+
+    // ==========================================
+    // INICIAR
+    // ==========================================
+
+    carregarPerfil();
 
 </script>
 
