@@ -12,162 +12,399 @@
 
     <title>Meu Perfil - AcompanhanteVirtual</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
 
     <style>
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
+
 
         body {
-            background: #f8f8f8;
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #fdf5f9;
+
+            color: #333;
+
             min-height: 100vh;
-            padding-bottom: 90px;
+
         }
 
-        .topo {
+
+        /* CABEÇALHO */
+
+        header {
+
             background: white;
-            padding: 18px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            padding: 18px 20px;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.08);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+
         }
+
+
+        .header-conteudo {
+
+            max-width: 1000px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
 
         .logo {
-            text-align: center;
-            font-size: 28px;
+
+            color: #e91e63;
+
+            font-size: 25px;
+
             font-weight: bold;
-            color: #ff2f83;
+
         }
 
-        .logo span {
-            color: #ff76aa;
+
+        .botao-voltar {
+
+            background: #e91e63;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
         }
 
-        .conteudo {
-            max-width: 500px;
-            margin: auto;
-            padding: 25px 20px;
+
+        .botao-voltar:hover {
+
+            background: #d81b60;
+
         }
+
+
+        /* CONTAINER */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            margin: 35px auto;
+
+            padding: 0 15px 50px;
+
+        }
+
 
         .card {
+
             background: white;
+
             border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            padding: 30px;
+
+            box-shadow:
+                0 5px 25px rgba(0,0,0,0.08);
+
         }
 
-        .foto {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto 20px;
-            border: 5px solid #ff2f83;
+
+        h1 {
+
+            text-align: center;
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            font-size: 27px;
+
         }
+
+
+        .subtitulo {
+
+            text-align: center;
+
+            color: #777;
+
+            margin-top: 0;
+
+            margin-bottom: 28px;
+
+            font-size: 14px;
+
+        }
+
+
+        /* FOTO */
+
+        .foto-area {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .foto-perfil {
+
+            width: 150px;
+
+            height: 150px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 4px solid #fce4ec;
+
+            background: #eeeeee;
+
+        }
+
 
         .sem-foto {
+
             width: 150px;
+
             height: 150px;
+
             border-radius: 50%;
-            background: #ffe0ec;
+
+            background: #fce4ec;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 60px;
-        }
 
-        .nome {
-            text-align: center;
-            font-size: 25px;
+            color: #e91e63;
+
+            font-size: 50px;
+
             font-weight: bold;
-            color: #333;
-            margin-bottom: 25px;
+
+            border: 4px solid #f8bbd0;
+
         }
 
-        .informacao {
-            padding: 13px 0;
-            border-bottom: 1px solid #eee;
+
+        /* DADOS */
+
+        .dados {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
         }
 
-        .informacao:last-child {
-            border-bottom: none;
+
+        .campo {
+
+            background: #fafafa;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 10px;
+
+            padding: 14px 16px;
+
         }
 
-        .rotulo {
+
+        .campo-label {
+
+            display: block;
+
             color: #888;
-            font-size: 13px;
-            margin-bottom: 4px;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+
+            font-weight: bold;
+
         }
 
-        .valor {
+
+        .campo-valor {
+
+            display: block;
+
             color: #333;
+
             font-size: 16px;
+
             word-break: break-word;
+
         }
+
+
+        .usuario {
+
+            color: #e91e63;
+
+            font-weight: bold;
+
+        }
+
+
+        /* CARREGANDO */
+
+        .carregando {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #777;
+
+        }
+
+
+        /* ERRO */
+
+        .erro {
+
+            background: #ffe5e5;
+
+            color: #c62828;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* BOTÕES */
+
+        .acoes {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+        }
+
 
         .botao {
-            width: 100%;
-            padding: 14px;
+
+            flex: 1;
+
+            height: 48px;
+
             border: none;
-            border-radius: 10px;
-            margin-top: 20px;
-            background: #ff2f83;
-            color: white;
-            font-size: 16px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
             font-weight: bold;
+
             cursor: pointer;
+
         }
+
+
+        .botao-inicio {
+
+            background: #e91e63;
+
+            color: white;
+
+        }
+
 
         .botao-sair {
-            background: #eee;
+
+            background: #eeeeee;
+
             color: #444;
+
         }
 
-        .menu-inferior {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 68px;
-            background: white;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: center;
-            z-index: 100;
-            box-shadow: 0 -3px 15px rgba(0,0,0,0.08);
-        }
 
-        .menu-item {
-            width: 50%;
-            max-width: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            color: #777;
-            font-size: 12px;
-        }
+        @media (max-width: 600px) {
 
-        .menu-item .icone {
-            font-size: 25px;
-            margin-bottom: 2px;
-        }
+            .card {
 
-        .menu-item.ativo {
-            color: #ff2f83;
-            font-weight: bold;
-        }
+                padding: 22px 18px;
 
-        .aviso {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
+            }
+
+
+            .logo {
+
+                font-size: 21px;
+
+            }
+
+
+            .botao-voltar {
+
+                padding: 8px 11px;
+
+                font-size: 12px;
+
+            }
+
+
+            h1 {
+
+                font-size: 24px;
+
+            }
+
         }
 
     </style>
@@ -178,262 +415,604 @@
 <body>
 
 
-<div class="topo">
+<!-- CABEÇALHO -->
 
-    <div class="logo">
-        Acompanhante<span>Virtual</span>
+<header>
+
+    <div class="header-conteudo">
+
+        <div class="logo">
+            AcompanhanteVirtual
+        </div>
+
+        <a
+            href="inicio.html"
+            class="botao-voltar"
+        >
+            ← Início
+        </a>
+
     </div>
 
-</div>
+</header>
 
 
-<div class="conteudo">
 
-    <div
-        id="perfil"
-        class="card"
-    ></div>
+<!-- CONTEÚDO -->
 
-</div>
+<main class="container">
 
 
-<nav class="menu-inferior">
-
-    <a
-        href="index.html"
-        class="menu-item"
-    >
-
-        <div class="icone">⌂</div>
-
-        <div>Início</div>
-
-    </a>
+    <div class="card">
 
 
-    <a
-        href="perfil.html"
-        class="menu-item ativo"
-    >
+        <h1>
+            Meu Perfil
+        </h1>
 
-        <div class="icone">👤</div>
 
-        <div>Meu perfil</div>
+        <p class="subtitulo">
+            Seus dados cadastrados
+        </p>
 
-    </a>
 
-</nav>
+        <!-- CARREGANDO -->
+
+        <div
+            id="carregando"
+            class="carregando"
+        >
+            Carregando seus dados...
+        </div>
+
+
+        <!-- ERRO -->
+
+        <div
+            id="erro"
+            class="erro"
+            style="display:none;"
+        ></div>
+
+
+        <!-- PERFIL -->
+
+        <div
+            id="perfil"
+            style="display:none;"
+        >
+
+
+            <!-- FOTO -->
+
+            <div class="foto-area">
+
+                <img
+                    id="fotoPerfil"
+                    class="foto-perfil"
+                    style="display:none;"
+                    alt="Foto de perfil"
+                >
+
+
+                <div
+                    id="semFoto"
+                    class="sem-foto"
+                    style="display:none;"
+                >
+                    👤
+                </div>
+
+            </div>
+
+
+
+            <!-- DADOS -->
+
+            <div class="dados">
+
+
+                <!-- NOME -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        NOME
+                    </span>
+
+                    <span
+                        id="nome"
+                        class="campo-valor"
+                    >
+                    </span>
+
+                </div>
+
+
+                <!-- SOBRENOME -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        SOBRENOME
+                    </span>
+
+                    <span
+                        id="sobrenome"
+                        class="campo-valor"
+                    >
+                    </span>
+
+                </div>
+
+
+                <!-- USUÁRIO -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        USUÁRIO
+                    </span>
+
+                    <span
+                        id="usuario"
+                        class="campo-valor usuario"
+                    >
+                    </span>
+
+                </div>
+
+
+                <!-- GÊNERO -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        GÊNERO
+                    </span>
+
+                    <span
+                        id="genero"
+                        class="campo-valor"
+                    >
+                    </span>
+
+                </div>
+
+
+                <!-- DATA NASCIMENTO -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        DATA DE NASCIMENTO
+                    </span>
+
+                    <span
+                        id="dataNascimento"
+                        class="campo-valor"
+                    >
+                    </span>
+
+                </div>
+
+
+                <!-- E-MAIL -->
+
+                <div class="campo">
+
+                    <span class="campo-label">
+                        E-MAIL
+                    </span>
+
+                    <span
+                        id="email"
+                        class="campo-valor"
+                    >
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- AÇÕES -->
+
+            <div class="acoes">
+
+
+                <button
+                    class="botao botao-inicio"
+                    onclick="window.location.href='inicio.html'"
+                >
+                    Voltar ao início
+                </button>
+
+
+                <button
+                    class="botao botao-sair"
+                    onclick="sair()"
+                >
+                    Sair
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
 
 
 <script>
 
 
-function carregarPerfil() {
+    // ==========================================
+    // CALCULAR IDADE
+    // ==========================================
 
-    const conta =
-        JSON.parse(
-            localStorage.getItem(
-                "acompanhanteVirtualConta"
+    function calcularIdade(data) {
+
+        if (!data) {
+            return "";
+        }
+
+
+        const nascimento =
+            new Date(data + "T00:00:00");
+
+
+        const hoje =
+            new Date();
+
+
+        let idade =
+            hoje.getFullYear() -
+            nascimento.getFullYear();
+
+
+        const mes =
+            hoje.getMonth() -
+            nascimento.getMonth();
+
+
+        if (
+            mes < 0 ||
+            (
+                mes === 0 &&
+                hoje.getDate() < nascimento.getDate()
             )
-        );
+        ) {
+
+            idade--;
+
+        }
 
 
-    const perfil =
-        JSON.parse(
-            localStorage.getItem(
-                "acompanhanteVirtualPerfil"
-            )
-        );
-
-
-    const area =
-        document.getElementById(
-            "perfil"
-        );
-
-
-    if (!conta || !perfil) {
-
-        area.innerHTML = `
-
-            <div class="aviso">
-
-                <h2>Perfil incompleto</h2>
-
-                <p style="margin-top:10px;color:#777;">
-                    Complete seu perfil primeiro.
-                </p>
-
-                <button
-                    class="botao"
-                    onclick="window.location.href='perfil.html'"
-                >
-                    Completar perfil
-                </button>
-
-            </div>
-
-        `;
-
-        return;
+        return idade;
 
     }
 
 
-    let fotoHTML = "";
+
+    // ==========================================
+    // FORMATAR DATA
+    // ==========================================
+
+    function formatarData(data) {
+
+        if (!data) {
+
+            return "Não informado";
+
+        }
 
 
-    if (perfil.foto) {
+        const partes =
+            data.split("-");
 
-        fotoHTML = `
 
-            <img
-                src="${perfil.foto}"
-                class="foto"
-            >
+        if (partes.length !== 3) {
 
-        `;
+            return data;
 
-    } else {
+        }
 
-        fotoHTML = `
 
-            <div class="sem-foto">
-                👤
-            </div>
-
-        `;
+        return (
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0]
+        );
 
     }
 
 
-    area.innerHTML = `
 
-        ${fotoHTML}
+    // ==========================================
+    // CARREGAR PERFIL
+    // ==========================================
 
-        <div class="nome">
-
-            ${perfil.nome}
-            ${perfil.sobrenome}
-
-        </div>
+    async function carregarPerfil() {
 
 
-        <div class="informacao">
-
-            <div class="rotulo">
-                Nome
-            </div>
-
-            <div class="valor">
-                ${perfil.nome}
-            </div>
-
-        </div>
+        const carregando =
+            document.getElementById("carregando");
 
 
-        <div class="informacao">
-
-            <div class="rotulo">
-                Sobrenome
-            </div>
-
-            <div class="valor">
-                ${perfil.sobrenome}
-            </div>
-
-        </div>
+        const perfilElemento =
+            document.getElementById("perfil");
 
 
-        <div class="informacao">
-
-            <div class="rotulo">
-                Nome de usuário
-            </div>
-
-            <div class="valor">
-                @${perfil.usuario}
-            </div>
-
-        </div>
+        const erroElemento =
+            document.getElementById("erro");
 
 
-        <div class="informacao">
-
-            <div class="rotulo">
-                Gênero
-            </div>
-
-            <div class="valor">
-                ${perfil.genero}
-            </div>
-
-        </div>
+        try {
 
 
-        <div class="informacao">
+            // --------------------------------------
+            // VERIFICAR SESSÃO
+            // --------------------------------------
 
-            <div class="rotulo">
-                E-mail da conta
-            </div>
-
-            <div class="valor">
-                ${conta.email}
-            </div>
-
-        </div>
+            const {
+                data: sessaoData,
+                error: sessaoErro
+            } =
+                await supabaseClient.auth.getSession();
 
 
-        <div class="informacao">
+            if (sessaoErro) {
 
-            <div class="rotulo">
-                Data de nascimento
-            </div>
+                throw sessaoErro;
 
-            <div class="valor">
-                ${conta.dataNascimento}
-            </div>
-
-        </div>
+            }
 
 
-        <button
-            class="botao"
-            onclick="window.location.href='perfil.html'"
-        >
-            Editar meu perfil
-        </button>
+            const sessao =
+                sessaoData.session;
 
 
-        <button
-            class="botao botao-sair"
-            onclick="sair()"
-        >
-            Sair da conta
-        </button>
+            if (!sessao) {
 
-    `;
+                window.location.href =
+                    "index.html";
 
-}
+                return;
+
+            }
 
 
-function sair() {
-
-    localStorage.removeItem(
-        "acompanhanteVirtualLogado"
-    );
-
-    sessionStorage.removeItem(
-        "acompanhanteVirtualLogado"
-    );
-
-    window.location.href =
-        "index.html";
-
-}
+            const usuarioAuth =
+                sessao.user;
 
 
-carregarPerfil();
+
+            // --------------------------------------
+            // BUSCAR PERFIL
+            // --------------------------------------
+
+            const {
+                data: perfil,
+                error
+            } =
+                await supabaseClient
+                    .from("perfis")
+                    .select(
+                        "id, email, nome, sobrenome, usuario, data_nascimento, genero, foto_url"
+                    )
+                    .eq(
+                        "id",
+                        usuarioAuth.id
+                    )
+                    .maybeSingle();
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            if (!perfil) {
+
+                throw new Error(
+                    "Seu perfil ainda não foi cadastrado."
+                );
+
+            }
+
+
+
+            // --------------------------------------
+            // PREENCHER DADOS
+            // --------------------------------------
+
+            document.getElementById("nome")
+                .textContent =
+                perfil.nome ||
+                "Não informado";
+
+
+            document.getElementById("sobrenome")
+                .textContent =
+                perfil.sobrenome ||
+                "Não informado";
+
+
+            document.getElementById("usuario")
+                .textContent =
+                perfil.usuario ||
+                "Não informado";
+
+
+            document.getElementById("genero")
+                .textContent =
+                perfil.genero ||
+                "Não informado";
+
+
+            document.getElementById("dataNascimento")
+                .textContent =
+                perfil.data_nascimento
+                    ? formatarData(
+                        perfil.data_nascimento
+                    ) +
+                    " (" +
+                    calcularIdade(
+                        perfil.data_nascimento
+                    ) +
+                    " anos)"
+                    : "Não informado";
+
+
+            /*
+            O e-mail vem do Auth.
+            Caso a coluna email da tabela esteja
+            preenchida, usamos ela.
+            */
+
+            document.getElementById("email")
+                .textContent =
+                perfil.email ||
+                usuarioAuth.email ||
+                "Não informado";
+
+
+
+            // --------------------------------------
+            // FOTO
+            // --------------------------------------
+
+            const foto =
+                document.getElementById("fotoPerfil");
+
+
+            const semFoto =
+                document.getElementById("semFoto");
+
+
+            if (perfil.foto_url) {
+
+                foto.src =
+                    perfil.foto_url;
+
+
+                foto.style.display =
+                    "block";
+
+
+                semFoto.style.display =
+                    "none";
+
+            } else {
+
+                foto.style.display =
+                    "none";
+
+
+                semFoto.style.display =
+                    "flex";
+
+            }
+
+
+
+            // --------------------------------------
+            // MOSTRAR PERFIL
+            // --------------------------------------
+
+            carregando.style.display =
+                "none";
+
+
+            erroElemento.style.display =
+                "none";
+
+
+            perfilElemento.style.display =
+                "block";
+
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Erro ao carregar perfil:",
+                error
+            );
+
+
+            carregando.style.display =
+                "none";
+
+
+            erroElemento.style.display =
+                "block";
+
+
+            erroElemento.innerHTML =
+                "Não foi possível carregar seus dados.<br><br>" +
+                "<small>" +
+                (
+                    error.message ||
+                    "Erro desconhecido."
+                ) +
+                "</small>";
+
+        }
+
+    }
+
+
+
+    // ==========================================
+    // SAIR
+    // ==========================================
+
+    async function sair() {
+
+
+        const {
+            error
+        } =
+            await supabaseClient.auth.signOut();
+
+
+        if (error) {
+
+            console.error(error);
+
+            return;
+
+        }
+
+
+        window.location.href =
+            "index.html";
+
+    }
+
+
+
+    // ==========================================
+    // INICIAR
+    // ==========================================
+
+    carregarPerfil();
 
 
 </script>
