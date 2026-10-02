@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AcompanhanteVirtual</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -140,25 +147,44 @@
         .escondido {
             display: none;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
 
     <div class="logo">
         AcompanhanteVirtual
     </div>
 
-    <!-- LOGIN -->
-    <div class="card" id="telaLogin">
 
-        <h2>Entrar</h2>
+    <!-- ==============================
+         LOGIN
+    =============================== -->
+
+    <div
+        class="card"
+        id="telaLogin"
+    >
+
+        <h2>
+            Entrar
+        </h2>
+
 
         <form id="formLogin">
 
-            <label for="loginEmail">E-mail</label>
+
+            <label for="loginEmail">
+                E-mail
+            </label>
+
             <input
                 type="email"
                 id="loginEmail"
@@ -166,7 +192,11 @@
                 placeholder="Digite seu e-mail"
             >
 
-            <label for="loginSenha">Senha</label>
+
+            <label for="loginSenha">
+                Senha
+            </label>
+
             <input
                 type="password"
                 id="loginSenha"
@@ -174,35 +204,69 @@
                 placeholder="Digite sua senha"
             >
 
+
             <label class="lembrar">
-                <input type="checkbox" id="lembrar">
+
+                <input
+                    type="checkbox"
+                    id="lembrar"
+                >
+
                 Lembrar de mim
+
             </label>
+
 
             <button type="submit">
                 Entrar
             </button>
 
+
         </form>
 
-        <div id="mensagemLogin" class="mensagem"></div>
+
+        <div
+            id="mensagemLogin"
+            class="mensagem"
+        ></div>
+
 
         <div class="trocar">
+
             Ainda não possui uma conta?
-            <a onclick="mostrarCadastro()">Criar conta</a>
+
+            <a onclick="mostrarCadastro()">
+                Criar conta
+            </a>
+
         </div>
+
 
     </div>
 
 
-    <!-- CADASTRO -->
-    <div class="card escondido" id="telaCadastro">
 
-        <h2>Criar conta</h2>
+    <!-- ==============================
+         CADASTRO
+    =============================== -->
+
+    <div
+        class="card escondido"
+        id="telaCadastro"
+    >
+
+        <h2>
+            Criar conta
+        </h2>
+
 
         <form id="formCadastro">
 
-            <label for="cadastroEmail">E-mail</label>
+
+            <label for="cadastroEmail">
+                E-mail
+            </label>
+
             <input
                 type="email"
                 id="cadastroEmail"
@@ -210,7 +274,11 @@
                 placeholder="Digite seu e-mail"
             >
 
-            <label for="cadastroSenha">Senha</label>
+
+            <label for="cadastroSenha">
+                Senha
+            </label>
+
             <input
                 type="password"
                 id="cadastroSenha"
@@ -219,7 +287,11 @@
                 placeholder="Crie uma senha"
             >
 
-            <label for="cadastroConfirmar">Confirmar senha</label>
+
+            <label for="cadastroConfirmar">
+                Confirmar senha
+            </label>
+
             <input
                 type="password"
                 id="cadastroConfirmar"
@@ -227,6 +299,7 @@
                 minlength="6"
                 placeholder="Digite a senha novamente"
             >
+
 
             <label for="dataNascimento">
                 Data de nascimento
@@ -238,118 +311,182 @@
                 required
             >
 
+
             <div class="idade-info">
-                É necessário ter 18 anos ou mais para criar uma conta.
+
+                É necessário ter 18 anos ou mais
+                para criar uma conta.
+
             </div>
+
 
             <button type="submit">
                 Criar minha conta
             </button>
 
+
         </form>
 
-        <div id="mensagemCadastro" class="mensagem"></div>
+
+        <div
+            id="mensagemCadastro"
+            class="mensagem"
+        ></div>
+
 
         <div class="trocar">
+
             Já possui uma conta?
-            <a onclick="mostrarLogin()">Entrar</a>
+
+            <a onclick="mostrarLogin()">
+                Entrar
+            </a>
+
         </div>
 
+
     </div>
+
 
 </div>
 
 
+
 <script src="supabase.js"></script>
+
 
 <script>
 
-    // ==============================
-    // TROCAR TELAS
-    // ==============================
 
-    function mostrarCadastro() {
+/* ==========================================
+   TROCAR LOGIN / CADASTRO
+========================================== */
 
-        document.getElementById("telaLogin")
-            .classList.add("escondido");
-
-        document.getElementById("telaCadastro")
-            .classList.remove("escondido");
-    }
-
-
-    function mostrarLogin() {
-
-        document.getElementById("telaCadastro")
-            .classList.add("escondido");
-
-        document.getElementById("telaLogin")
-            .classList.remove("escondido");
-    }
-
-
-    // ==============================
-    // MENSAGENS
-    // ==============================
-
-    function mostrarMensagem(id, texto, tipo) {
-
-        const elemento = document.getElementById(id);
-
-        elemento.textContent = texto;
-
-        elemento.className = "mensagem " + tipo;
-
-        elemento.style.display = "block";
-    }
-
-
-    // ==============================
-    // VERIFICAR IDADE
-    // ==============================
-
-    function calcularIdade(dataNascimento) {
-
-        const nascimento = new Date(dataNascimento);
-        const hoje = new Date();
-
-        let idade = hoje.getFullYear() - nascimento.getFullYear();
-
-        const mes = hoje.getMonth() - nascimento.getMonth();
-
-        if (
-            mes < 0 ||
-            (mes === 0 && hoje.getDate() < nascimento.getDate())
-        ) {
-            idade--;
-        }
-
-        return idade;
-    }
-
-
-    // ==============================
-    // CADASTRO
-    // ==============================
+function mostrarCadastro() {
 
     document
-        .getElementById("formCadastro")
-        .addEventListener("submit", async function(event) {
+        .getElementById("telaLogin")
+        .classList.add("escondido");
+
+    document
+        .getElementById("telaCadastro")
+        .classList.remove("escondido");
+
+}
+
+
+function mostrarLogin() {
+
+    document
+        .getElementById("telaCadastro")
+        .classList.add("escondido");
+
+    document
+        .getElementById("telaLogin")
+        .classList.remove("escondido");
+
+}
+
+
+
+/* ==========================================
+   MENSAGENS
+========================================== */
+
+function mostrarMensagem(id, texto, tipo) {
+
+    const elemento =
+        document.getElementById(id);
+
+    elemento.textContent = texto;
+
+    elemento.className =
+        "mensagem " + tipo;
+
+    elemento.style.display = "block";
+
+}
+
+
+
+/* ==========================================
+   CALCULAR IDADE
+========================================== */
+
+function calcularIdade(dataNascimento) {
+
+    const nascimento =
+        new Date(dataNascimento);
+
+    const hoje =
+        new Date();
+
+    let idade =
+        hoje.getFullYear() -
+        nascimento.getFullYear();
+
+    const mes =
+        hoje.getMonth() -
+        nascimento.getMonth();
+
+    if (
+        mes < 0 ||
+        (
+            mes === 0 &&
+            hoje.getDate() < nascimento.getDate()
+        )
+    ) {
+
+        idade--;
+
+    }
+
+    return idade;
+
+}
+
+
+
+/* ==========================================
+   CADASTRO
+========================================== */
+
+document
+    .getElementById("formCadastro")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
             event.preventDefault();
 
+
             const email =
-                document.getElementById("cadastroEmail").value.trim();
+                document
+                    .getElementById("cadastroEmail")
+                    .value
+                    .trim();
+
 
             const senha =
-                document.getElementById("cadastroSenha").value;
+                document
+                    .getElementById("cadastroSenha")
+                    .value;
+
 
             const confirmar =
-                document.getElementById("cadastroConfirmar").value;
+                document
+                    .getElementById("cadastroConfirmar")
+                    .value;
+
 
             const dataNascimento =
-                document.getElementById("dataNascimento").value;
+                document
+                    .getElementById("dataNascimento")
+                    .value;
 
+
+
+            /* SENHAS */
 
             if (senha !== confirmar) {
 
@@ -360,10 +497,17 @@
                 );
 
                 return;
+
             }
 
 
-            const idade = calcularIdade(dataNascimento);
+
+            /* IDADE */
+
+            const idade =
+                calcularIdade(
+                    dataNascimento
+                );
 
 
             if (idade < 18) {
@@ -375,12 +519,18 @@
                 );
 
                 return;
+
             }
+
 
 
             try {
 
-                const { data, error } =
+
+                const {
+                    data,
+                    error
+                } =
                     await supabaseClient.auth.signUp({
 
                         email: email,
@@ -388,17 +538,26 @@
                         password: senha,
 
                         options: {
+
                             data: {
-                                data_nascimento: dataNascimento
+
+                                data_nascimento:
+                                    dataNascimento
+
                             }
+
                         }
 
                     });
 
 
+
                 if (error) {
+
                     throw error;
+
                 }
+
 
 
                 mostrarMensagem(
@@ -408,14 +567,30 @@
                 );
 
 
-                setTimeout(function() {
 
-                    if (data.session) {
+                setTimeout(
+                    function() {
 
-                        window.location.href =
-                            "cadastro-perfil.html";
+                        /*
+                         * Se o Supabase já criou
+                         * a sessão, vai direto
+                         * para completar o perfil.
+                         */
 
-                    } else {
+                        if (data.session) {
+
+                            window.location.href =
+                                "cadastro-perfil.html";
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * Caso o Supabase exija
+                         * confirmação de e-mail.
+                         */
 
                         mostrarMensagem(
                             "mensagemCadastro",
@@ -423,9 +598,9 @@
                             "sucesso"
                         );
 
-                    }
-
-                }, 1200);
+                    },
+                    1200
+                );
 
 
             } catch (erro) {
@@ -434,35 +609,52 @@
 
                 mostrarMensagem(
                     "mensagemCadastro",
-                    "Erro ao criar conta: " + erro.message,
+                    "Erro ao criar conta: " +
+                    erro.message,
                     "erro"
                 );
+
             }
 
-        });
+        }
+    );
 
 
-    // ==============================
-    // LOGIN
-    // ==============================
 
-    document
-        .getElementById("formLogin")
-        .addEventListener("submit", async function(event) {
+/* ==========================================
+   LOGIN
+========================================== */
+
+document
+    .getElementById("formLogin")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
             event.preventDefault();
 
 
             const email =
-                document.getElementById("loginEmail").value.trim();
+                document
+                    .getElementById("loginEmail")
+                    .value
+                    .trim();
+
 
             const senha =
-                document.getElementById("loginSenha").value;
+                document
+                    .getElementById("loginSenha")
+                    .value;
+
 
 
             try {
 
-                const { data, error } =
+
+                const {
+                    data,
+                    error
+                } =
                     await supabaseClient.auth.signInWithPassword({
 
                         email: email,
@@ -472,9 +664,13 @@
                     });
 
 
+
                 if (error) {
+
                     throw error;
+
                 }
+
 
 
                 mostrarMensagem(
@@ -484,96 +680,90 @@
                 );
 
 
-                setTimeout(async function() {
 
-                    const usuario =
-                        data.user;
+                setTimeout(
+                    async function() {
 
-                    if (!usuario) {
-                        return;
-                    }
+                        const usuario =
+                            data.user;
 
 
-                    const { data: perfil } =
-                        await supabaseClient
-                            .from("perfis")
-                            .select("nome, sobrenome, usuario")
-                            .eq("id", usuario.id)
-                            .maybeSingle();
+                        if (!usuario) {
+
+                            return;
+
+                        }
 
 
-                    if (!perfil || !perfil.nome) {
+
+                        const {
+                            data: perfil
+                        } =
+                            await supabaseClient
+                                .from("perfis")
+                                .select(
+                                    "nome, sobrenome, usuario"
+                                )
+                                .eq(
+                                    "id",
+                                    usuario.id
+                                )
+                                .maybeSingle();
+
+
+
+                        /*
+                         * Se ainda não completou
+                         * o perfil:
+                         */
+
+                        if (
+                            !perfil ||
+                            !perfil.nome
+                        ) {
+
+                            window.location.href =
+                                "cadastro-perfil.html";
+
+                            return;
+
+                        }
+
+
+
+                        /*
+                         * Perfil já completo:
+                         * vai para a página inicial.
+                         */
 
                         window.location.href =
-                            "cadastro-perfil.html";
-
-                        return;
-                    }
+                            "inicio.html";
 
 
-                    window.location.href =
-                        "inicio.html";
-
-                }, 700);
+                    },
+                    700
+                );
 
 
             } catch (erro) {
 
-                console.error("ERRO REAL DO LOGIN:", erro);
+                console.error(erro);
 
                 mostrarMensagem(
                     "mensagemLogin",
-                    "Erro: " + (erro.message || "Erro desconhecido"),
+                    "E-mail ou senha incorretos.",
                     "erro"
                 );
+
             }
 
-        });
-
-
-    // ==============================
-    // VERIFICAR SE JÁ ESTÁ LOGADO
-    // ==============================
-
-    async function verificarSessao() {
-
-        const { data } =
-            await supabaseClient.auth.getSession();
-
-
-        if (!data.session) {
-            return;
         }
+    );
 
-
-        const usuario =
-            data.session.user;
-
-
-        const { data: perfil } =
-            await supabaseClient
-                .from("perfis")
-                .select("nome")
-                .eq("id", usuario.id)
-                .maybeSingle();
-
-
-        if (!perfil || !perfil.nome) {
-
-            window.location.href =
-                "cadastro-perfil.html";
-
-        } else {
-
-            window.location.href =
-                "inicio.html";
-        }
-    }
-
-
-    verificarSessao();
 
 </script>
 
+
 </body>
+
 </html>
