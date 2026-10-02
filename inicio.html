@@ -14,191 +14,156 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
     <style>
 
         * {
             box-sizing: border-box;
         }
 
-
         body {
-
             margin: 0;
-
+            padding: 0;
             font-family: Arial, sans-serif;
-
             background: #fdf5f9;
-
             color: #333;
-
-            padding-bottom: 70px;
-
         }
 
-
-        /* ==========================================
+        /* =========================
            CABEÇALHO
-        ========================================== */
+        ========================= */
 
         header {
-
             background: white;
-
-            border-bottom: 1px solid #eee;
-
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             position: sticky;
-
             top: 0;
-
-            z-index: 20;
-
+            z-index: 10;
         }
 
-
         .header-conteudo {
-
-            max-width: 1200px;
-
+            max-width: 1100px;
             margin: auto;
 
-            padding: 15px 20px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             gap: 15px;
-
         }
-
 
         .logo {
-
             color: #e91e63;
-
             font-size: 25px;
-
             font-weight: bold;
-
         }
-
 
         .botoes-header {
-
             display: flex;
-
-            align-items: center;
-
             gap: 8px;
-
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
-
         .botao-header {
-
-            text-decoration: none;
-
+            border: none;
             border-radius: 8px;
-
-            padding: 9px 14px;
-
-            font-size: 13px;
-
-            font-weight: bold;
+            padding: 9px 13px;
 
             cursor: pointer;
 
+            font-size: 13px;
+            font-weight: bold;
+
+            text-decoration: none;
+
+            transition: 0.2s;
         }
-
-
-        .botao-login {
-
-            color: #e91e63;
-
-            background: #fff0f5;
-
-        }
-
-
-        .botao-cadastro {
-
-            color: white;
-
-            background: #e91e63;
-
-        }
-
 
         .botao-header:hover {
-
             opacity: 0.85;
+        }
 
+        .botao-login {
+            background: #e91e63;
+            color: white;
+        }
+
+        .botao-cadastro {
+            background: #fce4ec;
+            color: #e91e63;
+        }
+
+        .botao-perfil {
+            background: #e91e63;
+            color: white;
+        }
+
+        .botao-inicio {
+            background: #fce4ec;
+            color: #e91e63;
+        }
+
+        .botao-sair {
+            background: #eeeeee;
+            color: #555;
         }
 
 
-
-        /* ==========================================
+        /* =========================
            CONTEÚDO
-        ========================================== */
+        ========================= */
 
         .container {
-
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1100px;
 
             margin: auto;
 
-            padding: 30px 20px;
-
+            padding: 25px 15px 90px;
         }
 
-
         .titulo {
-
             text-align: center;
 
-            margin: 10px 0 5px;
-
-            font-size: 30px;
+            margin-bottom: 8px;
 
             color: #333;
 
+            font-size: 27px;
         }
 
-
         .subtitulo {
-
             text-align: center;
-
-            margin: 0 0 30px;
 
             color: #777;
 
-            font-size: 15px;
+            margin-top: 0;
+            margin-bottom: 28px;
 
+            font-size: 15px;
         }
 
 
-        /* ==========================================
+        /* =========================
            GRID
-        ========================================== */
+        ========================= */
 
         .grid {
-
             display: grid;
 
             grid-template-columns:
                 repeat(4, 1fr);
 
-            gap: 20px;
-
+            gap: 18px;
         }
 
 
-        .card {
+        /* =========================
+           CARD
+        ========================= */
 
+        .card {
             background: white;
 
             border-radius: 15px;
@@ -206,73 +171,82 @@
             overflow: hidden;
 
             box-shadow:
-                0 4px 15px rgba(0,0,0,0.08);
+                0 4px 18px
+                rgba(0,0,0,0.08);
 
             cursor: pointer;
 
             transition:
                 transform 0.2s,
                 box-shadow 0.2s;
-
         }
 
-
         .card:hover {
-
             transform: translateY(-3px);
 
             box-shadow:
-                0 7px 20px rgba(0,0,0,0.12);
-
+                0 7px 22px
+                rgba(0,0,0,0.13);
         }
 
 
-        .foto-container {
+        /* =========================
+           FOTO
+        ========================= */
 
+        .foto-container {
             width: 100%;
 
-            height: 350px;
+            height: 300px;
 
             background: #eee;
 
             overflow: hidden;
-
         }
 
-
         .foto-container img {
-
             width: 100%;
-
             height: 100%;
 
             object-fit: cover;
 
             display: block;
-
         }
 
+        .sem-foto {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #999;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           INFORMAÇÕES
+        ========================= */
 
         .informacoes {
-
             padding: 14px;
-
         }
 
-
         .nome {
-
-            font-size: 18px;
+            font-size: 19px;
 
             font-weight: bold;
 
-            margin-bottom: 5px;
+            color: #333;
 
+            margin-bottom: 4px;
         }
 
-
         .idade {
-
             color: #e91e63;
 
             font-size: 14px;
@@ -280,86 +254,84 @@
             font-weight: bold;
 
             margin-bottom: 8px;
-
         }
 
-
         .descricao {
+            color: #666;
 
             font-size: 13px;
 
-            color: #666;
-
             line-height: 1.4;
 
+            height: 38px;
+
+            overflow: hidden;
         }
 
 
-        /* ==========================================
+        /* =========================
            CARREGANDO
-        ========================================== */
+        ========================= */
 
         .carregando {
-
             text-align: center;
 
-            padding: 40px;
+            padding: 50px 20px;
 
             color: #777;
 
+            font-size: 16px;
         }
 
+
+        /* =========================
+           NENHUM PERFIL
+        ========================= */
 
         .nenhum {
-
             text-align: center;
 
-            padding: 40px;
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 40px 20px;
 
             color: #777;
 
+            box-shadow:
+                0 4px 18px
+                rgba(0,0,0,0.06);
         }
 
 
+        /* =========================
+           ERRO
+        ========================= */
+
         .erro {
-
-            max-width: 600px;
-
-            margin: 20px auto;
-
-            padding: 15px;
-
-            border-radius: 10px;
+            text-align: center;
 
             background: #ffe5e5;
 
             color: #c62828;
 
-            text-align: center;
+            border-radius: 10px;
 
+            padding: 15px;
+
+            margin-bottom: 20px;
         }
 
 
-        .erro small {
-
-            display: block;
-
-            margin-top: 8px;
-
-        }
-
-
-
-        /* ==========================================
+        /* =========================
            RODAPÉ
-        ========================================== */
+        ========================= */
 
         .rodape {
-
             position: fixed;
 
             bottom: 0;
-
             left: 0;
 
             width: 100%;
@@ -371,12 +343,9 @@
             padding: 10px;
 
             z-index: 20;
-
         }
 
-
         .rodape-conteudo {
-
             max-width: 500px;
 
             margin: auto;
@@ -386,12 +355,9 @@
             justify-content: center;
 
             gap: 15px;
-
         }
 
-
         .link-rodape {
-
             color: #e91e63;
 
             text-decoration: none;
@@ -401,22 +367,18 @@
             font-weight: bold;
 
             padding: 8px 15px;
-
         }
 
 
-
-        /* ==========================================
+        /* =========================
            RESPONSIVO
-        ========================================== */
+        ========================= */
 
         @media (max-width: 900px) {
 
             .grid {
-
                 grid-template-columns:
                     repeat(3, 1fr);
-
             }
 
         }
@@ -424,50 +386,29 @@
 
         @media (max-width: 650px) {
 
-            .header-conteudo {
-
-                padding: 12px;
-
-            }
-
-
-            .logo {
-
-                font-size: 21px;
-
-            }
-
-
-            .botao-header {
-
-                padding: 8px 9px;
-
-                font-size: 12px;
-
-            }
-
-
             .grid {
-
                 grid-template-columns:
                     repeat(2, 1fr);
 
                 gap: 12px;
-
             }
-
 
             .foto-container {
-
                 height: 250px;
-
             }
 
+            .logo {
+                font-size: 21px;
+            }
+
+            .botao-header {
+                padding: 8px 9px;
+
+                font-size: 12px;
+            }
 
             .titulo {
-
                 font-size: 23px;
-
             }
 
         }
@@ -476,38 +417,32 @@
         @media (max-width: 420px) {
 
             .grid {
-
                 grid-template-columns:
                     repeat(2, 1fr);
-
             }
-
 
             .foto-container {
-
                 height: 210px;
-
             }
-
 
             .informacoes {
-
                 padding: 10px;
-
             }
-
 
             .nome {
-
                 font-size: 16px;
-
             }
 
-
             .descricao {
-
                 font-size: 12px;
+            }
 
+            .header-conteudo {
+                align-items: flex-start;
+            }
+
+            .botoes-header {
+                max-width: 190px;
             }
 
         }
@@ -520,25 +455,22 @@
 <body>
 
 
-<!-- ==========================================
+<!-- =========================
      CABEÇALHO
-========================================== -->
+========================= -->
 
 <header>
 
     <div class="header-conteudo">
 
-
         <div class="logo">
-
             AcompanhanteVirtual
-
         </div>
 
 
         <!--
-            O JavaScript vai colocar
-            os botões aqui.
+            ESTE MENU É PREENCHIDO
+            AUTOMATICAMENTE PELO JAVASCRIPT
         -->
 
         <div
@@ -552,31 +484,25 @@
 
         </div>
 
-
     </div>
 
 </header>
 
 
 
-<!-- ==========================================
+<!-- =========================
      CONTEÚDO
-========================================== -->
+========================= -->
 
 <main class="container">
 
-
     <h1 class="titulo">
-
         Encontre sua companhia
-
     </h1>
 
 
     <p class="subtitulo">
-
         Confira os perfis disponíveis
-
     </p>
 
 
@@ -587,9 +513,7 @@
         id="carregando"
         class="carregando"
     >
-
         Carregando perfis...
-
     </div>
 
 
@@ -609,25 +533,32 @@
         class="grid"
     ></div>
 
-
 </main>
 
 
 
-<!-- ==========================================
+<!-- =========================
      RODAPÉ
-========================================== -->
+========================= -->
 
 <div class="rodape">
 
-    <div
-        class="rodape-conteudo"
-        id="menuRodape"
-    >
+    <div class="rodape-conteudo">
 
-        <span>
-            Carregando...
-        </span>
+        <a
+            href="inicio.html"
+            class="link-rodape"
+        >
+            Início
+        </a>
+
+
+        <a
+            href="perfil.html"
+            class="link-rodape"
+        >
+            Meu Perfil
+        </a>
 
     </div>
 
@@ -635,33 +566,25 @@
 
 
 
+<!-- SUPABASE -->
+
 <script src="supabase.js"></script>
+
 
 
 <script>
 
-
-/* ==========================================
+/* ==================================================
    CONFIGURAR MENU
-========================================== */
+================================================== */
 
 async function configurarMenu() {
 
-
-    const menuHeader =
-        document.getElementById(
-            "menuHeader"
-        );
-
-
-    const menuRodape =
-        document.getElementById(
-            "menuRodape"
-        );
+    const menu =
+        document.getElementById("menuHeader");
 
 
     try {
-
 
         const {
             data,
@@ -677,231 +600,178 @@ async function configurarMenu() {
                 error
             );
 
+            mostrarMenuDeslogado();
+
+            return;
         }
 
 
-
-        /* ======================================
-           USUÁRIO LOGADO
-        ====================================== */
-
-        if (
-            data &&
-            data.session
-        ) {
+        const sessao =
+            data.session;
 
 
-            menuHeader.innerHTML = `
+        /* ==========================================
+           USUÁRIO NÃO ESTÁ LOGADO
+        ========================================== */
 
-                <a
-                    href="inicio.html"
-                    class="botao-header botao-login"
-                >
-                    Início
-                </a>
+        if (!sessao) {
 
+            mostrarMenuDeslogado();
 
-                <a
-                    href="perfil.html"
-                    class="botao-header botao-login"
-                >
-                    Meu Perfil
-                </a>
-
-
-                <a
-                    href="#"
-                    onclick="sair(); return false;"
-                    class="botao-header botao-cadastro"
-                >
-                    Sair
-                </a>
-
-            `;
-
-
-
-            menuRodape.innerHTML = `
-
-                <a
-                    href="inicio.html"
-                    class="link-rodape"
-                >
-                    Início
-                </a>
-
-
-                <a
-                    href="perfil.html"
-                    class="link-rodape"
-                >
-                    Meu Perfil
-                </a>
-
-
-                <a
-                    href="#"
-                    onclick="sair(); return false;"
-                    class="link-rodape"
-                >
-                    Sair
-                </a>
-
-            `;
-
-
-        }
-
-        /* ======================================
-           USUÁRIO NÃO LOGADO
-        ====================================== */
-
-        else {
-
-
-            menuHeader.innerHTML = `
-
-                <a
-                    href="index.html"
-                    class="botao-header botao-login"
-                >
-                    Entrar
-                </a>
-
-
-                <a
-                    href="index.html"
-                    class="botao-header botao-cadastro"
-                    onclick="abrirCadastro()"
-                >
-                    Criar conta
-                </a>
-
-            `;
-
-
-
-            menuRodape.innerHTML = `
-
-                <a
-                    href="index.html"
-                    class="link-rodape"
-                >
-                    Minha conta
-                </a>
-
-
-                <a
-                    href="index.html"
-                    class="link-rodape"
-                >
-                    Entrar
-                </a>
-
-            `;
-
+            return;
         }
 
 
-    } catch (erro) {
+        /* ==========================================
+           USUÁRIO ESTÁ LOGADO
+        ========================================== */
+
+        mostrarMenuLogado();
+
+    }
+
+    catch (erro) {
 
         console.error(
-            "Erro no menu:",
+            "Erro ao configurar menu:",
             erro
         );
+
+        mostrarMenuDeslogado();
 
     }
 
 }
 
 
+/* ==================================================
+   MENU DESLOGADO
+================================================== */
 
-/* ==========================================
+function mostrarMenuDeslogado() {
+
+    const menu =
+        document.getElementById("menuHeader");
+
+
+    menu.innerHTML = `
+
+        <a
+            href="index.html"
+            class="botao-header botao-login"
+        >
+            Entrar
+        </a>
+
+
+        <a
+            href="index.html?cadastro=1"
+            class="botao-header botao-cadastro"
+        >
+            Criar conta
+        </a>
+
+    `;
+
+}
+
+
+/* ==================================================
+   MENU LOGADO
+================================================== */
+
+function mostrarMenuLogado() {
+
+    const menu =
+        document.getElementById("menuHeader");
+
+
+    menu.innerHTML = `
+
+        <a
+            href="inicio.html"
+            class="botao-header botao-inicio"
+        >
+            Início
+        </a>
+
+
+        <a
+            href="perfil.html"
+            class="botao-header botao-perfil"
+        >
+            Meu Perfil
+        </a>
+
+
+        <button
+            type="button"
+            onclick="sair()"
+            class="botao-header botao-sair"
+        >
+            Sair
+        </button>
+
+    `;
+
+}
+
+
+/* ==================================================
    SAIR
-========================================== */
+================================================== */
 
 async function sair() {
 
-
     try {
 
-        await supabaseClient.auth.signOut();
+        const {
+            error
+        } =
+            await supabaseClient.auth.signOut();
 
-    } catch (erro) {
+
+        if (error) {
+
+            console.error(
+                "Erro ao sair:",
+                error
+            );
+
+            alert(
+                "Não foi possível sair."
+            );
+
+            return;
+        }
+
+
+        window.location.href =
+            "index.html";
+
+    }
+
+    catch (erro) {
 
         console.error(
             "Erro ao sair:",
             erro
         );
 
-    }
-
-
-    window.location.href =
-        "index.html";
-
-}
-
-
-
-/* ==========================================
-   ABRIR CADASTRO
-========================================== */
-
-function abrirCadastro() {
-
-    /*
-     * O index.html controla
-     * a tela de cadastro.
-     *
-     * O parâmetro ?cadastro=1
-     * permite que ele abra
-     * diretamente no cadastro.
-     */
-
-    window.location.href =
-        "index.html?cadastro=1";
-
-}
-
-
-
-/* ==========================================
-   ESCAPAR HTML
-========================================== */
-
-function escapeHTML(valor) {
-
-    if (valor === null ||
-        valor === undefined) {
-
-        return "";
+        alert(
+            "Erro ao sair da conta."
+        );
 
     }
 
-
-    return String(valor)
-
-        .replace(/&/g, "&amp;")
-
-        .replace(/</g, "&lt;")
-
-        .replace(/>/g, "&gt;")
-
-        .replace(/"/g, "&quot;")
-
-        .replace(/'/g, "&#039;");
-
 }
 
 
-
-/* ==========================================
+/* ==================================================
    CARREGAR ACOMPANHANTES
-========================================== */
+================================================== */
 
 async function carregarAcompanhantes() {
-
 
     const carregando =
         document.getElementById(
@@ -928,7 +798,6 @@ async function carregarAcompanhantes() {
 
 
     try {
-
 
         const {
             data,
@@ -987,9 +856,10 @@ async function carregarAcompanhantes() {
             }
         );
 
+    }
 
-    } catch (erro) {
 
+    catch (erro) {
 
         console.error(
             "Erro ao carregar acompanhantes:",
@@ -1001,37 +871,35 @@ async function carregarAcompanhantes() {
             "none";
 
 
-        mensagemErro.innerHTML = `
+        mensagemErro.innerHTML =
 
-            <div class="erro">
+            '<div class="erro">' +
 
-                Erro ao carregar os perfis.
+            'Erro ao carregar os perfis.<br>' +
 
-                <small>
-                    ${
-                        escapeHTML(
-                            erro.message ||
-                            "Erro desconhecido"
-                        )
-                    }
-                </small>
+            '<small>' +
 
-            </div>
+            (
+                erro.message ||
+                "Erro desconhecido"
+            ) +
 
-        `;
+            '</small>' +
+
+            '</div>';
 
     }
 
 }
 
 
-
-/* ==========================================
+/* ==================================================
    CRIAR CARD
-========================================== */
+================================================== */
 
-function criarCard(acompanhante) {
-
+function criarCard(
+    acompanhante
+) {
 
     const lista =
         document.getElementById(
@@ -1040,7 +908,9 @@ function criarCard(acompanhante) {
 
 
     const card =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     card.className =
@@ -1057,88 +927,192 @@ function criarCard(acompanhante) {
         };
 
 
+    /* ==========================================
+       FOTO
+    ========================================== */
 
-    const foto =
-        acompanhante.foto_principal ||
-        "https://via.placeholder.com/600x800?text=Sem+foto";
-
-
-
-    card.innerHTML = `
-
-        <div class="foto-container">
-
-            <img
-                src="${escapeHTML(foto)}"
-                alt="${escapeHTML(acompanhante.nome)}"
-                loading="lazy"
-            >
-
-        </div>
+    const fotoContainer =
+        document.createElement(
+            "div"
+        );
 
 
-        <div class="informacoes">
-
-            <div class="nome">
-
-                ${escapeHTML(
-                    acompanhante.nome
-                )}
-
-            </div>
+    fotoContainer.className =
+        "foto-container";
 
 
-            <div class="idade">
+    if (
+        acompanhante.foto_principal
+    ) {
 
-                ${escapeHTML(
-                    acompanhante.idade
-                )} anos
-
-            </div>
-
-
-            <div class="descricao">
-
-                ${escapeHTML(
-                    acompanhante.descricao || ""
-                )}
-
-            </div>
-
-        </div>
-
-    `;
+        const imagem =
+            document.createElement(
+                "img"
+            );
 
 
-    lista.appendChild(card);
+        imagem.src =
+            acompanhante.foto_principal;
+
+
+        imagem.alt =
+            acompanhante.nome;
+
+
+        imagem.loading =
+            "lazy";
+
+
+        fotoContainer.appendChild(
+            imagem
+        );
+
+    }
+
+    else {
+
+        const semFoto =
+            document.createElement(
+                "div"
+            );
+
+
+        semFoto.className =
+            "sem-foto";
+
+
+        semFoto.textContent =
+            "Sem foto";
+
+
+        fotoContainer.appendChild(
+            semFoto
+        );
+
+    }
+
+
+    /* ==========================================
+       INFORMAÇÕES
+    ========================================== */
+
+    const informacoes =
+        document.createElement(
+            "div"
+        );
+
+
+    informacoes.className =
+        "informacoes";
+
+
+    const nome =
+        document.createElement(
+            "div"
+        );
+
+
+    nome.className =
+        "nome";
+
+
+    nome.textContent =
+        acompanhante.nome;
+
+
+    const idade =
+        document.createElement(
+            "div"
+        );
+
+
+    idade.className =
+        "idade";
+
+
+    idade.textContent =
+        acompanhante.idade +
+        " anos";
+
+
+    const descricao =
+        document.createElement(
+            "div"
+        );
+
+
+    descricao.className =
+        "descricao";
+
+
+    descricao.textContent =
+
+        acompanhante.descricao ||
+
+        "Confira o perfil para mais informações.";
+
+
+    informacoes.appendChild(
+        nome
+    );
+
+
+    informacoes.appendChild(
+        idade
+    );
+
+
+    informacoes.appendChild(
+        descricao
+    );
+
+
+    card.appendChild(
+        fotoContainer
+    );
+
+
+    card.appendChild(
+        informacoes
+    );
+
+
+    lista.appendChild(
+        card
+    );
 
 }
 
 
-
-/* ==========================================
+/* ==================================================
    ABRIR PERFIL DO ACOMPANHANTE
-========================================== */
+================================================== */
 
 function abrirPerfil(id) {
 
-
     window.location.href =
+
         "pessoa.html?id=" +
+
         encodeURIComponent(id);
 
 }
 
 
+/* ==================================================
+   INICIAR PÁGINA
+================================================== */
 
-/* ==========================================
-   INICIAR
-========================================== */
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-configurarMenu();
+        configurarMenu();
 
-carregarAcompanhantes();
+        carregarAcompanhantes();
 
+    }
+);
 
 </script>
 
