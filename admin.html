@@ -14,9 +14,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="supabase.js"></script>
-
-
     <style>
 
         * {
@@ -25,10 +22,10 @@
 
         body {
             margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
             background: #fdf5f9;
             color: #333;
-            min-height: 100vh;
         }
 
         header {
@@ -55,93 +52,74 @@
             font-weight: bold;
         }
 
-        .acoes-header {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .botao-header {
+        .botao {
             border: none;
-            text-decoration: none;
-            padding: 9px 13px;
             border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
+            padding: 10px 15px;
             cursor: pointer;
-        }
-
-        .botao-inicio {
-            color: #e91e63;
-            border: 1px solid #e91e63;
-            background: white;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .botao-sair {
-            background: #555;
+            background: #eee;
+            color: #333;
+        }
+
+        .botao-principal {
+            background: #e91e63;
             color: white;
+        }
+
+        .botao-perigo {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .botao-secundario {
+            background: #fce4ec;
+            color: #e91e63;
         }
 
         .container {
             max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 15px 60px;
+            margin: auto;
+            padding: 30px 15px 60px;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .subtitulo {
-            text-align: center;
-            color: #777;
             margin-bottom: 30px;
         }
 
         .card {
             background: white;
-            border-radius: 16px;
+            border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
         }
 
-        .card h2 {
+        h2 {
             margin-top: 0;
-            color: #e91e63;
-            font-size: 21px;
-        }
-
-        .formulario {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .campo {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .campo-completo {
-            grid-column: 1 / -1;
+            margin-bottom: 20px;
         }
 
         label {
-            font-size: 13px;
+            display: block;
             font-weight: bold;
-            color: #555;
+            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 7px;
         }
 
         input,
         textarea {
             width: 100%;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 9px;
             padding: 12px;
-            font-size: 14px;
+            font-size: 15px;
             outline: none;
             font-family: Arial, sans-serif;
         }
@@ -152,64 +130,44 @@
         }
 
         textarea {
-            min-height: 110px;
+            min-height: 120px;
             resize: vertical;
         }
 
         input[type="file"] {
-            padding: 9px;
+            padding: 10px;
             background: #fafafa;
         }
 
-        .botoes-formulario {
-            grid-column: 1 / -1;
+        .campo-arquivo {
+            margin-top: 20px;
+        }
+
+        .acoes-form {
             display: flex;
             gap: 10px;
-            margin-top: 5px;
-        }
-
-        .botao {
-            border: none;
-            border-radius: 9px;
-            padding: 13px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .botao:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .botao-salvar {
-            background: #e91e63;
-            color: white;
-        }
-
-        .botao-cancelar {
-            background: #eee;
-            color: #444;
+            margin-top: 25px;
+            flex-wrap: wrap;
         }
 
         .mensagem {
-            padding: 13px;
-            border-radius: 9px;
-            margin-bottom: 18px;
             display: none;
-            line-height: 1.4;
-        }
-
-        .mensagem.sucesso {
-            display: block;
-            background: #e8f5e9;
-            color: #2e7d32;
+            padding: 13px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
         .mensagem.erro {
             display: block;
-            background: #ffebee;
-            color: #c62828;
+            background: #ffe5e5;
+            color: #b71c1c;
+        }
+
+        .mensagem.sucesso {
+            display: block;
+            background: #e5f8eb;
+            color: #176b30;
         }
 
         .lista {
@@ -218,111 +176,104 @@
             gap: 18px;
         }
 
-        .acompanhante {
-            background: #fafafa;
+        .item {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
             border: 1px solid #eee;
-            border-radius: 13px;
+        }
+
+        .item-foto {
+            width: 100%;
+            height: 280px;
+            background: #eee;
             overflow: hidden;
         }
 
-        .foto-principal {
+        .item-foto img {
             width: 100%;
-            height: 280px;
-            background: #eee;
+            height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .sem-foto {
-            width: 100%;
-            height: 280px;
-            background: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-
-        .info {
+        .item-info {
             padding: 15px;
         }
 
-        .nome {
+        .item-nome {
             font-size: 18px;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .idade {
-            color: #e91e63;
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        .descricao {
+        .item-idade {
             color: #777;
+            margin-bottom: 10px;
+        }
+
+        .item-descricao {
             font-size: 13px;
-            margin-top: 8px;
+            color: #666;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
 
-        .whatsapp {
-            margin-top: 8px;
-            font-size: 13px;
-            color: #555;
-        }
-
-        .acoes-card {
+        .item-acoes {
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
+            gap: 7px;
+            flex-wrap: wrap;
         }
 
-        .botao-editar {
+        .item-acoes button {
             flex: 1;
-            background: #eeeeee;
-            color: #333;
-        }
-
-        .botao-excluir {
-            flex: 1;
-            background: #c62828;
-            color: white;
+            min-width: 80px;
         }
 
         .galeria {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 10px;
             margin-top: 15px;
         }
 
-        .foto-extra {
+        .galeria-item {
             position: relative;
-            height: 100px;
             border-radius: 8px;
             overflow: hidden;
             background: #eee;
+            aspect-ratio: 1 / 1;
         }
 
-        .foto-extra img {
+        .galeria-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .botao-excluir-foto {
+        .galeria-item button {
             position: absolute;
-            right: 4px;
-            top: 4px;
-            width: 25px;
-            height: 25px;
+            top: 5px;
+            right: 5px;
+            width: 28px;
+            height: 28px;
+            padding: 0;
             border: none;
             border-radius: 50%;
-            background: rgba(198,40,40,0.9);
+            background: rgba(200,0,0,0.85);
             color: white;
             cursor: pointer;
             font-weight: bold;
+        }
+
+        .sem-fotos {
+            color: #777;
+            font-size: 13px;
+            padding: 10px 0;
+        }
+
+        .oculto {
+            display: none;
         }
 
         .carregando {
@@ -331,10 +282,10 @@
             color: #777;
         }
 
-        .contador-fotos {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #888;
+        .status-upload {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #777;
         }
 
         @media (max-width: 850px) {
@@ -345,14 +296,10 @@
 
         }
 
-        @media (max-width: 650px) {
+        @media (max-width: 600px) {
 
-            .formulario {
-                grid-template-columns: 1fr;
-            }
-
-            .campo-completo {
-                grid-column: auto;
+            .header-conteudo {
+                flex-direction: column;
             }
 
             .lista {
@@ -363,8 +310,8 @@
                 grid-template-columns: repeat(3, 1fr);
             }
 
-            .logo {
-                font-size: 19px;
+            .container {
+                padding: 20px 12px 50px;
             }
 
         }
@@ -385,43 +332,24 @@
             AcompanhanteVirtual
         </div>
 
-
-        <div class="acoes-header">
-
-            <a
-                href="inicio.html"
-                class="botao-header botao-inicio"
-            >
-                Início
-            </a>
-
-
-            <button
-                class="botao-header botao-sair"
-                onclick="sair()"
-            >
-                Sair
-            </button>
-
-        </div>
+        <button
+            class="botao botao-sair"
+            onclick="sair()"
+        >
+            Sair
+        </button>
 
     </div>
 
 </header>
 
 
-
-<main class="container">
+<div class="container">
 
 
     <h1>
         Painel Administrativo
     </h1>
-
-
-    <p class="subtitulo">
-        Gerencie os perfis do site
-    </p>
 
 
     <div
@@ -430,8 +358,9 @@
     ></div>
 
 
-
+    <!-- ================================================= -->
     <!-- FORMULÁRIO -->
+    <!-- ================================================= -->
 
     <div class="card">
 
@@ -440,164 +369,130 @@
         </h2>
 
 
-        <form id="formulario">
+        <input
+            type="hidden"
+            id="acompanhanteId"
+        >
 
+
+        <label for="nome">
+            Nome
+        </label>
+
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome"
+        >
+
+
+        <label for="idade">
+            Idade
+        </label>
+
+        <input
+            type="number"
+            id="idade"
+            min="18"
+            max="100"
+            placeholder="Idade"
+        >
+
+
+        <label for="descricao">
+            Descrição
+        </label>
+
+        <textarea
+            id="descricao"
+            placeholder="Descrição do perfil"
+        ></textarea>
+
+
+        <label for="whatsapp">
+            WhatsApp
+        </label>
+
+        <input
+            type="text"
+            id="whatsapp"
+            placeholder="Ex: 5584991288951"
+        >
+
+
+        <div class="campo-arquivo">
+
+            <label for="fotoPrincipal">
+                Foto principal
+            </label>
 
             <input
-                type="hidden"
-                id="idAcompanhante"
+                type="file"
+                id="fotoPrincipal"
+                accept="image/*"
             >
 
-
-            <div class="formulario">
-
-
-                <div class="campo">
-
-                    <label for="nome">
-                        Nome
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nome"
-                        required
-                    >
-
-                </div>
+        </div>
 
 
-                <div class="campo">
+        <div class="campo-arquivo">
 
-                    <label for="idade">
-                        Idade
-                    </label>
+            <label for="fotosExtras">
+                Fotos adicionais
+            </label>
 
-                    <input
-                        type="number"
-                        id="idade"
-                        min="18"
-                        max="100"
-                        required
-                    >
+            <input
+                type="file"
+                id="fotosExtras"
+                accept="image/*"
+                multiple
+            >
 
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="whatsapp">
-                        WhatsApp
-                    </label>
-
-                    <input
-                        type="text"
-                        id="whatsapp"
-                        placeholder="Ex.: 5584991288951"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="fotoPrincipal">
-                        Foto principal
-                    </label>
-
-                    <input
-                        type="file"
-                        id="fotoPrincipal"
-                        accept="image/*"
-                    >
-
-                </div>
-
-
-                <div class="campo campo-completo">
-
-                    <label for="descricao">
-                        Descrição
-                    </label>
-
-                    <textarea
-                        id="descricao"
-                        placeholder="Descrição do perfil..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="campo campo-completo">
-
-                    <label for="fotosExtras">
-
-                        Fotos adicionais
-
-                        <span
-                            style="font-weight:normal;color:#888;"
-                        >
-                            (pode selecionar várias)
-                        </span>
-
-                    </label>
-
-
-                    <input
-                        type="file"
-                        id="fotosExtras"
-                        accept="image/*"
-                        multiple
-                    >
-
-                    <div class="contador-fotos">
-                        Você pode selecionar várias fotos ao mesmo tempo.
-                    </div>
-
-                </div>
-
-
-                <div class="botoes-formulario">
-
-
-                    <button
-                        type="submit"
-                        class="botao botao-salvar"
-                        id="botaoSalvar"
-                    >
-                        Salvar acompanhante
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="botao botao-cancelar"
-                        onclick="cancelarEdicao()"
-                        id="botaoCancelar"
-                        style="display:none;"
-                    >
-                        Cancelar edição
-                    </button>
-
-
-                </div>
-
-
+            <div class="status-upload">
+                Você pode selecionar várias fotos de uma vez.
             </div>
 
-        </form>
+        </div>
+
+
+        <div class="acoes-form">
+
+            <button
+                id="botaoSalvar"
+                class="botao botao-principal"
+                onclick="salvarAcompanhante()"
+            >
+                Salvar acompanhante
+            </button>
+
+
+            <button
+                id="botaoCancelar"
+                class="botao botao-secundario oculto"
+                onclick="cancelarEdicao()"
+            >
+                Cancelar edição
+            </button>
+
+        </div>
+
+
+        <div
+            id="statusUpload"
+            class="status-upload"
+        ></div>
 
     </div>
 
 
-
+    <!-- ================================================= -->
     <!-- LISTA -->
+    <!-- ================================================= -->
 
     <div class="card">
 
         <h2>
-            Acompanhantes cadastradas
+            Acompanhantes cadastrados
         </h2>
 
 
@@ -617,41 +512,37 @@
     </div>
 
 
-</main>
+</div>
 
+
+<script src="supabase.js"></script>
 
 
 <script>
 
 
-    // ==========================================
+    // =====================================================
     // VARIÁVEIS
-    // ==========================================
+    // =====================================================
 
-    let acompanhantes = [];
+    let usuarioAtual = null;
 
 
-
-    // ==========================================
+    // =====================================================
     // MENSAGEM
-    // ==========================================
+    // =====================================================
 
-    function mostrarMensagem(
-        texto,
-        tipo
-    ) {
+    function mostrarMensagem(texto, tipo) {
 
         const elemento =
             document.getElementById("mensagem");
 
-
-        elemento.textContent =
-            texto;
-
+        elemento.textContent = texto;
 
         elemento.className =
             "mensagem " + tipo;
 
+        elemento.style.display = "block";
 
         window.scrollTo({
             top: 0,
@@ -661,148 +552,205 @@
     }
 
 
+    function limparMensagem() {
 
-    // ==========================================
-    // VERIFICAR ADMIN
-    // ==========================================
+        const elemento =
+            document.getElementById("mensagem");
 
-    async function verificarAdmin() {
+        elemento.textContent = "";
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.auth.getSession();
+        elemento.className = "mensagem";
 
-
-        if (error) {
-
-            console.error(error);
-
-            window.location.href =
-                "index.html";
-
-            return false;
-
-        }
-
-
-        if (!data.session) {
-
-            window.location.href =
-                "index.html";
-
-            return false;
-
-        }
-
-
-        const usuario =
-            data.session.user;
-
-
-        const {
-            data: perfil,
-            error: erroPerfil
-        } =
-            await supabaseClient
-                .from("perfis")
-                .select("usuario")
-                .eq("id", usuario.id)
-                .maybeSingle();
-
-
-        if (
-            erroPerfil ||
-            !perfil ||
-            perfil.usuario !== "ADMIN"
-        ) {
-
-            alert(
-                "Acesso permitido somente para administradores."
-            );
-
-
-            window.location.href =
-                "inicio.html";
-
-
-            return false;
-
-        }
-
-
-        return true;
+        elemento.style.display = "none";
 
     }
 
 
+    // =====================================================
+    // VERIFICAR ADMIN
+    // =====================================================
 
-    // ==========================================
-    // UPLOAD DE FOTO
-    // ==========================================
+    async function verificarAdmin() {
 
-    async function enviarFoto(
-        arquivo
-    ) {
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            if (!data.session) {
+
+                window.location.href = "index.html";
+
+                return false;
+
+            }
+
+
+            usuarioAtual =
+                data.session.user;
+
+
+            const {
+                data: perfil,
+                error: erroPerfil
+            } =
+                await supabaseClient
+                    .from("perfis")
+                    .select("id, nome, usuario")
+                    .eq("id", usuarioAtual.id)
+                    .maybeSingle();
+
+
+            if (erroPerfil) {
+
+                throw erroPerfil;
+
+            }
+
+
+            if (
+                !perfil ||
+                perfil.usuario !== "ADMIN"
+            ) {
+
+                alert(
+                    "Acesso permitido somente para administrador."
+                );
+
+                window.location.href =
+                    "inicio.html";
+
+                return false;
+
+            }
+
+
+            return true;
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao verificar administrador:",
+                erro
+            );
+
+            mostrarMensagem(
+                "Erro ao verificar acesso: " +
+                erro.message,
+                "erro"
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    // =====================================================
+    // SAIR
+    // =====================================================
+
+    async function sair() {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "index.html";
+
+    }
+
+
+    // =====================================================
+    // ENVIAR FOTO PARA STORAGE
+    // =====================================================
+
+    async function enviarFoto(arquivo, pasta) {
 
         if (!arquivo) {
 
-            return null;
+            throw new Error(
+                "Nenhuma imagem foi selecionada."
+            );
+
+        }
+
+
+        if (
+            !arquivo.type ||
+            !arquivo.type.startsWith("image/")
+        ) {
+
+            throw new Error(
+                "O arquivo selecionado não é uma imagem."
+            );
 
         }
 
 
         const extensao =
-            arquivo.name
-                .split(".")
-                .pop()
-                .toLowerCase();
+            arquivo.name.includes(".")
+                ? arquivo.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase()
+                : "jpg";
 
+
+        /*
+         * IMPORTANTE:
+         * Não usamos Date.now() como "ordem".
+         * Date.now() só é usado aqui no nome do arquivo,
+         * onde não existe o problema do integer.
+         */
 
         const nomeArquivo =
-
-            "acompanhante-" +
-
+            "foto-" +
             Date.now() +
-
             "-" +
-
             Math.random()
                 .toString(36)
-                .substring(2) +
-
+                .substring(2, 10) +
             "." +
-
             extensao;
 
 
         const caminho =
-            "acompanhantes/" +
+            pasta +
+            "/" +
             nomeArquivo;
 
 
         const {
-            error
+            error: erroUpload
         } =
-            await supabaseClient
-                .storage
+            await supabaseClient.storage
                 .from("fotos")
                 .upload(
                     caminho,
                     arquivo,
                     {
                         cacheControl: "3600",
-                        upsert: false
+                        upsert: false,
+                        contentType: arquivo.type
                     }
                 );
 
 
-        if (error) {
+        if (erroUpload) {
 
             throw new Error(
-                "Erro ao enviar foto para o Storage: " +
-                error.message
+                "Erro ao enviar imagem: " +
+                erroUpload.message
             );
 
         }
@@ -811,12 +759,9 @@
         const {
             data
         } =
-            supabaseClient
-                .storage
+            supabaseClient.storage
                 .from("fotos")
-                .getPublicUrl(
-                    caminho
-                );
+                .getPublicUrl(caminho);
 
 
         if (
@@ -825,27 +770,43 @@
         ) {
 
             throw new Error(
-                "Não foi possível obter a URL pública da foto."
+                "Não foi possível obter a URL pública da imagem."
             );
 
         }
 
 
-        return data.publicUrl;
+        return {
+            url: data.publicUrl,
+            caminho: caminho
+        };
 
     }
 
 
-
-    // ==========================================
-    // SALVAR FOTO NA TABELA
-    // ==========================================
+    // =====================================================
+    // SALVAR FOTO EXTRA NO BANCO
+    // =====================================================
 
     async function salvarFotoExtra(
         acompanhanteId,
         url,
         ordem
     ) {
+
+        /*
+         * ordem SEMPRE será um número pequeno:
+         * 0, 1, 2, 3...
+         *
+         * Isso corrige o erro:
+         * value "1790979211900" is out of range
+         */
+
+        const numeroOrdem =
+            Number.isInteger(ordem)
+                ? ordem
+                : 0;
+
 
         const {
             data,
@@ -854,7 +815,6 @@
             await supabaseClient
                 .from("fotos_acompanhantes")
                 .insert({
-
                     acompanhante_id:
                         acompanhanteId,
 
@@ -862,8 +822,7 @@
                         url,
 
                     ordem:
-                        ordem
-
+                        numeroOrdem
                 })
                 .select()
                 .single();
@@ -872,7 +831,7 @@
         if (error) {
 
             console.error(
-                "Erro ao salvar foto extra:",
+                "Erro ao registrar foto extra:",
                 error
             );
 
@@ -889,360 +848,522 @@
     }
 
 
+    // =====================================================
+    // OBTER PRÓXIMA ORDEM
+    // =====================================================
 
-    // ==========================================
+    async function obterProximaOrdem(
+        acompanhanteId
+    ) {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("fotos_acompanhantes")
+                .select("ordem")
+                .eq(
+                    "acompanhante_id",
+                    acompanhanteId
+                )
+                .order(
+                    "ordem",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(1);
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            return 0;
+
+        }
+
+
+        const ultimaOrdem =
+            Number(data[0].ordem);
+
+
+        if (
+            !Number.isInteger(ultimaOrdem)
+        ) {
+
+            return 0;
+
+        }
+
+
+        return ultimaOrdem + 1;
+
+    }
+
+
+    // =====================================================
     // SALVAR ACOMPANHANTE
-    // ==========================================
+    // =====================================================
 
-    document
-        .getElementById("formulario")
-        .addEventListener(
-            "submit",
-            async function(event) {
+    async function salvarAcompanhante() {
 
-                event.preventDefault();
+        limparMensagem();
 
 
-                const botao =
-                    document.getElementById(
-                        "botaoSalvar"
-                    );
+        const botao =
+            document.getElementById(
+                "botaoSalvar"
+            );
 
 
-                botao.disabled =
-                    true;
+        const status =
+            document.getElementById(
+                "statusUpload"
+            );
 
 
-                botao.textContent =
-                    "Salvando...";
+        const id =
+            document.getElementById(
+                "acompanhanteId"
+            ).value.trim();
 
 
-                try {
+        const nome =
+            document.getElementById(
+                "nome"
+            ).value.trim();
 
 
-                    const id =
-                        document
-                            .getElementById(
-                                "idAcompanhante"
-                            )
-                            .value;
+        const idade =
+            Number(
+                document.getElementById(
+                    "idade"
+                ).value
+            );
 
 
-                    const nome =
-                        document
-                            .getElementById(
-                                "nome"
-                            )
-                            .value
-                            .trim();
+        const descricao =
+            document.getElementById(
+                "descricao"
+            ).value.trim();
 
 
-                    const idade =
-                        parseInt(
-                            document
-                                .getElementById(
-                                    "idade"
-                                )
-                                .value
+        const whatsapp =
+            document.getElementById(
+                "whatsapp"
+            ).value.trim();
+
+
+        const fotoPrincipal =
+            document.getElementById(
+                "fotoPrincipal"
+            ).files[0];
+
+
+        const fotosExtras =
+            Array.from(
+                document.getElementById(
+                    "fotosExtras"
+                ).files
+            );
+
+
+        if (!nome) {
+
+            mostrarMensagem(
+                "Digite o nome.",
+                "erro"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !Number.isInteger(idade) ||
+            idade < 18 ||
+            idade > 100
+        ) {
+
+            mostrarMensagem(
+                "A idade deve estar entre 18 e 100 anos.",
+                "erro"
+            );
+
+            return;
+
+        }
+
+
+        if (!whatsapp) {
+
+            mostrarMensagem(
+                "Digite o WhatsApp.",
+                "erro"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Na criação, a foto principal é obrigatória.
+         * Na edição, ela é opcional.
+         */
+
+        if (!id && !fotoPrincipal) {
+
+            mostrarMensagem(
+                "Selecione uma foto principal.",
+                "erro"
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            botao.disabled = true;
+
+            botao.textContent =
+                "Salvando...";
+
+
+            status.textContent =
+                "Preparando...";
+
+
+            // =================================================
+            // CRIAR
+            // =================================================
+
+            if (!id) {
+
+
+                let fotoPrincipalUrl = null;
+
+
+                // FOTO PRINCIPAL
+
+                if (fotoPrincipal) {
+
+                    status.textContent =
+                        "Enviando foto principal...";
+
+
+                    const resultado =
+                        await enviarFoto(
+                            fotoPrincipal,
+                            "acompanhantes"
                         );
 
 
-                    const whatsapp =
-                        document
-                            .getElementById(
-                                "whatsapp"
-                            )
-                            .value
-                            .trim();
+                    fotoPrincipalUrl =
+                        resultado.url;
 
+                }
 
-                    const descricao =
-                        document
-                            .getElementById(
-                                "descricao"
-                            )
-                            .value
-                            .trim();
 
+                // INSERIR ACOMPANHANTE
 
-                    const fotoPrincipal =
-                        document
-                            .getElementById(
-                                "fotoPrincipal"
-                            )
-                            .files[0];
+                status.textContent =
+                    "Criando perfil...";
 
 
-                    const fotosExtras =
-                        document
-                            .getElementById(
-                                "fotosExtras"
-                            )
-                            .files;
+                const {
+                    data: acompanhante,
+                    error
+                } =
+                    await supabaseClient
+                        .from("acompanhantes")
+                        .insert({
+                            nome: nome,
+                            idade: idade,
+                            descricao: descricao,
+                            whatsapp: whatsapp,
+                            foto_principal:
+                                fotoPrincipalUrl,
+                            ativo: true
+                        })
+                        .select()
+                        .single();
 
 
+                if (error) {
 
-                    // ==========================================
-                    // NOVO CADASTRO
-                    // ==========================================
-
-                    if (!id) {
-
-
-                        let fotoPrincipalUrl =
-                            null;
-
-
-                        // FOTO PRINCIPAL
-
-                        if (
-                            fotoPrincipal
-                        ) {
-
-                            fotoPrincipalUrl =
-                                await enviarFoto(
-                                    fotoPrincipal
-                                );
-
-                        }
-
-
-                        // CRIAR ACOMPANHANTE
-
-                        const {
-                            data:
-                                acompanhante,
-                            error
-                        } =
-                            await supabaseClient
-                                .from("acompanhantes")
-                                .insert({
-
-                                    nome:
-                                        nome,
-
-                                    idade:
-                                        idade,
-
-                                    descricao:
-                                        descricao,
-
-                                    whatsapp:
-                                        whatsapp,
-
-                                    foto_principal:
-                                        fotoPrincipalUrl,
-
-                                    ativo:
-                                        true
-
-                                })
-                                .select()
-                                .single();
-
-
-                        if (error) {
-
-                            throw new Error(
-                                "Erro ao criar acompanhante: " +
-                                error.message
-                            );
-
-                        }
-
-
-
-                        // ==========================================
-                        // FOTOS EXTRAS
-                        // ==========================================
-
-                        for (
-                            let i = 0;
-                            i < fotosExtras.length;
-                            i++
-                        ) {
-
-                            botao.textContent =
-                                "Enviando foto " +
-                                (i + 1) +
-                                " de " +
-                                fotosExtras.length +
-                                "...";
-
-
-                            const url =
-                                await enviarFoto(
-                                    fotosExtras[i]
-                                );
-
-
-                            await salvarFotoExtra(
-                                acompanhante.id,
-                                url,
-                                i
-                            );
-
-                        }
-
-
-                        mostrarMensagem(
-                            "Acompanhante cadastrada com sucesso! " +
-                            fotosExtras.length +
-                            " foto(s) adicional(is) salva(s).",
-                            "sucesso"
-                        );
-
-                    }
-
-
-
-                    // ==========================================
-                    // EDIÇÃO
-                    // ==========================================
-
-                    else {
-
-
-                        let dadosAtualizados = {
-
-                            nome:
-                                nome,
-
-                            idade:
-                                idade,
-
-                            descricao:
-                                descricao,
-
-                            whatsapp:
-                                whatsapp
-
-                        };
-
-
-                        // NOVA FOTO PRINCIPAL
-
-                        if (
-                            fotoPrincipal
-                        ) {
-
-                            dadosAtualizados.foto_principal =
-                                await enviarFoto(
-                                    fotoPrincipal
-                                );
-
-                        }
-
-
-                        const {
-                            error
-                        } =
-                            await supabaseClient
-                                .from("acompanhantes")
-                                .update(
-                                    dadosAtualizados
-                                )
-                                .eq(
-                                    "id",
-                                    id
-                                );
-
-
-                        if (error) {
-
-                            throw new Error(
-                                "Erro ao atualizar acompanhante: " +
-                                error.message
-                            );
-
-                        }
-
-
-
-                        // ==========================================
-                        // NOVAS FOTOS EXTRAS
-                        // ==========================================
-
-                        for (
-                            let i = 0;
-                            i < fotosExtras.length;
-                            i++
-                        ) {
-
-                            botao.textContent =
-                                "Enviando foto " +
-                                (i + 1) +
-                                " de " +
-                                fotosExtras.length +
-                                "...";
-
-
-                            const url =
-                                await enviarFoto(
-                                    fotosExtras[i]
-                                );
-
-
-                            await salvarFotoExtra(
-                                id,
-                                url,
-                                Date.now() + i
-                            );
-
-                        }
-
-
-                        mostrarMensagem(
-                            "Acompanhante atualizada com sucesso! " +
-                            fotosExtras.length +
-                            " foto(s) adicional(is) salva(s).",
-                            "sucesso"
-                        );
-
-                    }
-
-
-                    limparFormulario();
-
-
-                    await carregarAcompanhantes();
-
-
-                } catch (erro) {
-
-                    console.error(
-                        "ERRO COMPLETO:",
-                        erro
-                    );
-
-
-                    mostrarMensagem(
-                        "Erro: " +
-                        (
-                            erro.message ||
-                            "Não foi possível salvar."
-                        ),
-                        "erro"
+                    throw new Error(
+                        "Erro ao criar acompanhante: " +
+                        error.message
                     );
 
                 }
 
 
-                botao.disabled =
-                    false;
+                // =================================================
+                // FOTOS EXTRAS
+                // =================================================
+
+                let ordem = 0;
 
 
-                botao.textContent =
-                    "Salvar acompanhante";
+                for (
+                    let i = 0;
+                    i < fotosExtras.length;
+                    i++
+                ) {
+
+                    status.textContent =
+                        "Enviando foto extra " +
+                        (i + 1) +
+                        " de " +
+                        fotosExtras.length +
+                        "...";
+
+
+                    const resultado =
+                        await enviarFoto(
+                            fotosExtras[i],
+                            "acompanhantes"
+                        );
+
+
+                    /*
+                     * Aqui está a correção principal.
+                     *
+                     * Usamos:
+                     * 0
+                     * 1
+                     * 2
+                     * 3
+                     *
+                     * e NÃO Date.now().
+                     */
+
+                    await salvarFotoExtra(
+                        acompanhante.id,
+                        resultado.url,
+                        ordem
+                    );
+
+
+                    ordem++;
+
+                }
+
+
+                status.textContent =
+                    "Concluído!";
+
+
+                mostrarMensagem(
+                    "Acompanhante cadastrado com sucesso.",
+                    "sucesso"
+                );
+
 
             }
-        );
+
+            // =================================================
+            // EDITAR
+            // =================================================
+
+            else {
 
 
+                let fotoPrincipalUrl =
+                    null;
 
-    // ==========================================
+
+                /*
+                 * Primeiro buscamos o registro atual.
+                 */
+
+                const {
+                    data: atual,
+                    error: erroAtual
+                } =
+                    await supabaseClient
+                        .from("acompanhantes")
+                        .select("*")
+                        .eq("id", id)
+                        .single();
+
+
+                if (erroAtual) {
+
+                    throw new Error(
+                        "Erro ao localizar acompanhante: " +
+                        erroAtual.message
+                    );
+
+                }
+
+
+                fotoPrincipalUrl =
+                    atual.foto_principal;
+
+
+                // NOVA FOTO PRINCIPAL
+
+                if (fotoPrincipal) {
+
+                    status.textContent =
+                        "Enviando nova foto principal...";
+
+
+                    const resultado =
+                        await enviarFoto(
+                            fotoPrincipal,
+                            "acompanhantes"
+                        );
+
+
+                    fotoPrincipalUrl =
+                        resultado.url;
+
+                }
+
+
+                // ATUALIZAR DADOS
+
+                status.textContent =
+                    "Atualizando perfil...";
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("acompanhantes")
+                        .update({
+                            nome: nome,
+                            idade: idade,
+                            descricao: descricao,
+                            whatsapp: whatsapp,
+                            foto_principal:
+                                fotoPrincipalUrl
+                        })
+                        .eq("id", id);
+
+
+                if (error) {
+
+                    throw new Error(
+                        "Erro ao atualizar acompanhante: " +
+                        error.message
+                    );
+
+                }
+
+
+                // =================================================
+                // NOVAS FOTOS EXTRAS
+                // =================================================
+
+                let ordem =
+                    await obterProximaOrdem(
+                        id
+                    );
+
+
+                for (
+                    let i = 0;
+                    i < fotosExtras.length;
+                    i++
+                ) {
+
+                    status.textContent =
+                        "Enviando nova foto " +
+                        (i + 1) +
+                        " de " +
+                        fotosExtras.length +
+                        "...";
+
+
+                    const resultado =
+                        await enviarFoto(
+                            fotosExtras[i],
+                            "acompanhantes"
+                        );
+
+
+                    await salvarFotoExtra(
+                        id,
+                        resultado.url,
+                        ordem
+                    );
+
+
+                    ordem++;
+
+                }
+
+
+                status.textContent =
+                    "Concluído!";
+
+
+                mostrarMensagem(
+                    "Acompanhante atualizado com sucesso.",
+                    "sucesso"
+                );
+
+            }
+
+
+            limparFormulario();
+
+            await carregarAcompanhantes();
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro completo:",
+                erro
+            );
+
+
+            status.textContent =
+                "";
+
+
+            mostrarMensagem(
+                erro.message ||
+                "Ocorreu um erro.",
+                "erro"
+            );
+
+
+        } finally {
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "Salvar acompanhante";
+
+        }
+
+    }
+
+
+    // =====================================================
     // CARREGAR ACOMPANHANTES
-    // ==========================================
+    // =====================================================
 
     async function carregarAcompanhantes() {
 
@@ -1262,12 +1383,10 @@
             "block";
 
 
-        lista.innerHTML =
-            "";
+        lista.innerHTML = "";
 
 
         try {
-
 
             const {
                 data,
@@ -1291,41 +1410,26 @@
             }
 
 
-            acompanhantes =
-                data || [];
-
-
             carregando.style.display =
                 "none";
 
 
             if (
-                acompanhantes.length === 0
+                !data ||
+                data.length === 0
             ) {
 
                 lista.innerHTML =
-
-                    '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#777;">' +
-
-                    'Nenhuma acompanhante cadastrada.' +
-
-                    '</div>';
+                    "<p>Nenhum acompanhante cadastrado.</p>";
 
                 return;
 
             }
 
 
-            for (
-                const acompanhante
-                of acompanhantes
-            ) {
-
-                await criarCard(
-                    acompanhante
-                );
-
-            }
+            data.forEach(
+                criarItem
+            );
 
 
         } catch (erro) {
@@ -1334,31 +1438,27 @@
                 "none";
 
 
+            console.error(
+                erro
+            );
+
+
             lista.innerHTML =
-
-                '<div style="grid-column:1/-1;color:#c62828;text-align:center;">' +
-
+                "<p style='color:#c62828'>" +
                 "Erro ao carregar: " +
-
-                escaparHTML(
-                    erro.message
-                ) +
-
-                "</div>";
+                erro.message +
+                "</p>";
 
         }
 
     }
 
 
+    // =====================================================
+    // CRIAR ITEM
+    // =====================================================
 
-    // ==========================================
-    // CRIAR CARD
-    // ==========================================
-
-    async function criarCard(
-        acompanhante
-    ) {
+    function criarItem(acompanhante) {
 
         const lista =
             document.getElementById(
@@ -1366,350 +1466,312 @@
             );
 
 
-        const card =
+        const item =
             document.createElement(
                 "div"
             );
 
 
-        card.className =
-            "acompanhante";
+        item.className =
+            "item";
 
 
-        let fotoPrincipalHTML =
-            "";
+        // FOTO
+
+        const foto =
+            document.createElement(
+                "div"
+            );
+
+
+        foto.className =
+            "item-foto";
 
 
         if (
             acompanhante.foto_principal
         ) {
 
-            fotoPrincipalHTML =
+            const img =
+                document.createElement(
+                    "img"
+                );
 
-                '<img src="' +
 
-                escaparHTML(
-                    acompanhante.foto_principal
-                ) +
+            img.src =
+                acompanhante.foto_principal;
 
-                '" class="foto-principal" alt="Foto">';
 
-        } else {
+            img.alt =
+                acompanhante.nome;
 
-            fotoPrincipalHTML =
 
-                '<div class="sem-foto">Sem foto</div>';
+            foto.appendChild(
+                img
+            );
 
         }
 
 
-        card.innerHTML = `
+        item.appendChild(
+            foto
+        );
 
-            ${fotoPrincipalHTML}
 
-            <div class="info">
+        // INFORMAÇÕES
 
-                <div class="nome">
-                    ${escaparHTML(
-                        acompanhante.nome
-                    )}
-                </div>
+        const info =
+            document.createElement(
+                "div"
+            );
 
-                <div class="idade">
-                    ${acompanhante.idade} anos
-                </div>
 
-                <div class="descricao">
-                    ${escaparHTML(
-                        acompanhante.descricao || ""
-                    )}
-                </div>
+        info.className =
+            "item-info";
 
-                <div class="whatsapp">
-                    WhatsApp:
-                    ${escaparHTML(
-                        acompanhante.whatsapp
-                    )}
-                </div>
 
-                <div
-                    id="galeria-${acompanhante.id}"
-                    class="galeria"
-                ></div>
+        const nome =
+            document.createElement(
+                "div"
+            );
 
-                <div class="acoes-card">
 
-                    <button
-                        class="botao botao-editar"
-                        onclick="editarAcompanhante('${acompanhante.id}')"
-                    >
-                        Editar
-                    </button>
+        nome.className =
+            "item-nome";
 
-                    <button
-                        class="botao botao-excluir"
-                        onclick="excluirAcompanhante('${acompanhante.id}')"
-                    >
-                        Excluir
-                    </button>
 
-                </div>
+        nome.textContent =
+            acompanhante.nome;
 
-            </div>
 
-        `;
+        info.appendChild(
+            nome
+        );
+
+
+        const idade =
+            document.createElement(
+                "div"
+            );
+
+
+        idade.className =
+            "item-idade";
+
+
+        idade.textContent =
+            acompanhante.idade +
+            " anos";
+
+
+        info.appendChild(
+            idade
+        );
+
+
+        const descricao =
+            document.createElement(
+                "div"
+            );
+
+
+        descricao.className =
+            "item-descricao";
+
+
+        descricao.textContent =
+            acompanhante.descricao ||
+            "Sem descrição.";
+
+
+        info.appendChild(
+            descricao
+        );
+
+
+        // AÇÕES
+
+        const acoes =
+            document.createElement(
+                "div"
+            );
+
+
+        acoes.className =
+            "item-acoes";
+
+
+        const editar =
+            document.createElement(
+                "button"
+            );
+
+
+        editar.className =
+            "botao botao-secundario";
+
+
+        editar.textContent =
+            "Editar";
+
+
+        editar.onclick =
+            function() {
+
+                editarAcompanhante(
+                    acompanhante
+                );
+
+            };
+
+
+        acoes.appendChild(
+            editar
+        );
+
+
+        const fotos =
+            document.createElement(
+                "button"
+            );
+
+
+        fotos.className =
+            "botao botao-principal";
+
+
+        fotos.textContent =
+            "Fotos";
+
+
+        fotos.onclick =
+            function() {
+
+                carregarFotosExtras(
+                    acompanhante.id,
+                    acompanhante.nome
+                );
+
+            };
+
+
+        acoes.appendChild(
+            fotos
+        );
+
+
+        const excluir =
+            document.createElement(
+                "button"
+            );
+
+
+        excluir.className =
+            "botao botao-perigo";
+
+
+        excluir.textContent =
+            "Excluir";
+
+
+        excluir.onclick =
+            function() {
+
+                excluirAcompanhante(
+                    acompanhante.id,
+                    acompanhante.nome
+                );
+
+            };
+
+
+        acoes.appendChild(
+            excluir
+        );
+
+
+        info.appendChild(
+            acoes
+        );
+
+
+        item.appendChild(
+            info
+        );
 
 
         lista.appendChild(
-            card
-        );
-
-
-        await carregarFotosExtras(
-            acompanhante.id
+            item
         );
 
     }
 
 
-
-    // ==========================================
-    // ESCAPAR HTML
-    // ==========================================
-
-    function escaparHTML(
-        texto
-    ) {
-
-        return String(
-            texto || ""
-        )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
-
-
-    // ==========================================
-    // CARREGAR FOTOS EXTRAS
-    // ==========================================
-
-    async function carregarFotosExtras(
-        acompanhanteId
-    ) {
-
-        const galeria =
-            document.getElementById(
-                "galeria-" +
-                acompanhanteId
-            );
-
-
-        if (!galeria) {
-
-            return;
-
-        }
-
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("fotos_acompanhantes")
-                .select("*")
-                .eq(
-                    "acompanhante_id",
-                    acompanhanteId
-                )
-                .order(
-                    "ordem",
-                    {
-                        ascending: true
-                    }
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Erro ao carregar fotos extras:",
-                error
-            );
-
-
-            galeria.innerHTML =
-                '<div style="color:#c62828;font-size:12px;">' +
-                escaparHTML(
-                    error.message
-                ) +
-                '</div>';
-
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-            return;
-
-        }
-
-
-        data.forEach(
-            function(foto) {
-
-                const elemento =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                elemento.className =
-                    "foto-extra";
-
-
-                elemento.innerHTML = `
-
-                    <img
-                        src="${escaparHTML(foto.foto_url)}"
-                        alt="Foto adicional"
-                    >
-
-                    <button
-                        class="botao-excluir-foto"
-                        onclick="excluirFoto('${foto.id}')"
-                        title="Excluir foto"
-                    >
-                        ×
-                    </button>
-
-                `;
-
-
-                galeria.appendChild(
-                    elemento
-                );
-
-            }
-        );
-
-    }
-
-
-
-    // ==========================================
+    // =====================================================
     // EDITAR
-    // ==========================================
+    // =====================================================
 
     function editarAcompanhante(
-        id
+        acompanhante
     ) {
 
-        const acompanhante =
-            acompanhantes.find(
-                function(item) {
-
-                    return item.id === id;
-
-                }
-            );
-
-
-        if (!acompanhante) {
-
-            return;
-
-        }
-
-
-        document
-            .getElementById(
-                "idAcompanhante"
-            )
-            .value =
+        document.getElementById(
+            "acompanhanteId"
+        ).value =
             acompanhante.id;
 
 
-        document
-            .getElementById(
-                "nome"
-            )
-            .value =
+        document.getElementById(
+            "nome"
+        ).value =
             acompanhante.nome || "";
 
 
-        document
-            .getElementById(
-                "idade"
-            )
-            .value =
+        document.getElementById(
+            "idade"
+        ).value =
             acompanhante.idade || "";
 
 
-        document
-            .getElementById(
-                "whatsapp"
-            )
-            .value =
-            acompanhante.whatsapp || "";
-
-
-        document
-            .getElementById(
-                "descricao"
-            )
-            .value =
+        document.getElementById(
+            "descricao"
+        ).value =
             acompanhante.descricao || "";
 
 
-        document
-            .getElementById(
-                "tituloFormulario"
-            )
-            .textContent =
+        document.getElementById(
+            "whatsapp"
+        ).value =
+            acompanhante.whatsapp || "";
+
+
+        document.getElementById(
+            "fotoPrincipal"
+        ).value = "";
+
+
+        document.getElementById(
+            "fotosExtras"
+        ).value = "";
+
+
+        document.getElementById(
+            "tituloFormulario"
+        ).textContent =
             "Editar acompanhante";
 
 
-        document
-            .getElementById(
-                "botaoSalvar"
-            )
-            .textContent =
+        document.getElementById(
+            "botaoCancelar"
+        ).classList.remove(
+            "oculto"
+        );
+
+
+        document.getElementById(
+            "botaoSalvar"
+        ).textContent =
             "Salvar alterações";
-
-
-        document
-            .getElementById(
-                "botaoCancelar"
-            )
-            .style.display =
-            "inline-block";
 
 
         window.scrollTo({
@@ -1720,10 +1782,9 @@
     }
 
 
-
-    // ==========================================
+    // =====================================================
     // CANCELAR EDIÇÃO
-    // ==========================================
+    // =====================================================
 
     function cancelarEdicao() {
 
@@ -1732,66 +1793,395 @@
     }
 
 
-
-    // ==========================================
+    // =====================================================
     // LIMPAR FORMULÁRIO
-    // ==========================================
+    // =====================================================
 
     function limparFormulario() {
 
-        document
-            .getElementById(
-                "formulario"
-            )
-            .reset();
+        document.getElementById(
+            "acompanhanteId"
+        ).value = "";
 
 
-        document
-            .getElementById(
-                "idAcompanhante"
-            )
-            .value =
-            "";
+        document.getElementById(
+            "nome"
+        ).value = "";
 
 
-        document
-            .getElementById(
-                "tituloFormulario"
-            )
-            .textContent =
+        document.getElementById(
+            "idade"
+        ).value = "";
+
+
+        document.getElementById(
+            "descricao"
+        ).value = "";
+
+
+        document.getElementById(
+            "whatsapp"
+        ).value = "";
+
+
+        document.getElementById(
+            "fotoPrincipal"
+        ).value = "";
+
+
+        document.getElementById(
+            "fotosExtras"
+        ).value = "";
+
+
+        document.getElementById(
+            "tituloFormulario"
+        ).textContent =
             "Adicionar acompanhante";
 
 
-        document
-            .getElementById(
-                "botaoSalvar"
-            )
-            .textContent =
+        document.getElementById(
+            "botaoSalvar"
+        ).textContent =
             "Salvar acompanhante";
 
 
-        document
-            .getElementById(
-                "botaoCancelar"
-            )
-            .style.display =
-            "none";
+        document.getElementById(
+            "botaoCancelar"
+        ).classList.add(
+            "oculto"
+        );
+
+
+        document.getElementById(
+            "statusUpload"
+        ).textContent = "";
 
     }
 
 
+    // =====================================================
+    // CARREGAR FOTOS EXTRAS
+    // =====================================================
 
-    // ==========================================
-    // EXCLUIR ACOMPANHANTE
-    // ==========================================
+    async function carregarFotosExtras(
+        acompanhanteId,
+        nome
+    ) {
 
-    async function excluirAcompanhante(
-        id
+        limparMensagem();
+
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("fotos_acompanhantes")
+                    .select("*")
+                    .eq(
+                        "acompanhante_id",
+                        acompanhanteId
+                    )
+                    .order(
+                        "ordem",
+                        {
+                            ascending: true
+                        }
+                    );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            /*
+             * Cria uma pequena janela para mostrar
+             * as fotos cadastradas.
+             */
+
+            const overlay =
+                document.createElement(
+                    "div"
+                );
+
+
+            overlay.id =
+                "overlayFotos";
+
+
+            overlay.style.position =
+                "fixed";
+
+
+            overlay.style.left =
+                "0";
+
+
+            overlay.style.top =
+                "0";
+
+
+            overlay.style.width =
+                "100%";
+
+
+            overlay.style.height =
+                "100%";
+
+
+            overlay.style.background =
+                "rgba(0,0,0,0.65)";
+
+
+            overlay.style.zIndex =
+                "9999";
+
+
+            overlay.style.overflow =
+                "auto";
+
+
+            overlay.style.padding =
+                "30px 15px";
+
+
+            const caixa =
+                document.createElement(
+                    "div"
+                );
+
+
+            caixa.style.maxWidth =
+                "800px";
+
+
+            caixa.style.margin =
+                "auto";
+
+
+            caixa.style.background =
+                "white";
+
+
+            caixa.style.borderRadius =
+                "15px";
+
+
+            caixa.style.padding =
+                "20px";
+
+
+            caixa.innerHTML =
+                "<h2>Fotos de " +
+                escaparHTML(nome) +
+                "</h2>";
+
+
+            const fechar =
+                document.createElement(
+                    "button"
+                );
+
+
+            fechar.className =
+                "botao botao-secundario";
+
+
+            fechar.textContent =
+                "Fechar";
+
+
+            fechar.onclick =
+                function() {
+
+                    overlay.remove();
+
+                };
+
+
+            caixa.appendChild(
+                fechar
+            );
+
+
+            if (
+                !data ||
+                data.length === 0
+            ) {
+
+                const sem =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                sem.className =
+                    "sem-fotos";
+
+
+                sem.textContent =
+                    "Nenhuma foto adicional cadastrada.";
+
+
+                caixa.appendChild(
+                    sem
+                );
+
+            } else {
+
+                const galeria =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                galeria.className =
+                    "galeria";
+
+
+                data.forEach(
+                    function(foto) {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        div.className =
+                            "galeria-item";
+
+
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
+
+
+                        img.src =
+                            foto.foto_url;
+
+
+                        img.alt =
+                            "Foto adicional";
+
+
+                        div.appendChild(
+                            img
+                        );
+
+
+                        const excluir =
+                            document.createElement(
+                                "button"
+                            );
+
+
+                        excluir.textContent =
+                            "×";
+
+
+                        excluir.title =
+                            "Excluir foto";
+
+
+                        excluir.onclick =
+                            async function() {
+
+                                await excluirFotoExtra(
+                                    foto
+                                );
+
+                            };
+
+
+                        div.appendChild(
+                            excluir
+                        );
+
+
+                        galeria.appendChild(
+                            div
+                        );
+
+                    }
+                );
+
+
+                caixa.appendChild(
+                    galeria
+                );
+
+            }
+
+
+            overlay.appendChild(
+                caixa
+            );
+
+
+            document.body.appendChild(
+                overlay
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar fotos:",
+                erro
+            );
+
+
+            mostrarMensagem(
+                "Erro ao carregar fotos: " +
+                erro.message,
+                "erro"
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // ESCAPAR HTML
+    // =====================================================
+
+    function escaparHTML(texto) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            texto || "";
+
+
+        return div.innerHTML;
+
+    }
+
+
+    // =====================================================
+    // EXCLUIR FOTO EXTRA
+    // =====================================================
+
+    async function excluirFotoExtra(
+        foto
     ) {
 
         const confirmar =
             confirm(
-                "Tem certeza que deseja excluir esta acompanhante?"
+                "Deseja realmente excluir esta foto?"
             );
 
 
@@ -1804,6 +2194,121 @@
 
         try {
 
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("fotos_acompanhantes")
+                    .delete()
+                    .eq(
+                        "id",
+                        foto.id
+                    );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            const overlay =
+                document.getElementById(
+                    "overlayFotos"
+                );
+
+
+            if (overlay) {
+
+                overlay.remove();
+
+            }
+
+
+            mostrarMensagem(
+                "Foto excluída com sucesso.",
+                "sucesso"
+            );
+
+
+            /*
+             * Reabrimos a galeria atualizando
+             * as fotos.
+             */
+
+            /*
+             * Como a função precisa do ID do acompanhante,
+             * buscamos pelo registro excluído.
+             */
+
+            if (
+                foto.acompanhante_id
+            ) {
+
+                /*
+                 * Pequeno atraso apenas para
+                 * garantir a atualização visual.
+                 */
+
+                setTimeout(
+                    async function() {
+
+                        await carregarFotosExtras(
+                            foto.acompanhante_id,
+                            "Acompanhante"
+                        );
+
+                    },
+                    300
+                );
+
+            }
+
+
+        } catch (erro) {
+
+            console.error(
+                erro
+            );
+
+
+            mostrarMensagem(
+                "Erro ao excluir foto: " +
+                erro.message,
+                "erro"
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // EXCLUIR ACOMPANHANTE
+    // =====================================================
+
+    async function excluirAcompanhante(
+        id,
+        nome
+    ) {
+
+        const confirmar =
+            confirm(
+                "Deseja realmente excluir o perfil de " +
+                nome +
+                "?"
+            );
+
+
+        if (!confirmar) {
+
+            return;
+
+        }
+
+
+        try {
 
             const {
                 error
@@ -1825,7 +2330,7 @@
 
 
             mostrarMensagem(
-                "Acompanhante excluída com sucesso.",
+                "Acompanhante excluído com sucesso.",
                 "sucesso"
             );
 
@@ -1835,8 +2340,13 @@
 
         } catch (erro) {
 
+            console.error(
+                erro
+            );
+
+
             mostrarMensagem(
-                "Erro ao excluir: " +
+                "Erro ao excluir acompanhante: " +
                 erro.message,
                 "erro"
             );
@@ -1846,94 +2356,9 @@
     }
 
 
-
-    // ==========================================
-    // EXCLUIR FOTO EXTRA
-    // ==========================================
-
-    async function excluirFoto(
-        id
-    ) {
-
-        const confirmar =
-            confirm(
-                "Deseja excluir esta foto?"
-            );
-
-
-        if (!confirmar) {
-
-            return;
-
-        }
-
-
-        try {
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-                .from("fotos_acompanhantes")
-                .delete()
-                .eq(
-                    "id",
-                    id
-                );
-
-
-            if (error) {
-
-                throw error;
-
-            }
-
-
-            mostrarMensagem(
-                "Foto excluída com sucesso.",
-                "sucesso"
-            );
-
-
-            await carregarAcompanhantes();
-
-
-        } catch (erro) {
-
-            mostrarMensagem(
-                "Erro ao excluir foto: " +
-                erro.message,
-                "erro"
-            );
-
-        }
-
-    }
-
-
-
-    // ==========================================
-    // SAIR
-    // ==========================================
-
-    async function sair() {
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-
-        window.location.href =
-            "index.html";
-
-    }
-
-
-
-    // ==========================================
+    // =====================================================
     // INICIAR
-    // ==========================================
+    // =====================================================
 
     async function iniciar() {
 
