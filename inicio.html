@@ -22,26 +22,30 @@
 
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background: #fdf5f9;
             color: #333;
+            padding-bottom: 70px;
         }
 
-        /* CABEÇALHO */
+        /* =========================
+           CABEÇALHO
+        ========================= */
 
         header {
             background: white;
-            padding: 18px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-bottom: 1px solid #eee;
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 20;
         }
 
         .header-conteudo {
+            width: 100%;
             max-width: 1100px;
             margin: auto;
+            padding: 15px 20px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -50,84 +54,99 @@
 
         .logo {
             color: #e91e63;
-            font-size: 25px;
+            font-size: 24px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .botoes-header {
             display: flex;
+            align-items: center;
             gap: 8px;
         }
 
         .botao-header {
-            border: none;
+            text-decoration: none;
+            padding: 9px 14px;
             border-radius: 8px;
-            padding: 9px 13px;
-            cursor: pointer;
             font-size: 13px;
             font-weight: bold;
-            text-decoration: none;
+            cursor: pointer;
+            border: none;
         }
 
         .botao-login {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .botao-cadastro {
             background: #e91e63;
             color: white;
         }
 
-        .botao-cadastro {
-            background: #fce4ec;
+        .botao-perfil {
+            background: #f5f5f5;
             color: #e91e63;
         }
 
-        /* CONTEÚDO */
+        .botao-sair {
+            background: #ffe5e5;
+            color: #c62828;
+        }
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
 
         .container {
             width: 100%;
             max-width: 1100px;
-            margin: auto;
-            padding: 25px 15px 90px;
+            margin: 0 auto;
+            padding: 30px 20px 40px;
         }
 
         .titulo {
             text-align: center;
-            margin-bottom: 8px;
             color: #333;
-            font-size: 27px;
+            margin: 10px 0 8px;
+            font-size: 30px;
         }
 
         .subtitulo {
             text-align: center;
             color: #777;
-            margin-top: 0;
-            margin-bottom: 28px;
+            margin: 0 0 30px;
             font-size: 15px;
         }
 
-        /* GRID */
+        /* =========================
+           GRID
+        ========================= */
 
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
+            gap: 20px;
         }
 
         .card {
             background: white;
-            border-radius: 15px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 7px 22px rgba(0,0,0,0.13);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
 
         .foto-container {
             width: 100%;
-            height: 300px;
+            height: 330px;
             background: #eee;
             overflow: hidden;
         }
@@ -150,63 +169,62 @@
         }
 
         .informacoes {
-            padding: 14px;
+            padding: 15px;
         }
 
         .nome {
             font-size: 19px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .idade {
-            color: #e91e63;
             font-size: 14px;
+            color: #e91e63;
             font-weight: bold;
             margin-bottom: 8px;
         }
 
         .descricao {
-            color: #666;
             font-size: 13px;
+            color: #777;
             line-height: 1.4;
-            height: 38px;
-            overflow: hidden;
         }
 
-        /* CARREGANDO */
+        /* =========================
+           MENSAGENS
+        ========================= */
 
         .carregando {
             text-align: center;
             padding: 50px 20px;
             color: #777;
-            font-size: 16px;
         }
-
-        /* NENHUM PERFIL */
 
         .nenhum {
             text-align: center;
-            background: white;
-            border-radius: 15px;
-            padding: 40px 20px;
+            padding: 50px 20px;
             color: #777;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
         }
 
-        /* ERRO */
-
         .erro {
-            text-align: center;
             background: #ffe5e5;
             color: #c62828;
-            border-radius: 10px;
             padding: 15px;
+            border-radius: 10px;
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        /* RODAPÉ */
+        .erro small {
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
 
         .rodape {
             position: fixed;
@@ -220,11 +238,14 @@
         }
 
         .rodape-conteudo {
-            max-width: 500px;
+            max-width: 600px;
             margin: auto;
+
             display: flex;
             justify-content: center;
-            gap: 15px;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .link-rodape {
@@ -233,9 +254,12 @@
             font-size: 13px;
             font-weight: bold;
             padding: 8px 15px;
+            cursor: pointer;
         }
 
-        /* RESPONSIVO */
+        /* =========================
+           RESPONSIVO
+        ========================= */
 
         @media (max-width: 900px) {
 
@@ -247,6 +271,19 @@
 
         @media (max-width: 650px) {
 
+            .header-conteudo {
+                padding: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .botao-header {
+                padding: 8px 9px;
+                font-size: 12px;
+            }
+
             .grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -256,29 +293,16 @@
                 height: 250px;
             }
 
-            .logo {
-                font-size: 21px;
-            }
-
-            .botao-header {
-                padding: 8px 9px;
-                font-size: 12px;
+            .container {
+                padding: 25px 12px 35px;
             }
 
             .titulo {
                 font-size: 23px;
             }
 
-        }
-
-        @media (max-width: 420px) {
-
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .foto-container {
-                height: 210px;
+            .subtitulo {
+                font-size: 13px;
             }
 
             .informacoes {
@@ -295,6 +319,31 @@
 
         }
 
+        @media (max-width: 420px) {
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .botoes-header {
+                gap: 4px;
+            }
+
+            .botao-header {
+                padding: 7px 7px;
+                font-size: 11px;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .foto-container {
+                height: 210px;
+            }
+
+        }
+
     </style>
 
 </head>
@@ -303,7 +352,9 @@
 <body>
 
 
-<!-- CABEÇALHO -->
+<!-- =========================
+     CABEÇALHO
+========================= -->
 
 <header>
 
@@ -313,21 +364,15 @@
             AcompanhanteVirtual
         </div>
 
-        <div class="botoes-header">
+        <div
+            class="botoes-header"
+            id="menuHeader"
+        >
 
-            <a
-                href="index.html"
-                class="botao-header botao-login"
-            >
-                Entrar
-            </a>
-
-            <a
-                href="index.html"
-                class="botao-header botao-cadastro"
-            >
-                Criar conta
-            </a>
+            <!--
+                O menu será preenchido
+                automaticamente pelo JavaScript.
+            -->
 
         </div>
 
@@ -336,7 +381,9 @@
 </header>
 
 
-<!-- CONTEÚDO -->
+<!-- =========================
+     CONTEÚDO
+========================= -->
 
 <main class="container">
 
@@ -365,9 +412,7 @@
         class="nenhum"
         style="display:none;"
     >
-
         Nenhum perfil disponível no momento.
-
     </div>
 
 
@@ -379,39 +424,261 @@
 </main>
 
 
-<!-- RODAPÉ -->
+<!-- =========================
+     RODAPÉ
+========================= -->
 
 <div class="rodape">
 
-    <div class="rodape-conteudo">
+    <div
+        class="rodape-conteudo"
+        id="menuRodape"
+    >
 
-        <a
-            href="index.html"
-            class="link-rodape"
-        >
-            Minha conta
-        </a>
-
-        <a
-            href="index.html"
-            class="link-rodape"
-        >
-            Entrar
-        </a>
+        <!--
+            O menu será preenchido
+            automaticamente.
+        -->
 
     </div>
 
 </div>
 
 
+<!-- SUPABASE -->
+
 <script src="supabase.js"></script>
 
 
 <script>
 
-    // ==========================================
+
+    // ==================================================
+    // CONFIGURAR MENU DE ACORDO COM O LOGIN
+    // ==================================================
+
+    async function configurarMenu() {
+
+        const menuHeader =
+            document.getElementById("menuHeader");
+
+        const menuRodape =
+            document.getElementById("menuRodape");
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.getSession();
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            const sessao =
+                data.session;
+
+
+            // ==========================================
+            // USUÁRIO ESTÁ LOGADO
+            // ==========================================
+
+            if (sessao) {
+
+                menuHeader.innerHTML = `
+
+                    <a
+                        href="inicio.html"
+                        class="botao-header botao-login"
+                    >
+                        Início
+                    </a>
+
+                    <a
+                        href="perfil.html"
+                        class="botao-header botao-perfil"
+                    >
+                        Meu Perfil
+                    </a>
+
+                    <button
+                        type="button"
+                        class="botao-header botao-sair"
+                        onclick="sair()"
+                    >
+                        Sair
+                    </button>
+
+                `;
+
+
+                menuRodape.innerHTML = `
+
+                    <a
+                        href="inicio.html"
+                        class="link-rodape"
+                    >
+                        Início
+                    </a>
+
+                    <a
+                        href="perfil.html"
+                        class="link-rodape"
+                    >
+                        Meu Perfil
+                    </a>
+
+                    <a
+                        href="#"
+                        class="link-rodape"
+                        onclick="sair(); return false;"
+                    >
+                        Sair
+                    </a>
+
+                `;
+
+                return;
+            }
+
+
+            // ==========================================
+            // USUÁRIO NÃO ESTÁ LOGADO
+            // ==========================================
+
+            menuHeader.innerHTML = `
+
+                <a
+                    href="index.html"
+                    class="botao-header botao-login"
+                >
+                    Entrar
+                </a>
+
+                <a
+                    href="index.html"
+                    class="botao-header botao-cadastro"
+                >
+                    Criar conta
+                </a>
+
+            `;
+
+
+            menuRodape.innerHTML = `
+
+                <a
+                    href="index.html"
+                    class="link-rodape"
+                >
+                    Minha conta
+                </a>
+
+                <a
+                    href="index.html"
+                    class="link-rodape"
+                >
+                    Entrar
+                </a>
+
+            `;
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao verificar sessão:",
+                erro
+            );
+
+
+            // Se houver erro, mantém
+            // o menu de visitante.
+
+            menuHeader.innerHTML = `
+
+                <a
+                    href="index.html"
+                    class="botao-header botao-login"
+                >
+                    Entrar
+                </a>
+
+                <a
+                    href="index.html"
+                    class="botao-header botao-cadastro"
+                >
+                    Criar conta
+                </a>
+
+            `;
+
+
+            menuRodape.innerHTML = `
+
+                <a
+                    href="index.html"
+                    class="link-rodape"
+                >
+                    Minha conta
+                </a>
+
+                <a
+                    href="index.html"
+                    class="link-rodape"
+                >
+                    Entrar
+                </a>
+
+            `;
+
+        }
+
+    }
+
+
+    // ==================================================
+    // SAIR DA CONTA
+    // ==================================================
+
+    async function sair() {
+
+        try {
+
+            const { error } =
+                await supabaseClient.auth.signOut();
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            window.location.href =
+                "index.html";
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao sair:",
+                erro
+            );
+
+            alert(
+                "Não foi possível sair da conta."
+            );
+
+        }
+
+    }
+
+
+    // ==================================================
     // CARREGAR ACOMPANHANTES
-    // ==========================================
+    // ==================================================
 
     async function carregarAcompanhantes() {
 
@@ -439,24 +706,27 @@
 
                     .eq("ativo", true)
 
-                    .order("criado_em", {
-                        ascending: false
-                    });
+                    .order(
+                        "criado_em",
+                        {
+                            ascending: false
+                        }
+                    );
 
 
             if (error) {
-
                 throw error;
-
             }
 
 
-            carregando.style.display = "none";
+            carregando.style.display =
+                "none";
 
 
             if (!data || data.length === 0) {
 
-                nenhum.style.display = "block";
+                nenhum.style.display =
+                    "block";
 
                 return;
 
@@ -466,11 +736,15 @@
             lista.innerHTML = "";
 
 
-            data.forEach(function(acompanhante) {
+            data.forEach(
+                function(acompanhante) {
 
-                criarCard(acompanhante);
+                    criarCard(
+                        acompanhante
+                    );
 
-            });
+                }
+            );
 
 
         } catch (erro) {
@@ -481,7 +755,8 @@
             );
 
 
-            carregando.style.display = "none";
+            carregando.style.display =
+                "none";
 
 
             mensagemErro.innerHTML =
@@ -492,7 +767,10 @@
 
                 '<small>' +
 
-                (erro.message || "Erro desconhecido") +
+                (
+                    erro.message ||
+                    "Erro desconhecido"
+                ) +
 
                 '</small>' +
 
@@ -503,10 +781,9 @@
     }
 
 
-
-    // ==========================================
+    // ==================================================
     // CRIAR CARD
-    // ==========================================
+    // ==================================================
 
     function criarCard(acompanhante) {
 
@@ -520,120 +797,84 @@
             document.createElement("div");
 
 
-        card.className = "card";
+        card.className =
+            "card";
 
 
-        card.onclick = function() {
+        card.onclick =
+            function() {
 
-            abrirPerfil(acompanhante.id);
+                abrirPerfil(
+                    acompanhante.id
+                );
 
-        };
-
-
-        // FOTO
-
-        const fotoContainer =
-            document.createElement("div");
-
-        fotoContainer.className =
-            "foto-container";
+            };
 
 
-        if (acompanhante.foto_principal) {
-
-            const imagem =
-                document.createElement("img");
+        let fotoHTML = "";
 
 
-            imagem.src =
-                acompanhante.foto_principal;
+        if (
+            acompanhante.foto_principal &&
+            acompanhante.foto_principal.trim() !== ""
+        ) {
 
+            fotoHTML = `
 
-            imagem.alt =
-                acompanhante.nome;
+                <img
+                    src="${acompanhante.foto_principal}"
+                    alt="${escapeHTML(acompanhante.nome)}"
+                >
 
-
-            imagem.loading = "lazy";
-
-
-            fotoContainer.appendChild(imagem);
-
+            `;
 
         } else {
 
-            const semFoto =
-                document.createElement("div");
+            fotoHTML = `
 
+                <div class="sem-foto">
+                    Sem foto
+                </div>
 
-            semFoto.className =
-                "sem-foto";
-
-
-            semFoto.textContent =
-                "Sem foto";
-
-
-            fotoContainer.appendChild(
-                semFoto
-            );
+            `;
 
         }
 
 
-        // INFORMAÇÕES
+        card.innerHTML = `
 
-        const informacoes =
-            document.createElement("div");
+            <div class="foto-container">
 
-        informacoes.className =
-            "informacoes";
+                ${fotoHTML}
 
-
-        const nome =
-            document.createElement("div");
-
-        nome.className =
-            "nome";
-
-        nome.textContent =
-            acompanhante.nome;
+            </div>
 
 
-        const idade =
-            document.createElement("div");
+            <div class="informacoes">
 
-        idade.className =
-            "idade";
-
-        idade.textContent =
-            acompanhante.idade + " anos";
+                <div class="nome">
+                    ${escapeHTML(acompanhante.nome)}
+                </div>
 
 
-        const descricao =
-            document.createElement("div");
-
-        descricao.className =
-            "descricao";
-
-        descricao.textContent =
-            acompanhante.descricao ||
-            "Confira o perfil para mais informações.";
+                <div class="idade">
+                    ${acompanhante.idade} anos
+                </div>
 
 
-        informacoes.appendChild(nome);
+                <div class="descricao">
+                    ${
+                        acompanhante.descricao
+                            ? escapeHTML(
+                                acompanhante.descricao
+                              )
+                            : ""
+                    }
+                </div>
 
-        informacoes.appendChild(idade);
+            </div>
 
-        informacoes.appendChild(descricao);
-
-
-        card.appendChild(
-            fotoContainer
-        );
-
-        card.appendChild(
-            informacoes
-        );
+        `;
 
 
         lista.appendChild(card);
@@ -641,10 +882,9 @@
     }
 
 
-
-    // ==========================================
+    // ==================================================
     // ABRIR PERFIL
-    // ==========================================
+    // ==================================================
 
     function abrirPerfil(id) {
 
@@ -655,12 +895,58 @@
     }
 
 
+    // ==================================================
+    // PROTEGER TEXTO INSERIDO NO HTML
+    // ==================================================
 
-    // ==========================================
+    function escapeHTML(texto) {
+
+        if (texto === null ||
+            texto === undefined) {
+
+            return "";
+
+        }
+
+
+        return String(texto)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    // ==================================================
     // INICIAR
-    // ==========================================
+    // ==================================================
+
+    configurarMenu();
 
     carregarAcompanhantes();
+
 
 </script>
 
