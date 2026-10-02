@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gerenciar Pessoas</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ff2f83;
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #ff76aa;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #ff2f83;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #ff2f83;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e91e6d;
+        }
+
+        .lista {
+            margin-top: 20px;
+        }
+
+        .pessoa {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pessoa img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .pessoa-info {
+            flex: 1;
+        }
+
+        .pessoa-nome {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pessoa-desc {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .botao-excluir {
+            width: auto;
+            padding: 9px 12px;
+            background: #eee;
+            color: #c62828;
+            font-size: 12px;
+        }
+
+        .botao-excluir:hover {
+            background: #ffdede;
+        }
+
+        .mensagem {
+            display: none;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #e5ffe9;
+            color: #218838;
+            text-align: center;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #ff2f83;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="logo">
+
+        Acompanhante<span>Virtual</span>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Adicionar pessoa
+        </h2>
+
+
+        <div
+            id="mensagem"
+            class="mensagem"
+        >
+            Pessoa adicionada com sucesso!
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Ex.: Ana"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Idade
+            </label>
+
+            <input
+                type="number"
+                id="idade"
+                placeholder="Ex.: 25"
+                min="18"
+                max="100"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Descrição
+            </label>
+
+            <textarea
+                id="descricao"
+                placeholder="Escreva uma descrição sobre a pessoa..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Número do WhatsApp
+            </label>
+
+            <input
+                type="text"
+                id="whatsapp"
+                placeholder="Ex.: 5584991288951"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Foto principal
+            </label>
+
+            <input
+                type="file"
+                id="fotoPrincipal"
+                accept="image/*"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Outras fotos
+            </label>
+
+            <input
+                type="file"
+                id="outrasFotos"
+                accept="image/*"
+                multiple
+            >
+
+        </div>
+
+
+        <button onclick="adicionarPessoa()">
+
+            Adicionar pessoa
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Pessoas cadastradas
+        </h2>
+
+
+        <div
+            id="lista"
+            class="lista"
+        ></div>
+
+    </div>
+
+
+    <a
+        href="index.html"
+        class="voltar"
+    >
+
+        ← Voltar para o início
+
+    </a>
+
+
+</div>
+
+
+<script>
+
+
+function arquivoParaBase64(arquivo) {
+
+    return new Promise(function(resolve, reject) {
+
+        const leitor =
+            new FileReader();
+
+
+        leitor.onload =
+            function() {
+
+                resolve(
+                    leitor.result
+                );
+
+            };
+
+
+        leitor.onerror =
+            function() {
+
+                reject(
+                    "Erro ao carregar imagem."
+                );
+
+            };
+
+
+        leitor.readAsDataURL(arquivo);
+
+    });
+
+}
+
+
+async function adicionarPessoa() {
+
+
+    const nome =
+        document
+            .getElementById("nome")
+            .value
+            .trim();
+
+
+    const idade =
+        document
+            .getElementById("idade")
+            .value;
+
+
+    const descricao =
+        document
+            .getElementById("descricao")
+            .value
+            .trim();
+
+
+    const whatsapp =
+        document
+            .getElementById("whatsapp")
+            .value
+            .trim();
+
+
+    const arquivoPrincipal =
+        document
+            .getElementById("fotoPrincipal")
+            .files[0];
+
+
+    const arquivosOutros =
+        document
+            .getElementById("outrasFotos")
+            .files;
+
+
+    if (!nome) {
+
+        alert("Digite o nome.");
+
+        return;
+
+    }
+
+
+    if (!idade || idade < 18) {
+
+        alert("Informe uma idade válida.");
+
+        return;
+
+    }
+
+
+    if (!descricao) {
+
+        alert("Digite uma descrição.");
+
+        return;
+
+    }
+
+
+    if (!whatsapp) {
+
+        alert("Digite o WhatsApp.");
+
+        return;
+
+    }
+
+
+    if (!arquivoPrincipal) {
+
+        alert("Escolha a foto principal.");
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const fotoPrincipal =
+            await arquivoParaBase64(
+                arquivoPrincipal
+            );
+
+
+        const fotos = [];
+
+
+        for (
+            let i = 0;
+            i < arquivosOutros.length;
+            i++
+        ) {
+
+            const foto =
+                await arquivoParaBase64(
+                    arquivosOutros[i]
+                );
+
+            fotos.push(foto);
+
+        }
+
+
+        const pessoa = {
+
+            nome: nome,
+
+            idade: idade,
+
+            descricao: descricao,
+
+            whatsapp: whatsapp,
+
+            foto: fotoPrincipal,
+
+            fotos: fotos
+
+        };
+
+
+        const pessoas =
+            JSON.parse(
+                localStorage.getItem(
+                    "acompanhanteVirtualPessoas"
+                )
+            ) || [];
+
+
+        pessoas.push(pessoa);
+
+
+        localStorage.setItem(
+
+            "acompanhanteVirtualPessoas",
+
+            JSON.stringify(pessoas)
+
+        );
+
+
+        document
+            .getElementById("nome")
+            .value = "";
+
+
+        document
+            .getElementById("idade")
+            .value = "";
+
+
+        document
+            .getElementById("descricao")
+            .value = "";
+
+
+        document
+            .getElementById("whatsapp")
+            .value = "";
+
+
+        document
+            .getElementById("fotoPrincipal")
+            .value = "";
+
+
+        document
+            .getElementById("outrasFotos")
+            .value = "";
+
+
+        document
+            .getElementById("mensagem")
+            .style.display = "block";
+
+
+        carregarLista();
+
+
+    } catch (erro) {
+
+        alert(
+            "Não foi possível carregar uma das imagens."
+        );
+
+    }
+
+}
+
+
+function carregarLista() {
+
+
+    const pessoas =
+        JSON.parse(
+            localStorage.getItem(
+                "acompanhanteVirtualPessoas"
+            )
+        ) || [];
+
+
+    const lista =
+        document.getElementById(
+            "lista"
+        );
+
+
+    lista.innerHTML = "";
+
+
+    if (pessoas.length === 0) {
+
+        lista.innerHTML = `
+
+            <p style="color:#777;">
+                Nenhuma pessoa cadastrada.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    pessoas.forEach(
+        function(pessoa, index) {
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "pessoa";
+
+
+            item.innerHTML = `
+
+                <img
+                    src="${pessoa.foto}"
+                >
+
+                <div class="pessoa-info">
+
+                    <div class="pessoa-nome">
+
+                        ${pessoa.nome},
+                        ${pessoa.idade}
+
+                    </div>
+
+                    <div class="pessoa-desc">
+
+                        WhatsApp:
+                        ${pessoa.whatsapp}
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="botao-excluir"
+                    onclick="excluirPessoa(${index})"
+                >
+
+                    Excluir
+
+                </button>
+
+            `;
+
+
+            lista.appendChild(item);
+
+        }
+    );
+
+}
+
+
+function excluirPessoa(index) {
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir esta pessoa?"
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    const pessoas =
+        JSON.parse(
+            localStorage.getItem(
+                "acompanhanteVirtualPessoas"
+            )
+        ) || [];
+
+
+    pessoas.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+
+        "acompanhanteVirtualPessoas",
+
+        JSON.stringify(pessoas)
+
+    );
+
+
+    carregarLista();
+
+}
+
+
+carregarLista();
+
+
+</script>
+
+
+</body>
+
+</html>

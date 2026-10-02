@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AcompanhanteVirtual</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fdf5f9;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            padding: 25px 20px 40px;
+        }
+
+        .logo {
+            text-align: center;
+            color: #e91e63;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 22px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #e91e63;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 20px;
+            background: #e91e63;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d81b60;
+        }
+
+        .trocar {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .trocar a {
+            color: #e91e63;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .lembrar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .lembrar input {
+            width: auto;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .erro {
+            background: #ffe5e5;
+            color: #c62828;
+        }
+
+        .sucesso {
+            background: #e5f8eb;
+            color: #1b7d38;
+        }
+
+        .idade-info {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .escondido {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        AcompanhanteVirtual
+    </div>
+
+    <!-- LOGIN -->
+    <div class="card" id="telaLogin">
+
+        <h2>Entrar</h2>
+
+        <form id="formLogin">
+
+            <label for="loginEmail">E-mail</label>
+            <input
+                type="email"
+                id="loginEmail"
+                required
+                placeholder="Digite seu e-mail"
+            >
+
+            <label for="loginSenha">Senha</label>
+            <input
+                type="password"
+                id="loginSenha"
+                required
+                placeholder="Digite sua senha"
+            >
+
+            <label class="lembrar">
+                <input type="checkbox" id="lembrar">
+                Lembrar de mim
+            </label>
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+        <div id="mensagemLogin" class="mensagem"></div>
+
+        <div class="trocar">
+            Ainda não possui uma conta?
+            <a onclick="mostrarCadastro()">Criar conta</a>
+        </div>
+
+    </div>
+
+
+    <!-- CADASTRO -->
+    <div class="card escondido" id="telaCadastro">
+
+        <h2>Criar conta</h2>
+
+        <form id="formCadastro">
+
+            <label for="cadastroEmail">E-mail</label>
+            <input
+                type="email"
+                id="cadastroEmail"
+                required
+                placeholder="Digite seu e-mail"
+            >
+
+            <label for="cadastroSenha">Senha</label>
+            <input
+                type="password"
+                id="cadastroSenha"
+                required
+                minlength="6"
+                placeholder="Crie uma senha"
+            >
+
+            <label for="cadastroConfirmar">Confirmar senha</label>
+            <input
+                type="password"
+                id="cadastroConfirmar"
+                required
+                minlength="6"
+                placeholder="Digite a senha novamente"
+            >
+
+            <label for="dataNascimento">
+                Data de nascimento
+            </label>
+
+            <input
+                type="date"
+                id="dataNascimento"
+                required
+            >
+
+            <div class="idade-info">
+                É necessário ter 18 anos ou mais para criar uma conta.
+            </div>
+
+            <button type="submit">
+                Criar minha conta
+            </button>
+
+        </form>
+
+        <div id="mensagemCadastro" class="mensagem"></div>
+
+        <div class="trocar">
+            Já possui uma conta?
+            <a onclick="mostrarLogin()">Entrar</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="supabase.js"></script>
+
+<script>
+
+    // ==============================
+    // TROCAR TELAS
+    // ==============================
+
+    function mostrarCadastro() {
+
+        document.getElementById("telaLogin")
+            .classList.add("escondido");
+
+        document.getElementById("telaCadastro")
+            .classList.remove("escondido");
+    }
+
+
+    function mostrarLogin() {
+
+        document.getElementById("telaCadastro")
+            .classList.add("escondido");
+
+        document.getElementById("telaLogin")
+            .classList.remove("escondido");
+    }
+
+
+    // ==============================
+    // MENSAGENS
+    // ==============================
+
+    function mostrarMensagem(id, texto, tipo) {
+
+        const elemento = document.getElementById(id);
+
+        elemento.textContent = texto;
+
+        elemento.className = "mensagem " + tipo;
+
+        elemento.style.display = "block";
+    }
+
+
+    // ==============================
+    // VERIFICAR IDADE
+    // ==============================
+
+    function calcularIdade(dataNascimento) {
+
+        const nascimento = new Date(dataNascimento);
+        const hoje = new Date();
+
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+
+        const mes = hoje.getMonth() - nascimento.getMonth();
+
+        if (
+            mes < 0 ||
+            (mes === 0 && hoje.getDate() < nascimento.getDate())
+        ) {
+            idade--;
+        }
+
+        return idade;
+    }
+
+
+    // ==============================
+    // CADASTRO
+    // ==============================
+
+    document
+        .getElementById("formCadastro")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("cadastroEmail").value.trim();
+
+            const senha =
+                document.getElementById("cadastroSenha").value;
+
+            const confirmar =
+                document.getElementById("cadastroConfirmar").value;
+
+            const dataNascimento =
+                document.getElementById("dataNascimento").value;
+
+
+            if (senha !== confirmar) {
+
+                mostrarMensagem(
+                    "mensagemCadastro",
+                    "As senhas não são iguais.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const idade = calcularIdade(dataNascimento);
+
+
+            if (idade < 18) {
+
+                mostrarMensagem(
+                    "mensagemCadastro",
+                    "É necessário ter 18 anos ou mais.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signUp({
+
+                        email: email,
+
+                        password: senha,
+
+                        options: {
+                            data: {
+                                data_nascimento: dataNascimento
+                            }
+                        }
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                mostrarMensagem(
+                    "mensagemCadastro",
+                    "Conta criada com sucesso!",
+                    "sucesso"
+                );
+
+
+                setTimeout(function() {
+
+                    if (data.session) {
+
+                        window.location.href =
+                            "cadastro-perfil.html";
+
+                    } else {
+
+                        mostrarMensagem(
+                            "mensagemCadastro",
+                            "Conta criada! Verifique seu e-mail para confirmar o cadastro.",
+                            "sucesso"
+                        );
+
+                    }
+
+                }, 1200);
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                mostrarMensagem(
+                    "mensagemCadastro",
+                    "Erro ao criar conta: " + erro.message,
+                    "erro"
+                );
+            }
+
+        });
+
+
+    // ==============================
+    // LOGIN
+    // ==============================
+
+    document
+        .getElementById("formLogin")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document.getElementById("loginEmail").value.trim();
+
+            const senha =
+                document.getElementById("loginSenha").value;
+
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email: email,
+
+                        password: senha
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                mostrarMensagem(
+                    "mensagemLogin",
+                    "Login realizado! Entrando...",
+                    "sucesso"
+                );
+
+
+                setTimeout(async function() {
+
+                    const usuario =
+                        data.user;
+
+                    if (!usuario) {
+                        return;
+                    }
+
+
+                    const { data: perfil } =
+                        await supabaseClient
+                            .from("perfis")
+                            .select("nome, sobrenome, usuario")
+                            .eq("id", usuario.id)
+                            .maybeSingle();
+
+
+                    if (!perfil || !perfil.nome) {
+
+                        window.location.href =
+                            "cadastro-perfil.html";
+
+                        return;
+                    }
+
+
+                    window.location.href =
+                        "inicio.html";
+
+                }, 700);
+
+
+            } catch (erro) {
+
+                console.error("ERRO REAL DO LOGIN:", erro);
+
+                mostrarMensagem(
+                    "mensagemLogin",
+                    "Erro: " + (erro.message || "Erro desconhecido"),
+                    "erro"
+                );
+            }
+
+        });
+
+
+    // ==============================
+    // VERIFICAR SE JÁ ESTÁ LOGADO
+    // ==============================
+
+    async function verificarSessao() {
+
+        const { data } =
+            await supabaseClient.auth.getSession();
+
+
+        if (!data.session) {
+            return;
+        }
+
+
+        const usuario =
+            data.session.user;
+
+
+        const { data: perfil } =
+            await supabaseClient
+                .from("perfis")
+                .select("nome")
+                .eq("id", usuario.id)
+                .maybeSingle();
+
+
+        if (!perfil || !perfil.nome) {
+
+            window.location.href =
+                "cadastro-perfil.html";
+
+        } else {
+
+            window.location.href =
+                "inicio.html";
+        }
+    }
+
+
+    verificarSessao();
+
+</script>
+
+</body>
+</html>

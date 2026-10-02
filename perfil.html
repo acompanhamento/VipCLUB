@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Meu Perfil - AcompanhanteVirtual</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f8f8;
+            min-height: 100vh;
+            padding-bottom: 90px;
+        }
+
+        .topo {
+            background: white;
+            padding: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff2f83;
+        }
+
+        .logo span {
+            color: #ff76aa;
+        }
+
+        .conteudo {
+            max-width: 500px;
+            margin: auto;
+            padding: 25px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .foto {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px;
+            border: 5px solid #ff2f83;
+        }
+
+        .sem-foto {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #ffe0ec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 60px;
+        }
+
+        .nome {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .informacao {
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .informacao:last-child {
+            border-bottom: none;
+        }
+
+        .rotulo {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .valor {
+            color: #333;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .botao {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+            background: #ff2f83;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botao-sair {
+            background: #eee;
+            color: #444;
+        }
+
+        .menu-inferior {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 -3px 15px rgba(0,0,0,0.08);
+        }
+
+        .menu-item {
+            width: 50%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .menu-item .icone {
+            font-size: 25px;
+            margin-bottom: 2px;
+        }
+
+        .menu-item.ativo {
+            color: #ff2f83;
+            font-weight: bold;
+        }
+
+        .aviso {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="topo">
+
+    <div class="logo">
+        Acompanhante<span>Virtual</span>
+    </div>
+
+</div>
+
+
+<div class="conteudo">
+
+    <div
+        id="perfil"
+        class="card"
+    ></div>
+
+</div>
+
+
+<nav class="menu-inferior">
+
+    <a
+        href="index.html"
+        class="menu-item"
+    >
+
+        <div class="icone">⌂</div>
+
+        <div>Início</div>
+
+    </a>
+
+
+    <a
+        href="perfil.html"
+        class="menu-item ativo"
+    >
+
+        <div class="icone">👤</div>
+
+        <div>Meu perfil</div>
+
+    </a>
+
+</nav>
+
+
+<script>
+
+
+function carregarPerfil() {
+
+    const conta =
+        JSON.parse(
+            localStorage.getItem(
+                "acompanhanteVirtualConta"
+            )
+        );
+
+
+    const perfil =
+        JSON.parse(
+            localStorage.getItem(
+                "acompanhanteVirtualPerfil"
+            )
+        );
+
+
+    const area =
+        document.getElementById(
+            "perfil"
+        );
+
+
+    if (!conta || !perfil) {
+
+        area.innerHTML = `
+
+            <div class="aviso">
+
+                <h2>Perfil incompleto</h2>
+
+                <p style="margin-top:10px;color:#777;">
+                    Complete seu perfil primeiro.
+                </p>
+
+                <button
+                    class="botao"
+                    onclick="window.location.href='perfil.html'"
+                >
+                    Completar perfil
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let fotoHTML = "";
+
+
+    if (perfil.foto) {
+
+        fotoHTML = `
+
+            <img
+                src="${perfil.foto}"
+                class="foto"
+            >
+
+        `;
+
+    } else {
+
+        fotoHTML = `
+
+            <div class="sem-foto">
+                👤
+            </div>
+
+        `;
+
+    }
+
+
+    area.innerHTML = `
+
+        ${fotoHTML}
+
+        <div class="nome">
+
+            ${perfil.nome}
+            ${perfil.sobrenome}
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                Nome
+            </div>
+
+            <div class="valor">
+                ${perfil.nome}
+            </div>
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                Sobrenome
+            </div>
+
+            <div class="valor">
+                ${perfil.sobrenome}
+            </div>
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                Nome de usuário
+            </div>
+
+            <div class="valor">
+                @${perfil.usuario}
+            </div>
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                Gênero
+            </div>
+
+            <div class="valor">
+                ${perfil.genero}
+            </div>
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                E-mail da conta
+            </div>
+
+            <div class="valor">
+                ${conta.email}
+            </div>
+
+        </div>
+
+
+        <div class="informacao">
+
+            <div class="rotulo">
+                Data de nascimento
+            </div>
+
+            <div class="valor">
+                ${conta.dataNascimento}
+            </div>
+
+        </div>
+
+
+        <button
+            class="botao"
+            onclick="window.location.href='perfil.html'"
+        >
+            Editar meu perfil
+        </button>
+
+
+        <button
+            class="botao botao-sair"
+            onclick="sair()"
+        >
+            Sair da conta
+        </button>
+
+    `;
+
+}
+
+
+function sair() {
+
+    localStorage.removeItem(
+        "acompanhanteVirtualLogado"
+    );
+
+    sessionStorage.removeItem(
+        "acompanhanteVirtualLogado"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+carregarPerfil();
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Administrativo</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        header button {
+            background: #e53935;
+            color: white;
+            border: 0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            border: 0;
+            padding: 11px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #111;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e53935;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #ddd;
+            color: #222;
+        }
+
+        .lista {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            background: #eee;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin: 0 0 6px;
+        }
+
+        .card p {
+            margin: 6px 0;
+            color: #555;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .ativo {
+            background: #d8f5dc;
+            color: #18752a;
+        }
+
+        .inativo {
+            background: #eee;
+            color: #555;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .fotos-preview {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .fotos-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .sucesso {
+            display: block;
+            background: #dff5e3;
+            color: #176b27;
+        }
+
+        .erro {
+            display: block;
+            background: #ffe0e0;
+            color: #a00000;
+        }
+
+        #campoEdicao {
+            display: none;
+        }
+
+        .voltar {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #111;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>⚙️ Painel Administrativo</h1>
+    <button onclick="sair()">Sair</button>
+</header>
+
+<div class="container">
+
+    <a href="inicio.html" class="voltar">← Voltar para o site</a>
+
+    <div class="box">
+
+        <h2 id="tituloFormulario">➕ Adicionar acompanhante</h2>
+
+        <form id="formAcompanhante">
+
+            <label>Nome</label>
+            <input
+                type="text"
+                id="nome"
+                required
+                placeholder="Nome"
+            >
+
+            <label>Idade</label>
+            <input
+                type="number"
+                id="idade"
+                min="18"
+                max="100"
+                required
+                placeholder="Idade"
+            >
+
+            <label>WhatsApp</label>
+            <input
+                type="text"
+                id="whatsapp"
+                required
+                placeholder="Ex.: 5584991288951"
+            >
+
+            <label>Descrição</label>
+            <textarea
+                id="descricao"
+                placeholder="Escreva uma descrição..."
+            ></textarea>
+
+            <label>Foto principal</label>
+            <input
+                type="file"
+                id="fotoPrincipal"
+                accept="image/*"
+            >
+
+            <div id="fotoAtual"></div>
+
+            <br>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                id="btnSalvar"
+            >
+                Salvar acompanhante
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                id="btnCancelar"
+                onclick="cancelarEdicao()"
+                style="display:none;"
+            >
+                Cancelar edição
+            </button>
+
+            <div id="mensagem" class="mensagem"></div>
+
+        </form>
+
+    </div>
+
+    <div class="box">
+
+        <h2>👩 Acompanhantes cadastradas</h2>
+
+        <div id="lista" class="lista">
+            Carregando...
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let usuarioAtual = null;
+let acompanhanteEditando = null;
+
+
+/* =========================
+   VERIFICAR ADMIN
+========================= */
+
+async function verificarAdmin() {
+
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error || !session) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    usuarioAtual = session.user;
+
+    const { data, error: erroPerfil } = await supabaseClient
+        .from("perfis")
+        .select("usuario")
+        .eq("id", usuarioAtual.id)
+        .single();
+
+    if (
+        erroPerfil ||
+        !data ||
+        data.usuario !== "ADMIN"
+    ) {
+        alert("Acesso permitido somente para administradores.");
+        window.location.href = "inicio.html";
+        return;
+    }
+
+    carregarAcompanhantes();
+}
+
+
+/* =========================
+   MENSAGEM
+========================= */
+
+function mostrarMensagem(texto, tipo) {
+
+    const elemento = document.getElementById("mensagem");
+
+    elemento.textContent = texto;
+    elemento.className = "mensagem " + tipo;
+
+}
+
+
+/* =========================
+   UPLOAD DA FOTO
+========================= */
+
+async function enviarFoto(file, pasta) {
+
+    if (!file) {
+        return null;
+    }
+
+    const extensao =
+        file.name.split(".").pop().toLowerCase();
+
+    const nomeArquivo =
+        Date.now() + "-" +
+        Math.random().toString(36).substring(2) +
+        "." + extensao;
+
+    const caminho =
+        pasta + "/" + nomeArquivo;
+
+    const { error } =
+        await supabaseClient.storage
+        .from("fotos")
+        .upload(caminho, file);
+
+    if (error) {
+        throw error;
+    }
+
+    const { data } =
+        supabaseClient.storage
+        .from("fotos")
+        .getPublicUrl(caminho);
+
+    return data.publicUrl;
+}
+
+
+/* =========================
+   SALVAR
+========================= */
+
+document
+.getElementById("formAcompanhante")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const idade =
+        Number(document.getElementById("idade").value);
+
+    const whatsapp =
+        document.getElementById("whatsapp").value.trim();
+
+    const descricao =
+        document.getElementById("descricao").value.trim();
+
+    const arquivo =
+        document.getElementById("fotoPrincipal").files[0];
+
+    const btn =
+        document.getElementById("btnSalvar");
+
+    try {
+
+        btn.disabled = true;
+        btn.textContent = "Salvando...";
+
+        /* =========================
+           NOVO CADASTRO
+        ========================= */
+
+        if (!acompanhanteEditando) {
+
+            if (!arquivo) {
+                mostrarMensagem(
+                    "Escolha uma foto principal.",
+                    "erro"
+                );
+
+                btn.disabled = false;
+                btn.textContent = "Salvar acompanhante";
+
+                return;
+            }
+
+            const idTemporario =
+                crypto.randomUUID();
+
+            const fotoUrl =
+                await enviarFoto(
+                    arquivo,
+                    "acompanhantes/" + idTemporario
+                );
+
+            const { data, error } =
+                await supabaseClient
+                .from("acompanhantes")
+                .insert({
+
+                    id: idTemporario,
+
+                    nome: nome,
+
+                    idade: idade,
+
+                    descricao: descricao,
+
+                    whatsapp: whatsapp,
+
+                    foto_principal: fotoUrl,
+
+                    ativo: true
+
+                })
+                .select()
+                .single();
+
+            if (error) {
+                throw error;
+            }
+
+            mostrarMensagem(
+                "Acompanhante cadastrada com sucesso!",
+                "sucesso"
+            );
+
+        }
+
+        /* =========================
+           EDIÇÃO
+        ========================= */
+
+        else {
+
+            let fotoUrl =
+                acompanhanteEditando.foto_principal;
+
+            if (arquivo) {
+
+                fotoUrl =
+                    await enviarFoto(
+                        arquivo,
+                        "acompanhantes/" +
+                        acompanhanteEditando.id
+                    );
+
+            }
+
+            const { error } =
+                await supabaseClient
+                .from("acompanhantes")
+                .update({
+
+                    nome: nome,
+
+                    idade: idade,
+
+                    descricao: descricao,
+
+                    whatsapp: whatsapp,
+
+                    foto_principal: fotoUrl,
+
+                    atualizado_em:
+                        new Date().toISOString()
+
+                })
+                .eq(
+                    "id",
+                    acompanhanteEditando.id
+                );
+
+            if (error) {
+                throw error;
+            }
+
+            mostrarMensagem(
+                "Cadastro atualizado com sucesso!",
+                "sucesso"
+            );
+
+        }
+
+        limparFormulario();
+
+        carregarAcompanhantes();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        mostrarMensagem(
+            "Erro ao salvar: " +
+            (error.message || "erro desconhecido"),
+            "erro"
+        );
+
+    }
+
+    finally {
+
+        btn.disabled = false;
+        btn.textContent =
+            "Salvar acompanhante";
+
+    }
+
+});
+
+
+/* =========================
+   CARREGAR LISTA
+========================= */
+
+async function carregarAcompanhantes() {
+
+    const lista =
+        document.getElementById("lista");
+
+    lista.innerHTML = "Carregando...";
+
+    const { data, error } =
+        await supabaseClient
+        .from("acompanhantes")
+        .select("*")
+        .order("criado_em", {
+            ascending: false
+        });
+
+    if (error) {
+
+        lista.innerHTML =
+            "<p>Erro ao carregar: " +
+            error.message +
+            "</p>";
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        lista.innerHTML =
+            "<p>Nenhuma acompanhante cadastrada.</p>";
+
+        return;
+    }
+
+    lista.innerHTML = "";
+
+    data.forEach(acompanhante => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        const foto =
+            acompanhante.foto_principal ||
+            "https://via.placeholder.com/500x600?text=Sem+foto";
+
+        card.innerHTML = `
+
+            <img
+                src="${foto}"
+                alt="${escapeHtml(acompanhante.nome)}"
+            >
+
+            <div class="card-content">
+
+                <h3>
+                    ${escapeHtml(acompanhante.nome)}
+                    ${acompanhante.idade}
+                </h3>
+
+                <p>
+                    ${escapeHtml(
+                        acompanhante.descricao || ""
+                    )}
+                </p>
+
+                <p>
+                    📱 ${escapeHtml(
+                        acompanhante.whatsapp
+                    )}
+                </p>
+
+                <span class="status ${
+                    acompanhante.ativo
+                    ? "ativo"
+                    : "inativo"
+                }">
+
+                    ${
+                        acompanhante.ativo
+                        ? "Ativo"
+                        : "Inativo"
+                    }
+
+                </span>
+
+                <div class="acoes">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="editarAcompanhante('${acompanhante.id}')"
+                    >
+                        ✏️ Editar
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="alternarStatus(
+                            '${acompanhante.id}',
+                            ${acompanhante.ativo}
+                        )"
+                    >
+                        ${
+                            acompanhante.ativo
+                            ? "Ocultar"
+                            : "Ativar"
+                        }
+                    </button>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="excluirAcompanhante('${acompanhante.id}')"
+                    >
+                        🗑️ Excluir
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   EDITAR
+========================= */
+
+async function editarAcompanhante(id) {
+
+    const { data, error } =
+        await supabaseClient
+        .from("acompanhantes")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+
+        alert(
+            "Erro ao carregar cadastro: " +
+            error.message
+        );
+
+        return;
+    }
+
+    acompanhanteEditando = data;
+
+    document.getElementById("nome").value =
+        data.nome;
+
+    document.getElementById("idade").value =
+        data.idade;
+
+    document.getElementById("whatsapp").value =
+        data.whatsapp;
+
+    document.getElementById("descricao").value =
+        data.descricao || "";
+
+    document.getElementById("tituloFormulario")
+        .textContent =
+        "✏️ Editando: " + data.nome;
+
+    document.getElementById("btnCancelar")
+        .style.display = "inline-block";
+
+    document.getElementById("fotoAtual")
+        .innerHTML = data.foto_principal
+        ? `
+            <p>Foto atual:</p>
+            <img
+                src="${data.foto_principal}"
+                style="
+                    width:120px;
+                    height:150px;
+                    object-fit:cover;
+                    border-radius:8px;
+                "
+            >
+        `
+        : "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================
+   CANCELAR EDIÇÃO
+========================= */
+
+function cancelarEdicao() {
+
+    limparFormulario();
+
+}
+
+
+/* =========================
+   LIMPAR FORMULÁRIO
+========================= */
+
+function limparFormulario() {
+
+    acompanhanteEditando = null;
+
+    document
+        .getElementById("formAcompanhante")
+        .reset();
+
+    document.getElementById("tituloFormulario")
+        .textContent =
+        "➕ Adicionar acompanhante";
+
+    document.getElementById("btnCancelar")
+        .style.display = "none";
+
+    document.getElementById("fotoAtual")
+        .innerHTML = "";
+
+}
+
+
+/* =========================
+   ATIVAR / DESATIVAR
+========================= */
+
+async function alternarStatus(id, atual) {
+
+    const { error } =
+        await supabaseClient
+        .from("acompanhantes")
+        .update({
+            ativo: !atual
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        alert(
+            "Erro: " + error.message
+        );
+
+        return;
+    }
+
+    carregarAcompanhantes();
+
+}
+
+
+/* =========================
+   EXCLUIR
+========================= */
+
+async function excluirAcompanhante(id) {
+
+    const confirmar =
+        confirm(
+            "Tem certeza que deseja excluir este cadastro?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("acompanhantes")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+
+        alert(
+            "Erro ao excluir: " +
+            error.message
+        );
+
+        return;
+    }
+
+    alert(
+        "Cadastro excluído com sucesso."
+    );
+
+    carregarAcompanhantes();
+
+}
+
+
+/* =========================
+   SAIR
+========================= */
+
+async function sair() {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href = "index.html";
+
+}
+
+
+/* =========================
+   SEGURANÇA DO HTML
+========================= */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+verificarAdmin();
+
+</script>
+
+</body>
+</html>
