@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meu perfil - AcompanhanteVirtual</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fdf5f9;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px 20px 50px;
+        }
+
+        .logo {
+            text-align: center;
+            color: #e91e63;
+            font-size: 29px;
+            font-weight: bold;
+            margin: 20px 0 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0 0 10px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 16px 0 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .foto-area {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .preview {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f3d0df;
+            display: none;
+            margin: 0 auto 15px;
+        }
+
+        .foto-placeholder {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #f7e8ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #999;
+            font-size: 45px;
+        }
+
+        .botao-foto {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #f1f1f1;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        #foto {
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 25px;
+            background: #e91e63;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d81b60;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .mensagem {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 9px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .erro {
+            background: #ffe5e5;
+            color: #c62828;
+        }
+
+        .sucesso {
+            background: #e5f8eb;
+            color: #1b7d38;
+        }
+
+        .obrigatorio {
+            color: #e91e63;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        AcompanhanteVirtual
+    </div>
+
+    <div class="card">
+
+        <h2>Complete seu perfil</h2>
+
+        <div class="subtitulo">
+            Essas informações serão usadas no seu perfil.
+        </div>
+
+
+        <div class="foto-area">
+
+            <div class="foto-placeholder" id="placeholder">
+                👤
+            </div>
+
+            <img
+                id="preview"
+                class="preview"
+                alt="Prévia da foto"
+            >
+
+            <label
+                for="foto"
+                class="botao-foto"
+            >
+                Escolher foto
+            </label>
+
+            <input
+                type="file"
+                id="foto"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+        </div>
+
+
+        <form id="formPerfil">
+
+            <label for="nome">
+                Nome <span class="obrigatorio">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Seu nome"
+                required
+            >
+
+
+            <label for="sobrenome">
+                Sobrenome <span class="obrigatorio">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="sobrenome"
+                placeholder="Seu sobrenome"
+                required
+            >
+
+
+            <label for="usuario">
+                Nome de usuário <span class="obrigatorio">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Ex: paulo123"
+                required
+                minlength="3"
+            >
+
+
+            <label for="genero">
+                Gênero <span class="obrigatorio">*</span>
+            </label>
+
+            <select id="genero" required>
+
+                <option value="">
+                    Selecione
+                </option>
+
+                <option value="Masculino">
+                    Masculino
+                </option>
+
+                <option value="Feminino">
+                    Feminino
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                id="botaoSalvar"
+            >
+                Salvar meu perfil
+            </button>
+
+        </form>
+
+
+        <div
+            id="mensagem"
+            class="mensagem"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script src="supabase.js"></script>
+
+<script>
+
+    let usuarioAtual = null;
+
+    let arquivoFoto = null;
+
+
+    // =====================================
+    // MENSAGEM
+    // =====================================
+
+    function mensagem(texto, tipo) {
+
+        const elemento =
+            document.getElementById("mensagem");
+
+        elemento.textContent = texto;
+
+        elemento.className =
+            "mensagem " + tipo;
+
+        elemento.style.display = "block";
+    }
+
+
+    // =====================================
+    // VERIFICAR LOGIN
+    // =====================================
+
+    async function verificarUsuario() {
+
+        const { data, error } =
+            await supabaseClient.auth.getUser();
+
+        if (error || !data.user) {
+
+            window.location.href = "index.html";
+
+            return;
+        }
+
+        usuarioAtual = data.user;
+
+
+        // Carregar informações já existentes
+
+        const { data: perfil } =
+            await supabaseClient
+                .from("perfis")
+                .select("*")
+                .eq("id", usuarioAtual.id)
+                .maybeSingle();
+
+
+        if (perfil) {
+
+            if (perfil.nome) {
+
+                document.getElementById("nome").value =
+                    perfil.nome;
+            }
+
+            if (perfil.sobrenome) {
+
+                document.getElementById("sobrenome").value =
+                    perfil.sobrenome;
+            }
+
+            if (perfil.usuario) {
+
+                document.getElementById("usuario").value =
+                    perfil.usuario;
+            }
+
+            if (perfil.genero) {
+
+                document.getElementById("genero").value =
+                    perfil.genero;
+            }
+
+
+            if (perfil.foto_url) {
+
+                mostrarPreview(perfil.foto_url);
+            }
+        }
+    }
+
+
+    // =====================================
+    // PREVIEW DA FOTO
+    // =====================================
+
+    document
+        .getElementById("foto")
+        .addEventListener("change", function(event) {
+
+            const arquivo =
+                event.target.files[0];
+
+            if (!arquivo) {
+                return;
+            }
+
+
+            if (arquivo.size > 5 * 1024 * 1024) {
+
+                mensagem(
+                    "A foto deve ter no máximo 5 MB.",
+                    "erro"
+                );
+
+                event.target.value = "";
+
+                return;
+            }
+
+
+            arquivoFoto = arquivo;
+
+
+            const url =
+                URL.createObjectURL(arquivo);
+
+            mostrarPreview(url);
+        });
+
+
+    function mostrarPreview(url) {
+
+        const preview =
+            document.getElementById("preview");
+
+        const placeholder =
+            document.getElementById("placeholder");
+
+
+        preview.src = url;
+
+        preview.style.display = "block";
+
+        placeholder.style.display = "none";
+    }
+
+
+    // =====================================
+    // SALVAR PERFIL
+    // =====================================
+
+    document
+        .getElementById("formPerfil")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            if (!usuarioAtual) {
+
+                mensagem(
+                    "Você precisa estar logado.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const nome =
+                document
+                    .getElementById("nome")
+                    .value
+                    .trim();
+
+
+            const sobrenome =
+                document
+                    .getElementById("sobrenome")
+                    .value
+                    .trim();
+
+
+            const usuario =
+                document
+                    .getElementById("usuario")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const genero =
+                document
+                    .getElementById("genero")
+                    .value;
+
+
+            if (!nome || !sobrenome || !usuario || !genero) {
+
+                mensagem(
+                    "Preencha todos os campos obrigatórios.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const botao =
+                document.getElementById("botaoSalvar");
+
+            botao.disabled = true;
+
+            botao.textContent =
+                "Salvando...";
+
+
+            try {
+
+                let fotoUrl = null;
+
+
+                // =====================================
+                // ENVIAR FOTO
+                // =====================================
+
+                if (arquivoFoto) {
+
+                    const extensao =
+                        arquivoFoto.name
+                            .split(".")
+                            .pop()
+                            .toLowerCase();
+
+
+                    const nomeArquivo =
+                        `${usuarioAtual.id}/perfil-${Date.now()}.${extensao}`;
+
+
+                    const { error: uploadError } =
+                        await supabaseClient
+                            .storage
+                            .from("fotos")
+                            .upload(
+                                nomeArquivo,
+                                arquivoFoto,
+                                {
+                                    upsert: true
+                                }
+                            );
+
+
+                    if (uploadError) {
+                        throw uploadError;
+                    }
+
+
+                    const { data: urlData } =
+                        supabaseClient
+                            .storage
+                            .from("fotos")
+                            .getPublicUrl(nomeArquivo);
+
+
+                    fotoUrl =
+                        urlData.publicUrl;
+                }
+
+
+                // =====================================
+                // ATUALIZAR PERFIL
+                // =====================================
+
+                const dadosPerfil = {
+
+                    nome: nome,
+
+                    sobrenome: sobrenome,
+
+                    usuario: usuario,
+
+                    genero: genero
+
+                };
+
+
+                if (fotoUrl) {
+
+                    dadosPerfil.foto_url =
+                        fotoUrl;
+                }
+
+
+                const { error: updateError } =
+                    await supabaseClient
+                        .from("perfis")
+                        .update(dadosPerfil)
+                        .eq("id", usuarioAtual.id);
+
+
+                if (updateError) {
+                    throw updateError;
+                }
+
+
+                mensagem(
+                    "Perfil salvo com sucesso!",
+                    "sucesso"
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "inicio.html";
+
+                }, 1000);
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                mensagem(
+                    "Erro ao salvar perfil: " + erro.message,
+                    "erro"
+                );
+
+
+                botao.disabled = false;
+
+                botao.textContent =
+                    "Salvar meu perfil";
+            }
+
+        });
+
+
+    // =====================================
+    // INICIAR
+    // =====================================
+
+    verificarUsuario();
+
+</script>
+
+</body>
+
+</html>

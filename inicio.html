@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AcompanhanteVirtual</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #faf5f8;
+            color: #333;
+        }
+
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+            padding: 16px 20px;
+        }
+
+        .header {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #e91e63;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 8px;
+            color: #333;
+        }
+
+        .menu a:hover {
+            background: #fbe5ef;
+        }
+
+        .btn-sair {
+            border: 0;
+            padding: 9px 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #eee;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 25px 15px 60px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e91e63;
+            margin-bottom: 30px;
+        }
+
+        .lista {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,.08);
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .midia {
+            width: 100%;
+            height: 360px;
+            background: #eee;
+        }
+
+        .midia img,
+        .midia video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .conteudo {
+            padding: 15px;
+        }
+
+        .nome {
+            font-size: 21px;
+            font-weight: bold;
+            color: #e91e63;
+        }
+
+        .idade {
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .sem-resultados {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        @media(max-width: 900px) {
+
+            .lista {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .header {
+                flex-direction: column;
+            }
+
+            .lista {
+                grid-template-columns: 1fr;
+            }
+
+            .midia {
+                height: 400px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="header">
+
+        <div class="logo">
+            AcompanhanteVirtual
+        </div>
+
+        <div
+            class="menu"
+            id="menu"
+        >
+
+            <a href="inicio.html">
+                Início
+            </a>
+
+            <a href="index.html">
+                Entrar
+            </a>
+
+            <a href="index.html">
+                Criar conta
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <h1>
+        Acompanhantes
+    </h1>
+
+    <div id="lista">
+        Carregando...
+    </div>
+
+</main>
+
+
+<script src="supabase.js"></script>
+
+<script>
+
+
+/* =========================================
+   ESCAPAR HTML
+========================================= */
+
+function escapeHtml(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto || "";
+
+    return div.innerHTML;
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+async function configurarMenu() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    const menu =
+        document.getElementById("menu");
+
+
+    if (
+        data &&
+        data.user
+    ) {
+
+        menu.innerHTML = `
+
+            <a href="inicio.html">
+                Início
+            </a>
+
+            <a href="perfil.html">
+                Meu perfil
+            </a>
+
+            <button
+                class="btn-sair"
+                onclick="sair()"
+            >
+                Sair
+            </button>
+
+        `;
+
+    } else {
+
+        menu.innerHTML = `
+
+            <a href="inicio.html">
+                Início
+            </a>
+
+            <a href="index.html">
+                Entrar
+            </a>
+
+            <a href="index.html">
+                Criar conta
+            </a>
+
+        `;
+    }
+}
+
+
+/* =========================================
+   SAIR
+========================================= */
+
+async function sair() {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.reload();
+}
+
+
+/* =========================================
+   CARREGAR
+========================================= */
+
+async function carregar() {
+
+    const lista =
+        document.getElementById("lista");
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("acompanhantes")
+            .select("*")
+            .eq("ativo", true)
+            .order(
+                "criado_em",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        lista.innerHTML = `
+            <div class="sem-resultados">
+                Erro ao carregar acompanhantes.
+            </div>
+        `;
+
+        console.error(error);
+
+        return;
+    }
+
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        lista.innerHTML = `
+            <div class="sem-resultados">
+                Nenhuma acompanhante disponível no momento.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const grid =
+        document.createElement("div");
+
+    grid.className = "lista";
+
+
+    data.forEach(
+        acompanhante => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "card";
+
+
+            card.onclick =
+                () => {
+
+                    window.location.href =
+                        "pessoa.html?id=" +
+                        encodeURIComponent(
+                            acompanhante.id
+                        );
+
+                };
+
+
+            const midia =
+                document.createElement("div");
+
+            midia.className = "midia";
+
+
+            /*
+              VÍDEO PRINCIPAL
+            */
+
+            if (
+                acompanhante.tipo_midia_principal ===
+                    "video" &&
+                acompanhante.video_principal
+            ) {
+
+                const video =
+                    document.createElement("video");
+
+                video.src =
+                    acompanhante.video_principal;
+
+                video.autoplay = true;
+
+                video.muted = true;
+
+                video.loop = true;
+
+                video.playsInline = true;
+
+                video.preload = "metadata";
+
+
+                /*
+                  Impede o clique no vídeo
+                  de abrir controles do navegador.
+                */
+
+                video.addEventListener(
+                    "click",
+                    event => {
+                        event.stopPropagation();
+                    }
+                );
+
+
+                midia.appendChild(video);
+
+            }
+
+
+            /*
+              FOTO PRINCIPAL
+            */
+
+            else if (
+                acompanhante.foto_principal
+            ) {
+
+                const img =
+                    document.createElement("img");
+
+                img.src =
+                    acompanhante.foto_principal;
+
+                img.alt =
+                    acompanhante.nome;
+
+                midia.appendChild(img);
+
+            }
+
+
+            else {
+
+                midia.innerHTML =
+                    "<div style='height:100%;display:flex;align-items:center;justify-content:center'>Sem foto</div>";
+
+            }
+
+
+            card.appendChild(midia);
+
+
+            /*
+              SOMENTE NOME E IDADE
+              NA PÁGINA INICIAL
+            */
+
+            const conteudo =
+                document.createElement("div");
+
+            conteudo.className =
+                "conteudo";
+
+
+            conteudo.innerHTML = `
+
+                <div class="nome">
+                    ${escapeHtml(
+                        acompanhante.nome
+                    )}
+                </div>
+
+                <div class="idade">
+                    ${acompanhante.idade} anos
+                </div>
+
+            `;
+
+
+            card.appendChild(
+                conteudo
+            );
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    lista.innerHTML = "";
+
+    lista.appendChild(grid);
+}
+
+
+/* =========================================
+   INICIAR
+========================================= */
+
+(async function() {
+
+    await configurarMenu();
+
+    await carregar();
+
+})();
+
+</script>
+
+</body>
+</html>
