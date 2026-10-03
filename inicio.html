@@ -5,14 +5,14 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AcompanhanteVirtual</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="supabase.js"></script>
-
 
     <style>
 
@@ -20,262 +20,146 @@
             box-sizing: border-box;
         }
 
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            color: #222;
+            background: #faf5f8;
+            color: #333;
         }
-
 
         header {
-            width: 100%;
-            background: white;
-            border-bottom: 1px solid #ddd;
-            padding: 15px 25px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+            padding: 16px 20px;
         }
 
+        .header {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
 
         .logo {
-            font-size: 23px;
+            color: #e91e63;
+            font-size: 25px;
             font-weight: bold;
-            color: #e60000;
-            text-decoration: none;
         }
-
 
         .menu {
             display: flex;
-            align-items: center;
             gap: 10px;
+            align-items: center;
         }
 
-
-        .menu a,
-        .menu button {
+        .menu a {
             text-decoration: none;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-
-            font-size: 15px;
-            color: #333;
-
             padding: 9px 13px;
-            border-radius: 7px;
+            border-radius: 8px;
+            color: #333;
         }
 
-
-        .menu a:hover,
-        .menu button:hover {
-            background: #f1f1f1;
+        .menu a:hover {
+            background: #fbe5ef;
         }
 
-
-        .menu .principal {
-            background: #e60000;
-            color: white;
-        }
-
-
-        .menu .principal:hover {
-            background: #c90000;
-        }
-
-
-        .escondido {
-            display: none !important;
-        }
-
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            padding: 30px 20px 50px;
-        }
-
-
-        .titulo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-
-        .titulo h1 {
-            margin: 0 0 8px;
-            font-size: 30px;
-        }
-
-
-        .titulo p {
-            margin: 0;
-            color: #777;
-        }
-
-
-        #listaAcompanhantes {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(230px, 1fr));
-
-            gap: 22px;
-        }
-
-
-        .card {
-            background: white;
-
-            border-radius: 12px;
-            overflow: hidden;
-
-            box-shadow:
-                0 2px 10px rgba(0,0,0,0.08);
-
+        .btn-sair {
+            border: 0;
+            padding: 9px 13px;
+            border-radius: 8px;
             cursor: pointer;
-
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s;
-        }
-
-
-        .card:hover {
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 5px 18px rgba(0,0,0,0.13);
-        }
-
-
-        .media-principal {
-            width: 100%;
-            height: 300px;
-
-            display: block;
-
-            object-fit: cover;
-
             background: #eee;
         }
 
-
-        .card video {
-            pointer-events: none;
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 25px 15px 60px;
         }
 
+        h1 {
+            text-align: center;
+            color: #e91e63;
+            margin-bottom: 30px;
+        }
 
-        .card-info {
+        .lista {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,.08);
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .midia {
+            width: 100%;
+            height: 360px;
+            background: #eee;
+        }
+
+        .midia img,
+        .midia video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .conteudo {
             padding: 15px;
         }
 
-
-        .card-info h2 {
-            margin: 0;
-            font-size: 20px;
+        .nome {
+            font-size: 21px;
+            font-weight: bold;
+            color: #e91e63;
         }
-
 
         .idade {
-            margin-top: 6px;
+            margin-top: 5px;
             color: #666;
-            font-size: 15px;
         }
 
-
-        .sem-resultados,
-        .carregando {
+        .sem-resultados {
             text-align: center;
-            color: #777;
-            padding: 40px 10px;
-
-            grid-column: 1 / -1;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
         }
 
+        @media(max-width: 900px) {
 
-        footer {
-            margin-top: 30px;
-            padding: 25px;
-
-            text-align: center;
-            color: #777;
-
-            border-top: 1px solid #ddd;
-            background: white;
-        }
-
-
-        footer a {
-            color: #555;
-            text-decoration: none;
-            margin: 0 8px;
-        }
-
-
-        @media (max-width: 600px) {
-
-            header {
-                padding: 12px 15px;
-            }
-
-
-            .logo {
-                font-size: 19px;
-            }
-
-
-            .menu {
-                gap: 3px;
-            }
-
-
-            .menu a,
-            .menu button {
-                font-size: 13px;
-                padding: 7px 8px;
-            }
-
-
-            .container {
-                padding: 20px 12px 40px;
-            }
-
-
-            .titulo h1 {
-                font-size: 25px;
-            }
-
-
-            #listaAcompanhantes {
+            .lista {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
             }
 
+        }
 
-            .media-principal {
-                height: 230px;
+        @media(max-width: 600px) {
+
+            .header {
+                flex-direction: column;
             }
 
-
-            .card-info {
-                padding: 10px;
+            .lista {
+                grid-template-columns: 1fr;
             }
 
-
-            .card-info h2 {
-                font-size: 17px;
+            .midia {
+                height: 400px;
             }
 
         }
@@ -284,436 +168,219 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
-    <a href="inicio.html" class="logo">
-        AcompanhanteVirtual
-    </a>
+    <div class="header">
 
+        <div class="logo">
+            AcompanhanteVirtual
+        </div>
 
-    <!-- MENU NÃO LOGADO -->
-
-    <div id="menuNaoLogado" class="menu">
-
-        <a href="index.html">
-            Entrar
-        </a>
-
-        <a href="index.html">
-            Criar conta
-        </a>
-
-    </div>
-
-
-    <!-- MENU LOGADO -->
-
-    <div id="menuLogado" class="menu escondido">
-
-        <a
-            href="inicio.html"
-            class="principal"
+        <div
+            class="menu"
+            id="menu"
         >
-            Início
-        </a>
 
+            <a href="inicio.html">
+                Início
+            </a>
 
-        <a href="perfil.html">
-            Meu perfil
-        </a>
+            <a href="index.html">
+                Entrar
+            </a>
 
+            <a href="index.html">
+                Criar conta
+            </a>
 
-        <button id="botaoSair">
-            Sair
-        </button>
+        </div>
 
     </div>
 
 </header>
 
 
+<main>
 
-<main class="container">
+    <h1>
+        Acompanhantes
+    </h1>
 
-
-    <div class="titulo">
-
-        <h1>
-            Acompanhantes
-        </h1>
-
-        <p>
-            Encontre o perfil que procura
-        </p>
-
+    <div id="lista">
+        Carregando...
     </div>
-
-
-
-    <div id="listaAcompanhantes">
-
-        <div class="carregando">
-            Carregando acompanhantes...
-        </div>
-
-    </div>
-
 
 </main>
 
 
-
-<footer>
-
-    <div>
-
-        <a href="inicio.html">
-            Início
-        </a>
-
-        <a href="perfil.html">
-            Minha conta
-        </a>
-
-    </div>
-
-
-    <p>
-        © AcompanhanteVirtual
-    </p>
-
-</footer>
-
-
+<script src="supabase.js"></script>
 
 <script>
 
 
-/* =====================================================
-   MENU / LOGIN
-===================================================== */
+/* =========================================
+   ESCAPAR HTML
+========================================= */
 
-function mostrarMenuLogado(logado) {
+function escapeHtml(texto) {
 
-    const menuNaoLogado =
-        document.getElementById("menuNaoLogado");
+    const div =
+        document.createElement("div");
 
-    const menuLogado =
-        document.getElementById("menuLogado");
+    div.textContent =
+        texto || "";
+
+    return div.innerHTML;
+}
 
 
-    if (logado) {
+/* =========================================
+   MENU
+========================================= */
 
-        menuNaoLogado.classList.add("escondido");
+async function configurarMenu() {
 
-        menuLogado.classList.remove("escondido");
+    const {
+        data
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    const menu =
+        document.getElementById("menu");
+
+
+    if (
+        data &&
+        data.user
+    ) {
+
+        menu.innerHTML = `
+
+            <a href="inicio.html">
+                Início
+            </a>
+
+            <a href="perfil.html">
+                Meu perfil
+            </a>
+
+            <button
+                class="btn-sair"
+                onclick="sair()"
+            >
+                Sair
+            </button>
+
+        `;
 
     } else {
 
-        menuNaoLogado.classList.remove("escondido");
+        menu.innerHTML = `
 
-        menuLogado.classList.add("escondido");
+            <a href="inicio.html">
+                Início
+            </a>
 
+            <a href="index.html">
+                Entrar
+            </a>
+
+            <a href="index.html">
+                Criar conta
+            </a>
+
+        `;
     }
-
 }
 
 
-
-/* =====================================================
-   VERIFICAR LOGIN
-===================================================== */
-
-async function verificarLogin() {
-
-    try {
-
-        const resultado =
-            await supabaseClient.auth.getSession();
-
-
-        const session =
-            resultado.data
-                ? resultado.data.session
-                : null;
-
-
-        mostrarMenuLogado(!!session);
-
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao verificar sessão:",
-            erro
-        );
-
-
-        mostrarMenuLogado(false);
-
-    }
-
-}
-
-
-
-/* =====================================================
-   MONITORAR LOGIN / LOGOUT
-===================================================== */
-
-supabaseClient.auth.onAuthStateChange(
-    function(event, session) {
-
-        mostrarMenuLogado(!!session);
-
-    }
-);
-
-
-
-/* =====================================================
+/* =========================================
    SAIR
-===================================================== */
+========================================= */
 
-document
-    .getElementById("botaoSair")
-    .addEventListener("click", async function() {
+async function sair() {
 
+    await supabaseClient.auth.signOut();
 
-        const resultado =
-            await supabaseClient.auth.signOut();
-
-
-        if (resultado.error) {
-
-            console.error(
-                "Erro ao sair:",
-                resultado.error
-            );
-
-            return;
-        }
-
-
-        window.location.href =
-            "index.html";
-
-    });
-
-
-
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
-
-function escaparHTML(texto) {
-
-    if (
-        texto === null ||
-        texto === undefined
-    ) {
-        return "";
-    }
-
-
-    return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
+    window.location.reload();
 }
 
 
+/* =========================================
+   CARREGAR
+========================================= */
 
-/* =====================================================
-   CARREGAR ACOMPANHANTES
-===================================================== */
-
-async function carregarAcompanhantes() {
-
+async function carregar() {
 
     const lista =
-        document.getElementById(
-            "listaAcompanhantes"
-        );
+        document.getElementById("lista");
 
 
-    lista.innerHTML = `
-        <div class="carregando">
-            Carregando acompanhantes...
-        </div>
-    `;
-
-
-
-    const resultado =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
             .from("acompanhantes")
             .select("*")
             .eq("ativo", true)
-            .order("criado_em", {
-                ascending: false
-            });
+            .order(
+                "criado_em",
+                {
+                    ascending: false
+                }
+            );
 
 
-
-    if (resultado.error) {
-
-        console.error(
-            "Erro ao carregar acompanhantes:",
-            resultado.error
-        );
-
+    if (error) {
 
         lista.innerHTML = `
             <div class="sem-resultados">
-                Não foi possível carregar os perfis.
+                Erro ao carregar acompanhantes.
+            </div>
+        `;
+
+        console.error(error);
+
+        return;
+    }
+
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        lista.innerHTML = `
+            <div class="sem-resultados">
+                Nenhuma acompanhante disponível no momento.
             </div>
         `;
 
         return;
-
     }
 
 
+    const grid =
+        document.createElement("div");
 
-    const acompanhantes =
-        resultado.data || [];
-
-
-
-    if (acompanhantes.length === 0) {
-
-        lista.innerHTML = `
-            <div class="sem-resultados">
-                Nenhuma acompanhante cadastrada.
-            </div>
-        `;
-
-        return;
-
-    }
+    grid.className = "lista";
 
 
-
-    lista.innerHTML = "";
-
-
-
-    acompanhantes.forEach(
-        function(acompanhante) {
-
+    data.forEach(
+        acompanhante => {
 
             const card =
                 document.createElement("div");
 
-
-            card.className =
-                "card";
+            card.className = "card";
 
 
-
-            let mediaHTML = "";
-
-
-
-            /* =================================================
-               SE FOR VÍDEO
-            ================================================= */
-
-            if (
-                acompanhante.tipo_midia_principal === "video"
-                &&
-                acompanhante.video_principal
-            ) {
-
-
-                mediaHTML = `
-
-                    <video
-                        class="media-principal"
-                        src="${escaparHTML(
-                            acompanhante.video_principal
-                        )}"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        preload="metadata"
-                    ></video>
-
-                `;
-
-
-            }
-
-            /* =================================================
-               SE FOR FOTO
-            ================================================= */
-
-            else {
-
-
-                let foto =
-                    acompanhante.foto_principal;
-
-
-                if (!foto) {
-
-                    foto =
-                        "https://via.placeholder.com/500x700?text=Sem+foto";
-
-                }
-
-
-                mediaHTML = `
-
-                    <img
-                        class="media-principal"
-                        src="${escaparHTML(foto)}"
-                        alt="${escaparHTML(
-                            acompanhante.nome
-                        )}"
-                        loading="lazy"
-                    >
-
-                `;
-
-            }
-
-
-
-            card.innerHTML = `
-
-                ${mediaHTML}
-
-                <div class="card-info">
-
-                    <h2>
-                        ${escaparHTML(
-                            acompanhante.nome
-                        )}
-                    </h2>
-
-                    <div class="idade">
-                        ${acompanhante.idade} anos
-                    </div>
-
-                </div>
-
-            `;
-
-
-
-            card.addEventListener(
-                "click",
-                function() {
+            card.onclick =
+                () => {
 
                     window.location.href =
                         "pessoa.html?id=" +
@@ -721,31 +388,152 @@ async function carregarAcompanhantes() {
                             acompanhante.id
                         );
 
-                }
+                };
+
+
+            const midia =
+                document.createElement("div");
+
+            midia.className = "midia";
+
+
+            /*
+              VÍDEO PRINCIPAL
+            */
+
+            if (
+                acompanhante.tipo_midia_principal ===
+                    "video" &&
+                acompanhante.video_principal
+            ) {
+
+                const video =
+                    document.createElement("video");
+
+                video.src =
+                    acompanhante.video_principal;
+
+                video.autoplay = true;
+
+                video.muted = true;
+
+                video.loop = true;
+
+                video.playsInline = true;
+
+                video.preload = "metadata";
+
+
+                /*
+                  Impede o clique no vídeo
+                  de abrir controles do navegador.
+                */
+
+                video.addEventListener(
+                    "click",
+                    event => {
+                        event.stopPropagation();
+                    }
+                );
+
+
+                midia.appendChild(video);
+
+            }
+
+
+            /*
+              FOTO PRINCIPAL
+            */
+
+            else if (
+                acompanhante.foto_principal
+            ) {
+
+                const img =
+                    document.createElement("img");
+
+                img.src =
+                    acompanhante.foto_principal;
+
+                img.alt =
+                    acompanhante.nome;
+
+                midia.appendChild(img);
+
+            }
+
+
+            else {
+
+                midia.innerHTML =
+                    "<div style='height:100%;display:flex;align-items:center;justify-content:center'>Sem foto</div>";
+
+            }
+
+
+            card.appendChild(midia);
+
+
+            /*
+              SOMENTE NOME E IDADE
+              NA PÁGINA INICIAL
+            */
+
+            const conteudo =
+                document.createElement("div");
+
+            conteudo.className =
+                "conteudo";
+
+
+            conteudo.innerHTML = `
+
+                <div class="nome">
+                    ${escapeHtml(
+                        acompanhante.nome
+                    )}
+                </div>
+
+                <div class="idade">
+                    ${acompanhante.idade} anos
+                </div>
+
+            `;
+
+
+            card.appendChild(
+                conteudo
             );
 
 
-
-            lista.appendChild(card);
+            grid.appendChild(
+                card
+            );
 
         }
     );
 
+
+    lista.innerHTML = "";
+
+    lista.appendChild(grid);
 }
 
 
-
-/* =====================================================
+/* =========================================
    INICIAR
-===================================================== */
+========================================= */
 
-verificarLogin();
+(async function() {
 
-carregarAcompanhantes();
+    await configurarMenu();
+
+    await carregar();
+
+})();
 
 </script>
 
-
 </body>
-
 </html>
