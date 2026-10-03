@@ -14,348 +14,204 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="supabase.js"></script>
-
-
     <style>
 
         * {
             box-sizing: border-box;
         }
 
-
         body {
             margin: 0;
-
             font-family: Arial, sans-serif;
-
-            background: #f7f7f7;
-
-            color: #222;
+            background: #faf5f8;
+            color: #333;
         }
-
 
         header {
-            background: white;
-
-            border-bottom: 1px solid #ddd;
-
-            padding: 15px 25px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            position: sticky;
-
-            top: 0;
-
-            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+            padding: 16px 20px;
         }
 
+        .header {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
 
         .logo {
-            font-size: 23px;
-
+            color: #e91e63;
+            font-size: 25px;
             font-weight: bold;
-
-            color: #e60000;
-
             text-decoration: none;
         }
-
-
-        .menu {
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-        }
-
-
-        .menu a,
-        .menu button {
-            text-decoration: none;
-
-            border: none;
-
-            background: transparent;
-
-            cursor: pointer;
-
-            font-size: 15px;
-
-            color: #333;
-
-            padding: 9px 13px;
-
-            border-radius: 7px;
-        }
-
-
-        .menu a:hover,
-        .menu button:hover {
-            background: #f1f1f1;
-        }
-
-
-        .menu .principal {
-            background: #e60000;
-
-            color: white;
-        }
-
-
-        .escondido {
-            display: none !important;
-        }
-
-
-        .container {
-            width: 100%;
-
-            max-width: 1000px;
-
-            margin: 0 auto;
-
-            padding: 30px 20px 60px;
-        }
-
 
         .voltar {
-            display: inline-block;
-
-            margin-bottom: 20px;
-
-            color: #555;
-
             text-decoration: none;
+            color: #e91e63;
+            font-weight: bold;
         }
 
-
-        .voltar:hover {
-            text-decoration: underline;
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px 15px 60px;
         }
-
 
         .perfil {
-            background: white;
-
-            border-radius: 15px;
-
-            padding: 25px;
-
-            box-shadow:
-                0 3px 15px rgba(0,0,0,0.08);
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
         }
 
+        .principal {
+            width: 100%;
+            max-height: 700px;
+            background: #111;
+            display: flex;
+            justify-content: center;
+        }
+
+        .principal img,
+        .principal video {
+            width: 100%;
+            max-height: 700px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .informacoes {
+            padding: 25px;
+        }
 
         .nome {
+            color: #e91e63;
             font-size: 30px;
-
-            margin: 0;
+            font-weight: bold;
         }
-
 
         .idade {
-            margin-top: 7px;
-
-            color: #777;
-
-            font-size: 17px;
+            font-size: 18px;
+            color: #666;
+            margin-top: 5px;
         }
 
-
         .descricao {
-            margin-top: 25px;
-
-            font-size: 17px;
-
+            margin-top: 20px;
             line-height: 1.6;
-
             white-space: pre-line;
         }
 
-
-        /* ==============================================
-           MÍDIA PRINCIPAL
-        ============================================== */
-
-        .media-container {
-            width: 100%;
-
-            max-width: 650px;
-
-            margin: 0 auto 25px;
-
-            border-radius: 14px;
-
-            overflow: hidden;
-
-            background: #111;
-        }
-
-
-        .media-principal {
-            width: 100%;
-
-            max-height: 750px;
-
-            display: block;
-
-            object-fit: cover;
-
-            background: #111;
-        }
-
-
-        .video-principal {
-            width: 100%;
-
-            max-height: 750px;
-
-            display: block;
-
-            object-fit: contain;
-
-            background: #000;
-        }
-
-
-        /* ==============================================
-           FOTOS ADICIONAIS
-        ============================================== */
-
-        .titulo-fotos {
-            margin-top: 35px;
-
-            margin-bottom: 15px;
-
-            font-size: 22px;
-        }
-
-
-        .galeria {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(150px, 1fr));
-
-            gap: 12px;
-        }
-
-
-        .galeria img {
-            width: 100%;
-
-            height: 190px;
-
-            object-fit: cover;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            transition: transform 0.2s;
-        }
-
-
-        .galeria img:hover {
-            transform: scale(1.02);
-        }
-
-
-        /* ==============================================
-           WHATSAPP
-        ============================================== */
-
         .whatsapp {
             display: inline-block;
-
-            margin-top: 30px;
-
+            margin-top: 22px;
+            padding: 13px 20px;
+            border-radius: 9px;
             background: #25D366;
-
             color: white;
-
             text-decoration: none;
-
-            padding: 14px 25px;
-
-            border-radius: 8px;
-
-            font-size: 17px;
-
             font-weight: bold;
         }
 
-
-        .whatsapp:hover {
-            background: #1ebe5d;
+        .galeria {
+            margin-top: 25px;
         }
 
+        .galeria h2 {
+            color: #e91e63;
+            margin-bottom: 15px;
+        }
 
-        .carregando,
-        .erro {
-            text-align: center;
+        .fotos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
 
-            padding: 50px 20px;
+        .foto {
+            height: 320px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #eee;
+            cursor: pointer;
+        }
 
+        .foto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .sem-fotos {
             color: #777;
         }
 
+        /* MODAL */
 
-        @media (max-width: 600px) {
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
 
-            header {
-                padding: 12px 15px;
+        .modal img {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .fechar {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border: 0;
+            border-radius: 50%;
+            background: white;
+            color: #333;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        @media(max-width: 700px) {
+
+            .header {
+                flex-direction: column;
             }
-
-
-            .logo {
-                font-size: 19px;
-            }
-
-
-            .menu {
-                gap: 3px;
-            }
-
-
-            .menu a,
-            .menu button {
-                font-size: 13px;
-
-                padding: 7px 8px;
-            }
-
-
-            .container {
-                padding: 20px 12px 40px;
-            }
-
-
-            .perfil {
-                padding: 15px;
-            }
-
 
             .nome {
                 font-size: 25px;
             }
 
-
-            .galeria {
-                grid-template-columns:
-                    repeat(2, 1fr);
+            .fotos {
+                grid-template-columns: repeat(2, 1fr);
             }
 
+            .foto {
+                height: 260px;
+            }
 
-            .galeria img {
-                height: 210px;
+        }
+
+        @media(max-width: 450px) {
+
+            .fotos {
+                grid-template-columns: 1fr;
+            }
+
+            .foto {
+                height: 400px;
             }
 
         }
@@ -364,236 +220,137 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
-    <a
-        href="inicio.html"
-        class="logo"
-    >
-        AcompanhanteVirtual
-    </a>
-
-
-    <div
-        id="menuNaoLogado"
-        class="menu"
-    >
-
-        <a href="index.html">
-            Entrar
-        </a>
-
-        <a href="index.html">
-            Criar conta
-        </a>
-
-    </div>
-
-
-    <div
-        id="menuLogado"
-        class="menu escondido"
-    >
+    <div class="header">
 
         <a
             href="inicio.html"
-            class="principal"
+            class="logo"
         >
-            Início
+            AcompanhanteVirtual
         </a>
 
-        <a href="perfil.html">
-            Meu perfil
+        <a
+            href="inicio.html"
+            class="voltar"
+        >
+            ← Voltar
         </a>
-
-        <button id="botaoSair">
-            Sair
-        </button>
 
     </div>
 
 </header>
 
 
-
-<main class="container">
-
-
-    <a
-        href="inicio.html"
-        class="voltar"
-    >
-        ← Voltar
-    </a>
-
-
+<main>
 
     <div id="conteudo">
-
-        <div class="carregando">
-            Carregando perfil...
-        </div>
-
+        Carregando perfil...
     </div>
-
 
 </main>
 
 
+<!-- MODAL DAS FOTOS -->
+
+<div
+    id="modal"
+    class="modal"
+    onclick="fecharModal()"
+>
+
+    <button
+        class="fechar"
+        onclick="fecharModal()"
+    >
+        ×
+    </button>
+
+    <img
+        id="imagemModal"
+        src=""
+        alt=""
+    >
+
+</div>
+
+
+<script src="supabase.js"></script>
 
 <script>
 
 
-/* =====================================================
-   MENU
-===================================================== */
-
-function mostrarMenuLogado(logado) {
-
-    const menuNaoLogado =
-        document.getElementById(
-            "menuNaoLogado"
-        );
-
-
-    const menuLogado =
-        document.getElementById(
-            "menuLogado"
-        );
-
-
-    if (logado) {
-
-        menuNaoLogado.classList.add(
-            "escondido"
-        );
-
-        menuLogado.classList.remove(
-            "escondido"
-        );
-
-    } else {
-
-        menuNaoLogado.classList.remove(
-            "escondido"
-        );
-
-        menuLogado.classList.add(
-            "escondido"
-        );
-
-    }
-
-}
-
-
-
-/* =====================================================
-   VERIFICAR LOGIN
-===================================================== */
-
-async function verificarLogin() {
-
-    const resultado =
-        await supabaseClient.auth.getSession();
-
-
-    const session =
-        resultado.data
-            ? resultado.data.session
-            : null;
-
-
-    mostrarMenuLogado(!!session);
-
-}
-
-
-
-supabaseClient.auth.onAuthStateChange(
-    function(event, session) {
-
-        mostrarMenuLogado(!!session);
-
-    }
-);
-
-
-
-/* =====================================================
-   SAIR
-===================================================== */
-
-document
-    .getElementById("botaoSair")
-    .addEventListener(
-        "click",
-        async function() {
-
-
-            await supabaseClient.auth.signOut();
-
-
-            window.location.href =
-                "index.html";
-
-        }
-    );
-
-
-
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
-
-function escaparHTML(texto) {
-
-    if (
-        texto === null ||
-        texto === undefined
-    ) {
-        return "";
-    }
-
-
-    return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-
-/* =====================================================
-   PEGAR ID DA URL
-===================================================== */
+/* =========================================
+   ID DA URL
+========================================= */
 
 const parametros =
     new URLSearchParams(
         window.location.search
     );
 
-
 const acompanhanteId =
     parametros.get("id");
 
 
+/* =========================================
+   ESCAPAR HTML
+========================================= */
 
-/* =====================================================
+function escapeHtml(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto || "";
+
+    return div.innerHTML;
+}
+
+
+/* =========================================
+   WHATSAPP
+========================================= */
+
+function whatsappLink(numero) {
+
+    let numeroLimpo =
+        String(numero || "")
+            .replace(/\D/g, "");
+
+
+    /*
+      Se o número não tiver
+      código do Brasil, adiciona 55.
+    */
+
+    if (
+        numeroLimpo.length > 0 &&
+        !numeroLimpo.startsWith("55")
+    ) {
+
+        numeroLimpo =
+            "55" +
+            numeroLimpo;
+    }
+
+
+    return "https://wa.me/" +
+        numeroLimpo;
+}
+
+
+/* =========================================
    CARREGAR PERFIL
-===================================================== */
+========================================= */
 
 async function carregarPerfil() {
 
-
-    const conteudo =
+    const container =
         document.getElementById(
             "conteudo"
         );
@@ -601,61 +358,54 @@ async function carregarPerfil() {
 
     if (!acompanhanteId) {
 
-        conteudo.innerHTML = `
-            <div class="erro">
-                Perfil não encontrado.
-            </div>
-        `;
+        container.innerHTML =
+            "<p>Perfil não encontrado.</p>";
 
         return;
-
     }
 
 
+    /*
+      BUSCAR ACOMPANHANTE
+    */
 
-    /* =================================================
-       BUSCAR ACOMPANHANTE
-    ================================================= */
-
-    const resultado =
+    const {
+        data: acompanhante,
+        error
+    } =
         await supabaseClient
             .from("acompanhantes")
             .select("*")
-            .eq("id", acompanhanteId)
-            .eq("ativo", true)
+            .eq(
+                "id",
+                acompanhanteId
+            )
+            .eq(
+                "ativo",
+                true
+            )
             .single();
 
 
+    if (error || !acompanhante) {
 
-    if (resultado.error) {
+        console.error(error);
 
-        console.error(
-            resultado.error
-        );
-
-
-        conteudo.innerHTML = `
-            <div class="erro">
-                Não foi possível carregar este perfil.
-            </div>
-        `;
+        container.innerHTML =
+            "<p>Essa acompanhante não está disponível.</p>";
 
         return;
-
     }
 
 
+    /*
+      BUSCAR TODAS AS FOTOS ADICIONAIS
+    */
 
-    const acompanhante =
-        resultado.data;
-
-
-
-    /* =================================================
-       BUSCAR FOTOS EXTRAS
-    ================================================= */
-
-    const fotosResultado =
+    const {
+        data: fotos,
+        error: erroFotos
+    } =
         await supabaseClient
             .from("fotos_acompanhantes")
             .select("*")
@@ -663,244 +413,293 @@ async function carregarPerfil() {
                 "acompanhante_id",
                 acompanhanteId
             )
-            .order("ordem", {
-                ascending: true
-            });
+            .order(
+                "ordem",
+                {
+                    ascending: true
+                }
+            );
 
 
+    if (erroFotos) {
 
-    const fotos =
-        fotosResultado.data || [];
-
-
-
-    /* =================================================
-       MÍDIA PRINCIPAL
-    ================================================= */
-
-    let mediaPrincipal = "";
-
-
-
-    if (
-        acompanhante.tipo_midia_principal === "video"
-        &&
-        acompanhante.video_principal
-    ) {
-
-
-        mediaPrincipal = `
-
-            <div class="media-container">
-
-                <video
-                    class="video-principal"
-                    src="${escaparHTML(
-                        acompanhante.video_principal
-                    )}"
-                    controls
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    preload="metadata"
-                ></video>
-
-            </div>
-
-        `;
-
-
-    } else {
-
-
-        let foto =
-            acompanhante.foto_principal;
-
-
-        if (!foto) {
-
-            foto =
-                "https://via.placeholder.com/700x900?text=Sem+foto";
-
-        }
-
-
-        mediaPrincipal = `
-
-            <div class="media-container">
-
-                <img
-                    class="media-principal"
-                    src="${escaparHTML(foto)}"
-                    alt="${escaparHTML(
-                        acompanhante.nome
-                    )}"
-                >
-
-            </div>
-
-        `;
-
+        console.error(
+            "Erro nas fotos:",
+            erroFotos
+        );
     }
 
 
+    /*
+      HTML PRINCIPAL
+    */
 
-    /* =================================================
-       GALERIA DE FOTOS
-    ================================================= */
+    const perfil =
+        document.createElement("div");
 
-    let galeriaHTML = "";
-
-
-
-    if (fotos.length > 0) {
+    perfil.className =
+        "perfil";
 
 
-        galeriaHTML = `
+    /*
+      MÍDIA PRINCIPAL
+    */
 
-            <h2 class="titulo-fotos">
-                Fotos
-            </h2>
+    const principal =
+        document.createElement("div");
 
-            <div class="galeria">
+    principal.className =
+        "principal";
 
-        `;
 
+    if (
+        acompanhante.tipo_midia_principal ===
+            "video" &&
+        acompanhante.video_principal
+    ) {
+
+        const video =
+            document.createElement("video");
+
+        video.src =
+            acompanhante.video_principal;
+
+        video.controls = true;
+
+        video.autoplay = true;
+
+        video.muted = true;
+
+        video.loop = true;
+
+        video.playsInline = true;
+
+        video.preload = "metadata";
+
+
+        principal.appendChild(
+            video
+        );
+
+    }
+
+    else if (
+        acompanhante.foto_principal
+    ) {
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            acompanhante.foto_principal;
+
+        img.alt =
+            acompanhante.nome;
+
+
+        principal.appendChild(
+            img
+        );
+
+    }
+
+    else {
+
+        principal.innerHTML =
+            "<div style='padding:80px;color:white'>Sem mídia principal.</div>";
+    }
+
+
+    perfil.appendChild(
+        principal
+    );
+
+
+    /*
+      INFORMAÇÕES
+    */
+
+    const informacoes =
+        document.createElement("div");
+
+    informacoes.className =
+        "informacoes";
+
+
+    informacoes.innerHTML = `
+
+        <div class="nome">
+            ${escapeHtml(
+                acompanhante.nome
+            )}
+        </div>
+
+        <div class="idade">
+            ${acompanhante.idade} anos
+        </div>
+
+        <div class="descricao">
+            ${escapeHtml(
+                acompanhante.descricao || ""
+            )}
+        </div>
+
+        <a
+            class="whatsapp"
+            href="${whatsappLink(
+                acompanhante.whatsapp
+            )}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Falar no WhatsApp
+        </a>
+
+    `;
+
+
+    perfil.appendChild(
+        informacoes
+    );
+
+
+    /*
+      GALERIA
+    */
+
+    const galeria =
+        document.createElement("div");
+
+    galeria.className =
+        "galeria";
+
+
+    galeria.innerHTML =
+        "<h2>Fotos</h2>";
+
+
+    const fotosContainer =
+        document.createElement("div");
+
+    fotosContainer.className =
+        "fotos";
+
+
+    if (
+        fotos &&
+        fotos.length > 0
+    ) {
 
         fotos.forEach(
-            function(foto) {
+            foto => {
 
-                galeriaHTML += `
+                const item =
+                    document.createElement("div");
 
-                    <img
-                        src="${escaparHTML(
-                            foto.foto_url
-                        )}"
-                        alt="Foto de ${escaparHTML(
-                            acompanhante.nome
-                        )}"
-                        loading="lazy"
-                        onclick="window.open(
-                            '${escaparHTML(
-                                foto.foto_url
-                            )}',
-                            '_blank'
-                        )"
-                    >
+                item.className =
+                    "foto";
 
-                `;
+
+                const img =
+                    document.createElement("img");
+
+                img.src =
+                    foto.foto_url;
+
+                img.alt =
+                    acompanhante.nome;
+
+                img.loading =
+                    "lazy";
+
+
+                item.onclick =
+                    () => abrirModal(
+                        foto.foto_url
+                    );
+
+
+                item.appendChild(
+                    img
+                );
+
+
+                fotosContainer.appendChild(
+                    item
+                );
 
             }
         );
 
+    } else {
 
-        galeriaHTML += `
-            </div>
-        `;
-
+        fotosContainer.innerHTML =
+            "<div class='sem-fotos'>Nenhuma foto adicional disponível.</div>";
     }
 
 
-
-    /* =================================================
-       WHATSAPP
-    ================================================= */
-
-    let whatsappHTML = "";
+    galeria.appendChild(
+        fotosContainer
+    );
 
 
-    if (acompanhante.whatsapp) {
+    perfil.appendChild(
+        galeria
+    );
 
 
-        let numero =
-            String(
-                acompanhante.whatsapp
-            )
-            .replace(/\D/g, "");
+    container.innerHTML = "";
 
-
-        if (numero) {
-
-            whatsappHTML = `
-
-                <a
-                    class="whatsapp"
-                    href="https://wa.me/${numero}"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Conversar pelo WhatsApp
-                </a>
-
-            `;
-
-        }
-
-    }
-
-
-
-    /* =================================================
-       MOSTRAR PERFIL
-    ================================================= */
-
-    conteudo.innerHTML = `
-
-        <div class="perfil">
-
-            ${mediaPrincipal}
-
-
-            <h1 class="nome">
-                ${escaparHTML(
-                    acompanhante.nome
-                )}
-            </h1>
-
-
-            <div class="idade">
-                ${acompanhante.idade} anos
-            </div>
-
-
-            ${
-                acompanhante.descricao
-                    ? `
-                        <div class="descricao">
-                            ${escaparHTML(
-                                acompanhante.descricao
-                            )}
-                        </div>
-                    `
-                    : ""
-            }
-
-
-            ${galeriaHTML}
-
-
-            ${whatsappHTML}
-
-        </div>
-
-    `;
-
+    container.appendChild(
+        perfil
+    );
 }
 
 
+/* =========================================
+   MODAL
+========================================= */
 
-/* =====================================================
+function abrirModal(url) {
+
+    const modal =
+        document.getElementById(
+            "modal"
+        );
+
+    const imagem =
+        document.getElementById(
+            "imagemModal"
+        );
+
+
+    imagem.src = url;
+
+    modal.style.display =
+        "flex";
+}
+
+
+function fecharModal() {
+
+    document.getElementById(
+        "modal"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "imagemModal"
+    ).src = "";
+}
+
+
+/* =========================================
    INICIAR
-===================================================== */
-
-verificarLogin();
+========================================= */
 
 carregarPerfil();
 
 </script>
 
-
 </body>
-
 </html>
