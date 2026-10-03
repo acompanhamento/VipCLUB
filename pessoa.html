@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Perfil - AcompanhanteVirtual</title>
+    <title>Perfil - VipBLUB</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -23,7 +23,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #faf5f8;
+            background: #f5f9ff;
             color: #333;
         }
 
@@ -43,7 +43,7 @@
         }
 
         .logo {
-            color: #e91e63;
+            color: #1976d2;
             font-size: 25px;
             font-weight: bold;
             text-decoration: none;
@@ -51,7 +51,7 @@
 
         .voltar {
             text-decoration: none;
-            color: #e91e63;
+            color: #1976d2;
             font-weight: bold;
         }
 
@@ -89,7 +89,7 @@
         }
 
         .nome {
-            color: #e91e63;
+            color: #1976d2;
             font-size: 30px;
             font-weight: bold;
         }
@@ -106,12 +106,12 @@
             white-space: pre-line;
         }
 
-        .whatsapp {
+        .telegram {
             display: inline-block;
             margin-top: 22px;
             padding: 13px 20px;
             border-radius: 9px;
-            background: #25D366;
+            background: #229ED9;
             color: white;
             text-decoration: none;
             font-weight: bold;
@@ -122,7 +122,7 @@
         }
 
         .galeria h2 {
-            color: #e91e63;
+            color: #1976d2;
             margin-bottom: 15px;
         }
 
@@ -230,7 +230,7 @@
             href="inicio.html"
             class="logo"
         >
-            AcompanhanteVirtual
+            VipBLUB
         </a>
 
         <a
@@ -313,34 +313,23 @@ function escapeHtml(texto) {
 
 
 /* =========================================
-   WHATSAPP
+   TELEGRAM
 ========================================= */
 
-function whatsappLink(numero) {
+function telegramLink(valor) {
+    const texto = String(valor || "").trim();
 
-    let numeroLimpo =
-        String(numero || "")
-            .replace(/\D/g, "");
-
-
-    /*
-      Se o número não tiver
-      código do Brasil, adiciona 55.
-    */
-
-    if (
-        numeroLimpo.length > 0 &&
-        !numeroLimpo.startsWith("55")
-    ) {
-
-        numeroLimpo =
-            "55" +
-            numeroLimpo;
+    if (!texto) {
+        return "#";
     }
 
+    if (/^https?:\/\//i.test(texto)) {
+        return texto;
+    }
 
-    return "https://wa.me/" +
-        numeroLimpo;
+    const usuario = texto.replace(/^@/, "").trim();
+
+    return "https://t.me/" + encodeURIComponent(usuario);
 }
 
 
@@ -545,14 +534,14 @@ async function carregarPerfil() {
         </div>
 
         <a
-            class="whatsapp"
-            href="${whatsappLink(
+            class="telegram"
+            href="${telegramLink(
                 acompanhante.whatsapp
             )}"
             target="_blank"
             rel="noopener noreferrer"
         >
-            Falar no WhatsApp
+            Falar no Telegram
         </a>
 
     `;

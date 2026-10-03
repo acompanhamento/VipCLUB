@@ -16,7 +16,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #faf5f8;
+            background: #f5f9ff;
             color: #333;
         }
 
@@ -38,7 +38,7 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #e91e63;
+            color: #1976d2;
         }
 
         .container {
@@ -57,11 +57,11 @@
 
         h1 {
             text-align: center;
-            color: #e91e63;
+            color: #1976d2;
         }
 
         h2 {
-            color: #e91e63;
+            color: #1976d2;
             margin-top: 0;
         }
 
@@ -125,7 +125,7 @@
         }
 
         .btn-principal {
-            background: #e91e63;
+            background: #1976d2;
             color: #fff;
         }
 
@@ -162,7 +162,7 @@
         }
 
         .erro {
-            background: #ffe5e5;
+            background: #e3f2fd;
             color: #c62828;
         }
 
@@ -199,7 +199,7 @@
         .nome {
             font-size: 21px;
             font-weight: bold;
-            color: #e91e63;
+            color: #1976d2;
         }
 
         .status {
@@ -216,7 +216,7 @@
         }
 
         .inativo {
-            background: #ffe5e5;
+            background: #e3f2fd;
             color: #c62828;
         }
 
@@ -263,8 +263,8 @@
         }
 
         .info-ajuda {
-            background: #fff7fb;
-            border-left: 4px solid #e91e63;
+            background: #f5f9ff;
+            border-left: 4px solid #1976d2;
             padding: 12px;
             margin-top: 15px;
             border-radius: 5px;
@@ -290,7 +290,7 @@
 
 <header>
     <div class="header">
-        <div class="logo">AcompanhanteVirtual - Admin</div>
+        <div class="logo">VipBLUB - Admin</div>
 
         <button class="btn-sair" onclick="sair()">
             Sair
@@ -335,11 +335,12 @@
             placeholder="Descrição da acompanhante"
         ></textarea>
 
-        <label>WhatsApp</label>
+        <label>Telegram</label>
         <input
             type="text"
             id="whatsapp"
-            placeholder="Ex.: 5584991288951"
+            type="url"
+            placeholder="Ex.: https://t.me/usuario"
         >
 
         <label>Status</label>
@@ -852,7 +853,7 @@ async function salvar() {
 
         if (!whatsapp) {
             mensagem(
-                "Digite o WhatsApp.",
+                "Digite o Telegram.",
                 true
             );
             return;
@@ -1295,7 +1296,7 @@ async function criarCard(
         </div>
 
         <div>
-            WhatsApp:
+            Telegram:
             ${escapeHtml(acompanhante.whatsapp)}
         </div>
 
