@@ -20,216 +20,374 @@
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             font-family: Arial, sans-serif;
+
             background: #fdf5f9;
+
             color: #333;
+
         }
+
 
         header {
+
             background: white;
+
             padding: 18px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 2px 10px
+                rgba(0,0,0,.08);
+
         }
+
 
         .header-conteudo {
+
             max-width: 900px;
+
             margin: auto;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
         }
+
 
         .logo {
+
             color: #e91e63;
-            font-size: 24px;
+
+            font-size: 23px;
+
             font-weight: bold;
+
         }
+
 
         .voltar {
+
             text-decoration: none;
-            background: #fce4ec;
+
             color: #e91e63;
-            padding: 9px 15px;
-            border-radius: 8px;
+
             font-weight: bold;
-            font-size: 14px;
+
         }
+
 
         .container {
+
             max-width: 900px;
-            margin: 30px auto;
-            padding: 0 15px 50px;
+
+            margin: auto;
+
+            padding: 25px 15px 60px;
+
         }
+
 
         .perfil {
+
             background: white;
+
             border-radius: 18px;
+
             padding: 20px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 4px 20px
+                rgba(0,0,0,.08);
+
         }
 
-        /* FOTO PRINCIPAL */
 
         .foto-principal {
+
             width: 100%;
-            max-height: 650px;
+
+            max-height: 600px;
+
             object-fit: cover;
-            display: block;
+
             border-radius: 15px;
-            cursor: pointer;
+
+            display: block;
+
+            margin-bottom: 20px;
+
         }
+
+
+        .sem-foto {
+
+            width: 100%;
+
+            height: 350px;
+
+            background: #eee;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #999;
+
+        }
+
+
+        h1 {
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .idade {
+
+            color: #e91e63;
+
+            font-weight: bold;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .secao {
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #eee;
+
+        }
+
+
+        .secao h2 {
+
+            color: #e91e63;
+
+            margin-top: 0;
+
+        }
+
+
+        .descricao {
+
+            color: #555;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+        }
+
 
         /* GALERIA */
 
-        .titulo-galeria {
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
         .galeria {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-top: 15px;
+
         }
 
-        .foto-galeria {
+
+        .galeria img {
+
             width: 100%;
-            height: 220px;
+
+            height: 150px;
+
             object-fit: cover;
-            border-radius: 12px;
+
+            border-radius: 10px;
+
             cursor: pointer;
-            transition: 0.2s;
-            display: block;
+
         }
 
-        .foto-galeria:hover {
-            transform: scale(1.02);
+
+        /* TABELA DE VALORES */
+
+        .tabela-valores {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+
+            overflow: hidden;
+
+            border-radius: 10px;
+
         }
 
-        /* INFORMAÇÕES */
 
-        .nome {
-            font-size: 28px;
-            font-weight: bold;
-            margin-top: 25px;
-            color: #333;
+        .tabela-valores th {
+
+            background: #e91e63;
+
+            color: white;
+
+            padding: 13px;
+
+            text-align: left;
+
         }
 
-        .idade {
+
+        .tabela-valores td {
+
+            padding: 13px;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .tabela-valores tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        .valor {
+
             color: #e91e63;
-            font-size: 17px;
+
             font-weight: bold;
-            margin-top: 5px;
+
+            text-align: right;
+
+            white-space: nowrap;
+
         }
 
-        .descricao {
-            margin-top: 18px;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #555;
-            white-space: pre-line;
+
+        .sem-valores {
+
+            color: #777;
+
+            font-size: 14px;
+
         }
+
 
         /* WHATSAPP */
 
         .whatsapp {
+
             display: block;
-            text-align: center;
-            text-decoration: none;
-            background: #25D366;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
+
+            width: 100%;
+
             margin-top: 25px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #25D366;
+
+            color: white;
+
+            text-align: center;
+
+            text-decoration: none;
+
             font-size: 17px;
+
             font-weight: bold;
+
         }
 
-        .whatsapp:hover {
-            opacity: 0.9;
-        }
 
         .carregando {
+
             text-align: center;
+
             padding: 50px;
+
             color: #777;
+
         }
+
 
         .erro {
-            background: #ffe5e5;
+
+            background: #ffebee;
+
             color: #c62828;
-            padding: 18px;
+
+            padding: 15px;
+
             border-radius: 10px;
+
             text-align: center;
+
         }
 
-        /* MODAL DA FOTO */
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.92);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal img {
-            max-width: 95%;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 10px;
-        }
-
-        .fechar {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* CELULAR */
-
-        @media (max-width: 650px) {
-
-            .logo {
-                font-size: 20px;
-            }
+        @media (max-width: 600px) {
 
             .galeria {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
             }
 
-            .foto-galeria {
-                height: 220px;
+
+            .galeria img {
+
+                height: 110px;
+
             }
+
+
+            .perfil {
+
+                padding: 15px;
+
+            }
+
 
             .foto-principal {
-                max-height: 550px;
-            }
 
-            .nome {
-                font-size: 24px;
+                max-height: 500px;
+
             }
 
         }
+
 
     </style>
 
 </head>
+
 
 <body>
 
@@ -256,13 +414,16 @@
 
 <main class="container">
 
+
     <div id="carregando" class="carregando">
+
         Carregando perfil...
+
     </div>
+
 
     <div
         id="erro"
-        class="erro"
         style="display:none;"
     ></div>
 
@@ -273,24 +434,15 @@
         style="display:none;"
     >
 
+
         <!-- FOTO PRINCIPAL -->
 
-        <img
-            id="fotoPrincipal"
-            class="foto-principal"
-            alt="Foto principal"
-        >
+        <div id="fotoPrincipal"></div>
 
 
-        <!-- NOME -->
+        <!-- INFORMAÇÕES -->
 
-        <div
-            id="nome"
-            class="nome"
-        ></div>
-
-
-        <!-- IDADE -->
+        <h1 id="nome"></h1>
 
         <div
             id="idade"
@@ -298,28 +450,83 @@
         ></div>
 
 
-        <!-- DESCRIÇÃO -->
-
-        <div
-            id="descricao"
-            class="descricao"
-        ></div>
-
-
         <!-- GALERIA -->
 
         <div
-            id="tituloGaleria"
-            class="titulo-galeria"
+            id="secaoGaleria"
+            class="secao"
             style="display:none;"
         >
-            Mais fotos
+
+            <h2>
+                Fotos
+            </h2>
+
+            <div
+                id="galeria"
+                class="galeria"
+            ></div>
+
         </div>
 
+
+        <!-- DESCRIÇÃO -->
+
+        <div class="secao">
+
+            <h2>
+                Sobre
+            </h2>
+
+            <div
+                id="descricao"
+                class="descricao"
+            ></div>
+
+        </div>
+
+
+        <!-- VALORES -->
+
         <div
-            id="galeria"
-            class="galeria"
-        ></div>
+            id="secaoValores"
+            class="secao"
+            style="display:none;"
+        >
+
+            <h2>
+                Valores
+            </h2>
+
+
+            <table
+                class="tabela-valores"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Serviço
+                        </th>
+
+                        <th>
+                            Valor
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="tabelaValores"
+                ></tbody>
+
+            </table>
+
+        </div>
 
 
         <!-- WHATSAPP -->
@@ -330,34 +537,13 @@
             target="_blank"
             rel="noopener noreferrer"
         >
-            💬 Falar pelo WhatsApp
+            💬 Entrar em contato pelo WhatsApp
         </a>
+
 
     </div>
 
 </main>
-
-
-<!-- MODAL -->
-
-<div
-    id="modal"
-    class="modal"
-    onclick="fecharModal()"
->
-
-    <span class="fechar">
-        ×
-    </span>
-
-    <img
-        id="imagemModal"
-        src=""
-        alt="Foto ampliada"
-        onclick="event.stopPropagation()"
-    >
-
-</div>
 
 
 <script src="supabase.js"></script>
@@ -365,358 +551,509 @@
 
 <script>
 
-    async function carregarPerfil() {
 
-        const carregando =
-            document.getElementById("carregando");
+// =====================================================
+// PEGAR ID DA URL
+// =====================================================
 
-        const erroElemento =
-            document.getElementById("erro");
-
-        const perfil =
-            document.getElementById("perfil");
-
-
-        try {
-
-            const parametros =
-                new URLSearchParams(
-                    window.location.search
-                );
-
-            const id =
-                parametros.get("id");
+const parametros =
+    new URLSearchParams(
+        window.location.search
+    );
 
 
-            if (!id) {
+const acompanhanteId =
+    parametros.get("id");
 
-                throw new Error(
-                    "Perfil não encontrado."
-                );
 
+// =====================================================
+// FORMATAR WHATSAPP
+// =====================================================
+
+function formatarWhatsapp(numero) {
+
+    let telefone =
+        String(numero || "")
+            .replace(/\D/g, "");
+
+
+    /*
+     * Se o número não tiver
+     * código do Brasil,
+     * adicionamos 55.
+     */
+
+    if (
+        telefone.length > 0 &&
+        !telefone.startsWith("55")
+    ) {
+
+        telefone =
+            "55" + telefone;
+
+    }
+
+
+    return telefone;
+
+}
+
+
+// =====================================================
+// FORMATAR VALOR
+// =====================================================
+
+function formatarValor(valor) {
+
+    return Number(valor)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style: "currency",
+                currency: "BRL"
             }
+        );
 
+}
 
-            // ==========================================
-            // BUSCAR ACOMPANHANTE
-            // ==========================================
 
-            const resultado =
-                await supabaseClient
+// =====================================================
+// CARREGAR PERFIL
+// =====================================================
 
-                    .from("acompanhantes")
+async function carregarPerfil() {
 
-                    .select(
-                        "id, nome, idade, descricao, whatsapp, foto_principal"
-                    )
+    if (!acompanhanteId) {
 
-                    .eq("id", id)
+        mostrarErro(
+            "Perfil não encontrado."
+        );
 
-                    .eq("ativo", true)
+        return;
 
-                    .maybeSingle();
+    }
 
 
-            if (resultado.error) {
+    try {
 
-                throw resultado.error;
+        // =================================================
+        // ACOMPANHANTE
+        // =================================================
 
-            }
+        const {
+            data:
+            acompanhante,
+            error:
+            erroAcompanhante
+        } = await supabaseClient
 
+            .from("acompanhantes")
 
-            const acompanhante =
-                resultado.data;
+            .select("*")
 
+            .eq(
+                "id",
+                acompanhanteId
+            )
 
-            if (!acompanhante) {
+            .eq(
+                "ativo",
+                true
+            )
 
-                throw new Error(
-                    "Este perfil não existe ou não está disponível."
-                );
+            .maybeSingle();
 
-            }
 
+        if (erroAcompanhante) {
 
-            // ==========================================
-            // PREENCHER INFORMAÇÕES
-            // ==========================================
-
-            document.getElementById("nome")
-                .textContent =
-                acompanhante.nome;
-
-
-            document.getElementById("idade")
-                .textContent =
-                acompanhante.idade + " anos";
-
-
-            document.getElementById("descricao")
-                .textContent =
-                acompanhante.descricao || "";
-
-
-            // ==========================================
-            // FOTO PRINCIPAL
-            // ==========================================
-
-            const fotoPrincipal =
-                document.getElementById("fotoPrincipal");
-
-
-            if (acompanhante.foto_principal) {
-
-                fotoPrincipal.src =
-                    acompanhante.foto_principal;
-
-                fotoPrincipal.onclick =
-                    function() {
-
-                        abrirModal(
-                            acompanhante.foto_principal
-                        );
-
-                    };
-
-            } else {
-
-                fotoPrincipal.style.display =
-                    "none";
-
-            }
-
-
-            // ==========================================
-            // BUSCAR TODAS AS FOTOS ADICIONAIS
-            // ==========================================
-
-            const resultadoFotos =
-                await supabaseClient
-
-                    .from("fotos_acompanhantes")
-
-                    .select(
-                        "id, foto_url, ordem"
-                    )
-
-                    .eq(
-                        "acompanhante_id",
-                        acompanhante.id
-                    )
-
-                    .order(
-                        "ordem",
-                        {
-                            ascending: true
-                        }
-                    );
-
-
-            if (resultadoFotos.error) {
-
-                throw resultadoFotos.error;
-
-            }
-
-
-            const fotos =
-                resultadoFotos.data || [];
-
-
-            const galeria =
-                document.getElementById("galeria");
-
-            const tituloGaleria =
-                document.getElementById(
-                    "tituloGaleria"
-                );
-
-
-            galeria.innerHTML = "";
-
-
-            // ==========================================
-            // MOSTRAR TODAS AS FOTOS
-            // ==========================================
-
-            if (fotos.length > 0) {
-
-                tituloGaleria.style.display =
-                    "block";
-
-
-                fotos.forEach(
-                    function(foto) {
-
-                        if (!foto.foto_url) {
-                            return;
-                        }
-
-
-                        const imagem =
-                            document.createElement(
-                                "img"
-                            );
-
-
-                        imagem.src =
-                            foto.foto_url;
-
-
-                        imagem.className =
-                            "foto-galeria";
-
-
-                        imagem.alt =
-                            acompanhante.nome;
-
-
-                        imagem.loading =
-                            "lazy";
-
-
-                        imagem.onclick =
-                            function() {
-
-                                abrirModal(
-                                    foto.foto_url
-                                );
-
-                            };
-
-
-                        galeria.appendChild(
-                            imagem
-                        );
-
-                    }
-                );
-
-            }
-
-
-            // ==========================================
-            // WHATSAPP
-            // ==========================================
-
-            let numero =
-                acompanhante.whatsapp || "";
-
-
-            numero =
-                numero.replace(
-                    /\D/g,
-                    ""
-                );
-
-
-            // Se o número não começar com 55,
-            // adiciona o código do Brasil.
-
-            if (
-                numero &&
-                !numero.startsWith("55")
-            ) {
-
-                numero =
-                    "55" + numero;
-
-            }
-
-
-            if (numero) {
-
-                document.getElementById(
-                    "whatsapp"
-                ).href =
-                    "https://wa.me/" + numero;
-
-            } else {
-
-                document.getElementById(
-                    "whatsapp"
-                ).style.display =
-                    "none";
-
-            }
-
-
-            // ==========================================
-            // MOSTRAR PERFIL
-            // ==========================================
-
-            carregando.style.display =
-                "none";
-
-            perfil.style.display =
-                "block";
-
-
-        } catch (error) {
-
-            console.error(
-                "Erro ao carregar perfil:",
-                error
-            );
-
-
-            carregando.style.display =
-                "none";
-
-
-            erroElemento.style.display =
-                "block";
-
-
-            erroElemento.textContent =
-                "Erro ao carregar o perfil: " +
-                error.message;
+            throw erroAcompanhante;
 
         }
 
-    }
+
+        if (!acompanhante) {
+
+            mostrarErro(
+                "Este perfil não está disponível."
+            );
+
+            return;
+
+        }
 
 
-    // ==========================================
-    // ABRIR FOTO
-    // ==========================================
-
-    function abrirModal(url) {
-
-        const modal =
-            document.getElementById("modal");
-
-        const imagem =
-            document.getElementById("imagemModal");
-
-
-        imagem.src = url;
-
-        modal.style.display =
-            "flex";
-
-    }
-
-
-    // ==========================================
-    // FECHAR FOTO
-    // ==========================================
-
-    function fecharModal() {
+        // =================================================
+        // INFORMAÇÕES
+        // =================================================
 
         document.getElementById(
-            "modal"
+            "nome"
+        ).textContent =
+            acompanhante.nome;
+
+
+        document.getElementById(
+            "idade"
+        ).textContent =
+            acompanhante.idade +
+            " anos";
+
+
+        document.getElementById(
+            "descricao"
+        ).textContent =
+            acompanhante.descricao ||
+            "Nenhuma descrição informada.";
+
+
+        // =================================================
+        // FOTO PRINCIPAL
+        // =================================================
+
+        const fotoPrincipal =
+            document.getElementById(
+                "fotoPrincipal"
+            );
+
+
+        if (
+            acompanhante.foto_principal
+        ) {
+
+            const imagem =
+                document.createElement("img");
+
+
+            imagem.src =
+                acompanhante.foto_principal;
+
+
+            imagem.alt =
+                acompanhante.nome;
+
+
+            imagem.className =
+                "foto-principal";
+
+
+            fotoPrincipal.appendChild(
+                imagem
+            );
+
+        }
+
+        else {
+
+            fotoPrincipal.innerHTML =
+                '<div class="sem-foto">Sem foto</div>';
+
+        }
+
+
+        // =================================================
+        // GALERIA
+        // =================================================
+
+        const {
+            data:
+            fotos,
+            error:
+            erroFotos
+        } = await supabaseClient
+
+            .from("fotos_acompanhantes")
+
+            .select("*")
+
+            .eq(
+                "acompanhante_id",
+                acompanhanteId
+            )
+
+            .order(
+                "ordem",
+                {
+                    ascending: true
+                }
+            );
+
+
+        if (erroFotos) {
+
+            throw erroFotos;
+
+        }
+
+
+        const galeria =
+            document.getElementById(
+                "galeria"
+            );
+
+
+        if (
+            fotos &&
+            fotos.length > 0
+        ) {
+
+            document.getElementById(
+                "secaoGaleria"
+            ).style.display =
+                "block";
+
+
+            fotos.forEach(
+                function(foto) {
+
+                    const imagem =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    imagem.src =
+                        foto.foto_url;
+
+
+                    imagem.alt =
+                        acompanhante.nome;
+
+
+                    imagem.loading =
+                        "lazy";
+
+
+                    imagem.onclick =
+                        function() {
+
+                            window.open(
+                                foto.foto_url,
+                                "_blank"
+                            );
+
+                        };
+
+
+                    galeria.appendChild(
+                        imagem
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =================================================
+        // VALORES
+        // =================================================
+
+        const {
+            data:
+            valores,
+            error:
+            erroValores
+        } = await supabaseClient
+
+            .from(
+                "valores_acompanhantes"
+            )
+
+            .select("*")
+
+            .eq(
+                "acompanhante_id",
+                acompanhanteId
+            )
+
+            .order(
+                "ordem",
+                {
+                    ascending: true
+                }
+            );
+
+
+        if (erroValores) {
+
+            throw erroValores;
+
+        }
+
+
+        const tabela =
+            document.getElementById(
+                "tabelaValores"
+            );
+
+
+        tabela.innerHTML = "";
+
+
+        if (
+            valores &&
+            valores.length > 0
+        ) {
+
+            document.getElementById(
+                "secaoValores"
+            ).style.display =
+                "block";
+
+
+            valores.forEach(
+                function(item) {
+
+                    const tr =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    const tdServico =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    tdServico.textContent =
+                        item.servico;
+
+
+                    const tdValor =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    tdValor.className =
+                        "valor";
+
+
+                    tdValor.textContent =
+                        formatarValor(
+                            item.valor
+                        );
+
+
+                    tr.appendChild(
+                        tdServico
+                    );
+
+
+                    tr.appendChild(
+                        tdValor
+                    );
+
+
+                    tabela.appendChild(
+                        tr
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =================================================
+        // WHATSAPP
+        // =================================================
+
+        const telefone =
+            formatarWhatsapp(
+                acompanhante.whatsapp
+            );
+
+
+        if (telefone) {
+
+            document.getElementById(
+                "whatsapp"
+            ).href =
+                "https://wa.me/" +
+                telefone;
+
+        }
+
+        else {
+
+            document.getElementById(
+                "whatsapp"
+            ).style.display =
+                "none";
+
+        }
+
+
+        // =================================================
+        // MOSTRAR
+        // =================================================
+
+        document.getElementById(
+            "carregando"
         ).style.display =
             "none";
 
+
+        document.getElementById(
+            "perfil"
+        ).style.display =
+            "block";
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mostrarErro(
+            "Erro ao carregar o perfil: " +
+            erro.message
+        );
+
     }
 
+}
 
-    // ==========================================
-    // INICIAR
-    // ==========================================
 
-    carregarPerfil();
+// =====================================================
+// ERRO
+// =====================================================
+
+function mostrarErro(mensagem) {
+
+    document.getElementById(
+        "carregando"
+    ).style.display =
+        "none";
+
+
+    const erro =
+        document.getElementById(
+            "erro"
+        );
+
+
+    erro.className =
+        "erro";
+
+
+    erro.textContent =
+        mensagem;
+
+
+    erro.style.display =
+        "block";
+
+}
+
+
+// =====================================================
+// INICIAR
+// =====================================================
+
+carregarPerfil();
+
 
 </script>
 
