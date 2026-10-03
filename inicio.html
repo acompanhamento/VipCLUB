@@ -1,650 +1,570 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AcompanhanteVirtual</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
-            background: #fdf5f9;
-            color: #333;
+            background: #f7f7f7;
+            color: #222;
         }
-
-        /* CABEÇALHO */
 
         header {
+            width: 100%;
             background: white;
-            padding: 18px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .header-conteudo {
-            max-width: 1100px;
-            margin: auto;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
-            color: #e91e63;
-            font-size: 25px;
+            font-size: 23px;
             font-weight: bold;
-        }
-
-        .botoes-header {
-            display: flex;
-            gap: 8px;
-        }
-
-        .botao-header {
-            border: none;
-            border-radius: 8px;
-            padding: 9px 13px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
+            color: #e60000;
             text-decoration: none;
         }
 
-        .botao-login {
-            background: #e91e63;
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu a,
+        .menu button {
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 15px;
+            color: #333;
+            padding: 9px 13px;
+            border-radius: 7px;
+        }
+
+        .menu a:hover,
+        .menu button:hover {
+            background: #f1f1f1;
+        }
+
+        .menu .principal {
+            background: #e60000;
             color: white;
         }
 
-        .botao-cadastro {
-            background: #fce4ec;
-            color: #e91e63;
+        .menu .principal:hover {
+            background: #c90000;
         }
 
-        /* CONTEÚDO */
+        .escondido {
+            display: none !important;
+        }
 
         .container {
             width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 25px 15px 90px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
         }
 
         .titulo {
             text-align: center;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 27px;
+            margin-bottom: 30px;
         }
 
-        .subtitulo {
-            text-align: center;
+        .titulo h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .titulo p {
+            margin: 0;
             color: #777;
-            margin-top: 0;
-            margin-bottom: 28px;
-            font-size: 15px;
         }
 
-        /* GRID */
-
-        .grid {
+        #listaAcompanhantes {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 22px;
         }
 
         .card {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 7px 22px rgba(0,0,0,0.13);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.13);
         }
 
-        .foto-container {
+        .card img {
             width: 100%;
             height: 300px;
-            background: #eee;
-            overflow: hidden;
-        }
-
-        .foto-container img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
             display: block;
+            background: #eee;
         }
 
-        .sem-foto {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 14px;
+        .card-info {
+            padding: 15px;
         }
 
-        .informacoes {
-            padding: 14px;
-        }
-
-        .nome {
-            font-size: 19px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 4px;
+        .card-info h2 {
+            margin: 0;
+            font-size: 20px;
         }
 
         .idade {
-            color: #e91e63;
-            font-size: 14px;
-            font-weight: bold;
+            margin-top: 6px;
+            color: #666;
+            font-size: 15px;
         }
 
-        /* CARREGANDO */
+        .sem-resultados {
+            text-align: center;
+            color: #777;
+            padding: 40px 10px;
+            grid-column: 1 / -1;
+        }
 
         .carregando {
             text-align: center;
-            padding: 50px 20px;
             color: #777;
-            font-size: 16px;
+            padding: 40px 10px;
+            grid-column: 1 / -1;
         }
 
-        /* NENHUM PERFIL */
-
-        .nenhum {
+        footer {
+            margin-top: 30px;
+            padding: 25px;
             text-align: center;
-            background: white;
-            border-radius: 15px;
-            padding: 40px 20px;
             color: #777;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
-        }
-
-        /* ERRO */
-
-        .erro {
-            text-align: center;
-            background: #ffe5e5;
-            color: #c62828;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        /* RODAPÉ */
-
-        .rodape {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            border-top: 1px solid #ddd;
             background: white;
-            border-top: 1px solid #eee;
-            padding: 10px;
-            z-index: 20;
         }
 
-        .rodape-conteudo {
-            max-width: 500px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .link-rodape {
-            color: #e91e63;
+        footer a {
+            color: #555;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 8px 15px;
+            margin: 0 8px;
         }
 
-        /* RESPONSIVO */
+        @media (max-width: 600px) {
 
-        @media (max-width: 900px) {
-
-            .grid {
-                grid-template-columns: repeat(3, 1fr);
+            header {
+                padding: 12px 15px;
             }
 
-        }
+            .logo {
+                font-size: 19px;
+            }
 
-        @media (max-width: 650px) {
+            .menu {
+                gap: 3px;
+            }
 
-            .grid {
+            .menu a,
+            .menu button {
+                font-size: 13px;
+                padding: 7px 8px;
+            }
+
+            .container {
+                padding: 20px 12px 40px;
+            }
+
+            .titulo h1 {
+                font-size: 25px;
+            }
+
+            #listaAcompanhantes {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
 
-            .foto-container {
-                height: 250px;
+            .card img {
+                height: 230px;
             }
 
-            .logo {
-                font-size: 21px;
-            }
-
-            .botao-header {
-                padding: 8px 9px;
-                font-size: 12px;
-            }
-
-            .titulo {
-                font-size: 23px;
-            }
-
-        }
-
-        @media (max-width: 420px) {
-
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .foto-container {
-                height: 210px;
-            }
-
-            .informacoes {
+            .card-info {
                 padding: 10px;
             }
 
-            .nome {
-                font-size: 16px;
+            .card-info h2 {
+                font-size: 17px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-<!-- CABEÇALHO -->
-
 <header>
 
-    <div class="header-conteudo">
+    <a href="inicio.html" class="logo">
+        AcompanhanteVirtual
+    </a>
 
-        <div class="logo">
-            AcompanhanteVirtual
-        </div>
+    <!-- MENU PARA QUEM NÃO ESTÁ LOGADO -->
+    <div id="menuNaoLogado" class="menu">
 
-        <div class="botoes-header">
+        <a href="index.html">
+            Entrar
+        </a>
 
-            <a
-                href="index.html"
-                class="botao-header botao-login"
-            >
-                Entrar
-            </a>
+        <a href="index.html">
+            Criar conta
+        </a>
 
-            <a
-                href="index.html"
-                class="botao-header botao-cadastro"
-            >
-                Criar conta
-            </a>
+    </div>
 
-        </div>
+
+    <!-- MENU PARA QUEM ESTÁ LOGADO -->
+    <div id="menuLogado" class="menu escondido">
+
+        <a href="inicio.html" class="principal">
+            Início
+        </a>
+
+        <a href="perfil.html">
+            Meu perfil
+        </a>
+
+        <button id="botaoSair">
+            Sair
+        </button>
 
     </div>
 
 </header>
 
 
-<!-- CONTEÚDO -->
-
 <main class="container">
 
-    <h1 class="titulo">
-        Encontre sua companhia
-    </h1>
+    <div class="titulo">
 
-    <p class="subtitulo">
-        Confira os perfis disponíveis
-    </p>
+        <h1>Acompanhantes</h1>
 
-
-    <div id="mensagemErro"></div>
-
-
-    <div
-        id="carregando"
-        class="carregando"
-    >
-        Carregando perfis...
-    </div>
-
-
-    <div
-        id="nenhum"
-        class="nenhum"
-        style="display:none;"
-    >
-
-        Nenhum perfil disponível no momento.
+        <p>
+            Encontre o perfil que procura
+        </p>
 
     </div>
 
 
-    <div
-        id="listaAcompanhantes"
-        class="grid"
-    ></div>
+    <div id="listaAcompanhantes">
+
+        <div class="carregando">
+            Carregando acompanhantes...
+        </div>
+
+    </div>
 
 </main>
 
 
-<!-- RODAPÉ -->
+<footer>
 
-<div class="rodape">
-
-    <div class="rodape-conteudo">
-
-        <a
-            href="index.html"
-            class="link-rodape"
-        >
-            Minha conta
-        </a>
-
-        <a
-            href="index.html"
-            class="link-rodape"
-        >
-            Entrar
-        </a>
-
+    <div>
+        <a href="inicio.html">Início</a>
+        <a href="perfil.html">Minha conta</a>
     </div>
 
-</div>
+    <p>
+        © AcompanhanteVirtual
+    </p>
 
-
-<script src="supabase.js"></script>
+</footer>
 
 
 <script>
 
-    // ==========================================
-    // CARREGAR ACOMPANHANTES
-    // ==========================================
+    /*
+     * MOSTRA O MENU CORRETO
+     */
+    function mostrarMenuLogado(logado) {
 
-    async function carregarAcompanhantes() {
+        const menuNaoLogado =
+            document.getElementById("menuNaoLogado");
 
-        const carregando =
-            document.getElementById("carregando");
+        const menuLogado =
+            document.getElementById("menuLogado");
 
-        const lista =
-            document.getElementById("listaAcompanhantes");
 
-        const nenhum =
-            document.getElementById("nenhum");
+        if (logado) {
 
-        const mensagemErro =
-            document.getElementById("mensagemErro");
+            menuNaoLogado.classList.add("escondido");
 
+            menuLogado.classList.remove("escondido");
+
+        } else {
+
+            menuNaoLogado.classList.remove("escondido");
+
+            menuLogado.classList.add("escondido");
+
+        }
+    }
+
+
+    /*
+     * VERIFICA SE EXISTE USUÁRIO LOGADO
+     */
+    async function verificarLogin() {
 
         try {
 
-            const { data, error } =
-                await supabaseClient
+            const resultado =
+                await supabaseClient.auth.getSession();
 
-                    .from("acompanhantes")
-
-                    .select("*")
-
-                    .eq("ativo", true)
-
-                    .order("criado_em", {
-                        ascending: false
-                    });
+            const session =
+                resultado.data
+                    ? resultado.data.session
+                    : null;
 
 
-            if (error) {
-
-                throw error;
-
-            }
-
-
-            carregando.style.display = "none";
-
-
-            if (!data || data.length === 0) {
-
-                nenhum.style.display = "block";
-
-                return;
-
-            }
-
-
-            lista.innerHTML = "";
-
-
-            data.forEach(function(acompanhante) {
-
-                criarCard(acompanhante);
-
-            });
-
+            mostrarMenuLogado(!!session);
 
         } catch (erro) {
 
             console.error(
-                "Erro ao carregar acompanhantes:",
+                "Erro ao verificar sessão:",
                 erro
             );
 
-
-            carregando.style.display = "none";
-
-
-            mensagemErro.innerHTML =
-
-                '<div class="erro">' +
-
-                'Erro ao carregar os perfis.<br>' +
-
-                '<small>' +
-
-                (erro.message || "Erro desconhecido") +
-
-                '</small>' +
-
-                '</div>';
-
+            mostrarMenuLogado(false);
         }
-
     }
 
 
+    /*
+     * MONITORA LOGIN/LOGOUT
+     */
+    supabaseClient.auth.onAuthStateChange(
+        function(event, session) {
 
-    // ==========================================
-    // CRIAR CARD
-    // ==========================================
+            mostrarMenuLogado(!!session);
 
-    function criarCard(acompanhante) {
+        }
+    );
+
+
+    /*
+     * BOTÃO SAIR
+     */
+    document
+        .getElementById("botaoSair")
+        .addEventListener("click", async function() {
+
+            const resultado =
+                await supabaseClient.auth.signOut();
+
+
+            if (resultado.error) {
+
+                console.error(
+                    "Erro ao sair:",
+                    resultado.error
+                );
+
+                return;
+            }
+
+
+            window.location.href = "index.html";
+
+        });
+
+
+    /*
+     * CARREGA AS ACOMPANHANTES
+     */
+    async function carregarAcompanhantes() {
 
         const lista =
-            document.getElementById(
-                "listaAcompanhantes"
+            document.getElementById("listaAcompanhantes");
+
+
+        lista.innerHTML = `
+            <div class="carregando">
+                Carregando acompanhantes...
+            </div>
+        `;
+
+
+        const resultado =
+            await supabaseClient
+                .from("acompanhantes")
+                .select("*")
+                .eq("ativo", true)
+                .order("criado_em", {
+                    ascending: false
+                });
+
+
+        if (resultado.error) {
+
+            console.error(
+                "Erro ao carregar acompanhantes:",
+                resultado.error
             );
 
 
-        const card =
-            document.createElement("div");
+            lista.innerHTML = `
+                <div class="sem-resultados">
+                    Não foi possível carregar os perfis.
+                </div>
+            `;
+
+            return;
+        }
 
 
-        card.className = "card";
+        const acompanhantes =
+            resultado.data || [];
 
 
-        card.onclick = function() {
+        if (acompanhantes.length === 0) {
 
-            abrirPerfil(acompanhante.id);
+            lista.innerHTML = `
+                <div class="sem-resultados">
+                    Nenhuma acompanhante cadastrada.
+                </div>
+            `;
 
-        };
-
-
-        // FOTO
-
-        const fotoContainer =
-            document.createElement("div");
-
-        fotoContainer.className =
-            "foto-container";
+            return;
+        }
 
 
-        if (acompanhante.foto_principal) {
-
-            const imagem =
-                document.createElement("img");
+        lista.innerHTML = "";
 
 
-            imagem.src =
+        acompanhantes.forEach(function(acompanhante) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "card";
+
+
+            /*
+             * FOTO
+             */
+            let foto =
                 acompanhante.foto_principal;
 
 
-            imagem.alt =
-                acompanhante.nome;
+            if (!foto) {
+
+                foto =
+                    "https://via.placeholder.com/500x700?text=Sem+foto";
+
+            }
 
 
-            imagem.loading = "lazy";
+            /*
+             * CARD
+             *
+             * Aqui NÃO mostramos a descrição.
+             * A descrição fica somente em pessoa.html.
+             */
+            card.innerHTML = `
+
+                <img
+                    src="${foto}"
+                    alt="${escaparHTML(acompanhante.nome)}"
+                >
+
+                <div class="card-info">
+
+                    <h2>
+                        ${escaparHTML(acompanhante.nome)}
+                    </h2>
+
+                    <div class="idade">
+                        ${acompanhante.idade} anos
+                    </div>
+
+                </div>
+
+            `;
 
 
-            fotoContainer.appendChild(imagem);
+            /*
+             * AO CLICAR ABRE O PERFIL
+             */
+            card.addEventListener(
+                "click",
+                function() {
 
+                    window.location.href =
+                        "pessoa.html?id=" +
+                        encodeURIComponent(
+                            acompanhante.id
+                        );
 
-        } else {
-
-            const semFoto =
-                document.createElement("div");
-
-
-            semFoto.className =
-                "sem-foto";
-
-
-            semFoto.textContent =
-                "Sem foto";
-
-
-            fotoContainer.appendChild(
-                semFoto
+                }
             );
 
+
+            lista.appendChild(card);
+
+        });
+
+    }
+
+
+    /*
+     * EVITA QUE TEXTO DO BANCO
+     * QUEBRE O HTML
+     */
+    function escaparHTML(texto) {
+
+        if (texto === null || texto === undefined) {
+            return "";
         }
 
 
-        // INFORMAÇÕES
-
-        const informacoes =
-            document.createElement("div");
-
-        informacoes.className =
-            "informacoes";
-
-
-        const nome =
-            document.createElement("div");
-
-        nome.className =
-            "nome";
-
-        nome.textContent =
-            acompanhante.nome;
-
-
-        const idade =
-            document.createElement("div");
-
-        idade.className =
-            "idade";
-
-        idade.textContent =
-            acompanhante.idade + " anos";
-
-
-        /*
-         * IMPORTANTE:
-         * A descrição NÃO é adicionada aqui.
-         * Ela será exibida somente dentro de pessoa.html.
-         */
-
-        informacoes.appendChild(nome);
-
-        informacoes.appendChild(idade);
-
-
-        card.appendChild(
-            fotoContainer
-        );
-
-        card.appendChild(
-            informacoes
-        );
-
-
-        lista.appendChild(card);
+        return String(texto)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
     }
 
 
-
-    // ==========================================
-    // ABRIR PERFIL
-    // ==========================================
-
-    function abrirPerfil(id) {
-
-        window.location.href =
-            "pessoa.html?id=" +
-            encodeURIComponent(id);
-
-    }
-
-
-
-    // ==========================================
-    // INICIAR
-    // ==========================================
+    /*
+     * INICIA A PÁGINA
+     */
+    verificarLogin();
 
     carregarAcompanhantes();
 
 </script>
 
-
 </body>
-
 </html>
