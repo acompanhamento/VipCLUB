@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AcompanhanteVirtual</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="supabase.js"></script>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
+
 
         body {
             margin: 0;
@@ -21,18 +28,22 @@
             color: #222;
         }
 
+
         header {
             width: 100%;
             background: white;
             border-bottom: 1px solid #ddd;
             padding: 15px 25px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             position: sticky;
             top: 0;
             z-index: 1000;
         }
+
 
         .logo {
             font-size: 23px;
@@ -41,11 +52,13 @@
             text-decoration: none;
         }
 
+
         .menu {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
 
         .menu a,
         .menu button {
@@ -53,88 +66,127 @@
             border: none;
             background: transparent;
             cursor: pointer;
+
             font-size: 15px;
             color: #333;
+
             padding: 9px 13px;
             border-radius: 7px;
         }
+
 
         .menu a:hover,
         .menu button:hover {
             background: #f1f1f1;
         }
 
+
         .menu .principal {
             background: #e60000;
             color: white;
         }
 
+
         .menu .principal:hover {
             background: #c90000;
         }
+
 
         .escondido {
             display: none !important;
         }
 
+
         .container {
             width: 100%;
             max-width: 1200px;
+
             margin: 0 auto;
+
             padding: 30px 20px 50px;
         }
+
 
         .titulo {
             text-align: center;
             margin-bottom: 30px;
         }
 
+
         .titulo h1 {
             margin: 0 0 8px;
             font-size: 30px;
         }
+
 
         .titulo p {
             margin: 0;
             color: #777;
         }
 
+
         #listaAcompanhantes {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(230px, 1fr));
+
             gap: 22px;
         }
 
+
         .card {
             background: white;
+
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.08);
+
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
         }
+
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.13);
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.13);
         }
 
-        .card img {
+
+        .media-principal {
             width: 100%;
             height: 300px;
-            object-fit: cover;
+
             display: block;
+
+            object-fit: cover;
+
             background: #eee;
         }
+
+
+        .card video {
+            pointer-events: none;
+        }
+
 
         .card-info {
             padding: 15px;
         }
 
+
         .card-info h2 {
             margin: 0;
             font-size: 20px;
         }
+
 
         .idade {
             margin-top: 6px;
@@ -142,28 +194,28 @@
             font-size: 15px;
         }
 
-        .sem-resultados {
-            text-align: center;
-            color: #777;
-            padding: 40px 10px;
-            grid-column: 1 / -1;
-        }
 
+        .sem-resultados,
         .carregando {
             text-align: center;
             color: #777;
             padding: 40px 10px;
+
             grid-column: 1 / -1;
         }
+
 
         footer {
             margin-top: 30px;
             padding: 25px;
+
             text-align: center;
             color: #777;
+
             border-top: 1px solid #ddd;
             background: white;
         }
+
 
         footer a {
             color: #555;
@@ -171,19 +223,23 @@
             margin: 0 8px;
         }
 
+
         @media (max-width: 600px) {
 
             header {
                 padding: 12px 15px;
             }
 
+
             .logo {
                 font-size: 19px;
             }
 
+
             .menu {
                 gap: 3px;
             }
+
 
             .menu a,
             .menu button {
@@ -191,35 +247,46 @@
                 padding: 7px 8px;
             }
 
+
             .container {
                 padding: 20px 12px 40px;
             }
 
+
             .titulo h1 {
                 font-size: 25px;
             }
+
 
             #listaAcompanhantes {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
 
-            .card img {
+
+            .media-principal {
                 height: 230px;
             }
+
 
             .card-info {
                 padding: 10px;
             }
 
+
             .card-info h2 {
                 font-size: 17px;
             }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -227,7 +294,9 @@
         AcompanhanteVirtual
     </a>
 
-    <!-- MENU PARA QUEM NÃO ESTÁ LOGADO -->
+
+    <!-- MENU NÃO LOGADO -->
+
     <div id="menuNaoLogado" class="menu">
 
         <a href="index.html">
@@ -241,16 +310,22 @@
     </div>
 
 
-    <!-- MENU PARA QUEM ESTÁ LOGADO -->
+    <!-- MENU LOGADO -->
+
     <div id="menuLogado" class="menu escondido">
 
-        <a href="inicio.html" class="principal">
+        <a
+            href="inicio.html"
+            class="principal"
+        >
             Início
         </a>
+
 
         <a href="perfil.html">
             Meu perfil
         </a>
+
 
         <button id="botaoSair">
             Sair
@@ -261,17 +336,22 @@
 </header>
 
 
+
 <main class="container">
+
 
     <div class="titulo">
 
-        <h1>Acompanhantes</h1>
+        <h1>
+            Acompanhantes
+        </h1>
 
         <p>
             Encontre o perfil que procura
         </p>
 
     </div>
+
 
 
     <div id="listaAcompanhantes">
@@ -282,15 +362,25 @@
 
     </div>
 
+
 </main>
+
 
 
 <footer>
 
     <div>
-        <a href="inicio.html">Início</a>
-        <a href="perfil.html">Minha conta</a>
+
+        <a href="inicio.html">
+            Início
+        </a>
+
+        <a href="perfil.html">
+            Minha conta
+        </a>
+
     </div>
+
 
     <p>
         © AcompanhanteVirtual
@@ -299,208 +389,316 @@
 </footer>
 
 
+
 <script>
 
-    /*
-     * MOSTRA O MENU CORRETO
-     */
-    function mostrarMenuLogado(logado) {
 
-        const menuNaoLogado =
-            document.getElementById("menuNaoLogado");
+/* =====================================================
+   MENU / LOGIN
+===================================================== */
 
-        const menuLogado =
-            document.getElementById("menuLogado");
+function mostrarMenuLogado(logado) {
+
+    const menuNaoLogado =
+        document.getElementById("menuNaoLogado");
+
+    const menuLogado =
+        document.getElementById("menuLogado");
 
 
-        if (logado) {
+    if (logado) {
 
-            menuNaoLogado.classList.add("escondido");
+        menuNaoLogado.classList.add("escondido");
 
-            menuLogado.classList.remove("escondido");
+        menuLogado.classList.remove("escondido");
 
-        } else {
+    } else {
 
-            menuNaoLogado.classList.remove("escondido");
+        menuNaoLogado.classList.remove("escondido");
 
-            menuLogado.classList.add("escondido");
+        menuLogado.classList.add("escondido");
 
-        }
     }
 
-
-    /*
-     * VERIFICA SE EXISTE USUÁRIO LOGADO
-     */
-    async function verificarLogin() {
-
-        try {
-
-            const resultado =
-                await supabaseClient.auth.getSession();
-
-            const session =
-                resultado.data
-                    ? resultado.data.session
-                    : null;
+}
 
 
-            mostrarMenuLogado(!!session);
 
-        } catch (erro) {
+/* =====================================================
+   VERIFICAR LOGIN
+===================================================== */
 
-            console.error(
-                "Erro ao verificar sessão:",
-                erro
-            );
+async function verificarLogin() {
 
-            mostrarMenuLogado(false);
-        }
+    try {
+
+        const resultado =
+            await supabaseClient.auth.getSession();
+
+
+        const session =
+            resultado.data
+                ? resultado.data.session
+                : null;
+
+
+        mostrarMenuLogado(!!session);
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao verificar sessão:",
+            erro
+        );
+
+
+        mostrarMenuLogado(false);
+
     }
 
-
-    /*
-     * MONITORA LOGIN/LOGOUT
-     */
-    supabaseClient.auth.onAuthStateChange(
-        function(event, session) {
-
-            mostrarMenuLogado(!!session);
-
-        }
-    );
+}
 
 
-    /*
-     * BOTÃO SAIR
-     */
-    document
-        .getElementById("botaoSair")
-        .addEventListener("click", async function() {
 
-            const resultado =
-                await supabaseClient.auth.signOut();
+/* =====================================================
+   MONITORAR LOGIN / LOGOUT
+===================================================== */
 
+supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
 
-            if (resultado.error) {
+        mostrarMenuLogado(!!session);
 
-                console.error(
-                    "Erro ao sair:",
-                    resultado.error
-                );
-
-                return;
-            }
+    }
+);
 
 
-            window.location.href = "index.html";
 
-        });
+/* =====================================================
+   SAIR
+===================================================== */
 
-
-    /*
-     * CARREGA AS ACOMPANHANTES
-     */
-    async function carregarAcompanhantes() {
-
-        const lista =
-            document.getElementById("listaAcompanhantes");
-
-
-        lista.innerHTML = `
-            <div class="carregando">
-                Carregando acompanhantes...
-            </div>
-        `;
+document
+    .getElementById("botaoSair")
+    .addEventListener("click", async function() {
 
 
         const resultado =
-            await supabaseClient
-                .from("acompanhantes")
-                .select("*")
-                .eq("ativo", true)
-                .order("criado_em", {
-                    ascending: false
-                });
+            await supabaseClient.auth.signOut();
 
 
         if (resultado.error) {
 
             console.error(
-                "Erro ao carregar acompanhantes:",
+                "Erro ao sair:",
                 resultado.error
             );
 
-
-            lista.innerHTML = `
-                <div class="sem-resultados">
-                    Não foi possível carregar os perfis.
-                </div>
-            `;
-
             return;
         }
 
 
-        const acompanhantes =
-            resultado.data || [];
+        window.location.href =
+            "index.html";
+
+    });
 
 
-        if (acompanhantes.length === 0) {
 
-            lista.innerHTML = `
-                <div class="sem-resultados">
-                    Nenhuma acompanhante cadastrada.
-                </div>
-            `;
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
 
-            return;
-        }
+function escaparHTML(texto) {
+
+    if (
+        texto === null ||
+        texto === undefined
+    ) {
+        return "";
+    }
 
 
-        lista.innerHTML = "";
+    return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
 
 
-        acompanhantes.forEach(function(acompanhante) {
+
+/* =====================================================
+   CARREGAR ACOMPANHANTES
+===================================================== */
+
+async function carregarAcompanhantes() {
+
+
+    const lista =
+        document.getElementById(
+            "listaAcompanhantes"
+        );
+
+
+    lista.innerHTML = `
+        <div class="carregando">
+            Carregando acompanhantes...
+        </div>
+    `;
+
+
+
+    const resultado =
+        await supabaseClient
+            .from("acompanhantes")
+            .select("*")
+            .eq("ativo", true)
+            .order("criado_em", {
+                ascending: false
+            });
+
+
+
+    if (resultado.error) {
+
+        console.error(
+            "Erro ao carregar acompanhantes:",
+            resultado.error
+        );
+
+
+        lista.innerHTML = `
+            <div class="sem-resultados">
+                Não foi possível carregar os perfis.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+
+    const acompanhantes =
+        resultado.data || [];
+
+
+
+    if (acompanhantes.length === 0) {
+
+        lista.innerHTML = `
+            <div class="sem-resultados">
+                Nenhuma acompanhante cadastrada.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+
+    lista.innerHTML = "";
+
+
+
+    acompanhantes.forEach(
+        function(acompanhante) {
+
 
             const card =
                 document.createElement("div");
 
-            card.className = "card";
+
+            card.className =
+                "card";
 
 
-            /*
-             * FOTO
-             */
-            let foto =
-                acompanhante.foto_principal;
+
+            let mediaHTML = "";
 
 
-            if (!foto) {
 
-                foto =
-                    "https://via.placeholder.com/500x700?text=Sem+foto";
+            /* =================================================
+               SE FOR VÍDEO
+            ================================================= */
+
+            if (
+                acompanhante.tipo_midia_principal === "video"
+                &&
+                acompanhante.video_principal
+            ) {
+
+
+                mediaHTML = `
+
+                    <video
+                        class="media-principal"
+                        src="${escaparHTML(
+                            acompanhante.video_principal
+                        )}"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                    ></video>
+
+                `;
+
+
+            }
+
+            /* =================================================
+               SE FOR FOTO
+            ================================================= */
+
+            else {
+
+
+                let foto =
+                    acompanhante.foto_principal;
+
+
+                if (!foto) {
+
+                    foto =
+                        "https://via.placeholder.com/500x700?text=Sem+foto";
+
+                }
+
+
+                mediaHTML = `
+
+                    <img
+                        class="media-principal"
+                        src="${escaparHTML(foto)}"
+                        alt="${escaparHTML(
+                            acompanhante.nome
+                        )}"
+                        loading="lazy"
+                    >
+
+                `;
 
             }
 
 
-            /*
-             * CARD
-             *
-             * Aqui NÃO mostramos a descrição.
-             * A descrição fica somente em pessoa.html.
-             */
+
             card.innerHTML = `
 
-                <img
-                    src="${foto}"
-                    alt="${escaparHTML(acompanhante.nome)}"
-                >
+                ${mediaHTML}
 
                 <div class="card-info">
 
                     <h2>
-                        ${escaparHTML(acompanhante.nome)}
+                        ${escaparHTML(
+                            acompanhante.nome
+                        )}
                     </h2>
 
                     <div class="idade">
@@ -512,9 +710,7 @@
             `;
 
 
-            /*
-             * AO CLICAR ABRE O PERFIL
-             */
+
             card.addEventListener(
                 "click",
                 function() {
@@ -529,42 +725,27 @@
             );
 
 
+
             lista.appendChild(card);
 
-        });
-
-    }
-
-
-    /*
-     * EVITA QUE TEXTO DO BANCO
-     * QUEBRE O HTML
-     */
-    function escaparHTML(texto) {
-
-        if (texto === null || texto === undefined) {
-            return "";
         }
+    );
+
+}
 
 
-        return String(texto)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
 
-    }
+/* =====================================================
+   INICIAR
+===================================================== */
 
+verificarLogin();
 
-    /*
-     * INICIA A PÁGINA
-     */
-    verificarLogin();
-
-    carregarAcompanhantes();
+carregarAcompanhantes();
 
 </script>
 
+
 </body>
+
 </html>
