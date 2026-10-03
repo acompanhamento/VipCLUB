@@ -14,9 +14,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="supabase.js"></script>
-
-
     <style>
 
         * {
@@ -24,488 +21,263 @@
         }
 
         body {
-
             margin: 0;
-
+            padding: 0;
             font-family: Arial, sans-serif;
-
             background: #fdf5f9;
-
             color: #333;
-
-            min-height: 100vh;
-
-            padding-bottom: 70px;
-
         }
 
+        /* CABEÇALHO */
 
         header {
-
             background: white;
-
             padding: 18px 20px;
-
-            box-shadow:
-                0 2px 10px rgba(0,0,0,0.08);
-
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             position: sticky;
-
             top: 0;
-
-            z-index: 20;
-
+            z-index: 10;
         }
-
 
         .header-conteudo {
-
             max-width: 1100px;
-
             margin: auto;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             gap: 15px;
-
         }
-
 
         .logo {
-
             color: #e91e63;
-
             font-size: 25px;
-
             font-weight: bold;
-
         }
-
 
         .botoes-header {
-
             display: flex;
-
-            align-items: center;
-
             gap: 8px;
-
-            flex-wrap: wrap;
-
-            justify-content: flex-end;
-
         }
-
 
         .botao-header {
-
-            text-decoration: none;
-
-            padding: 9px 13px;
-
+            border: none;
             border-radius: 8px;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
+            padding: 9px 13px;
             cursor: pointer;
-
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
         }
-
 
         .botao-login {
-
-            color: #e91e63;
-
-            border: 1px solid #e91e63;
-
-            background: white;
-
+            background: #e91e63;
+            color: white;
         }
-
 
         .botao-cadastro {
-
-            color: white;
-
-            background: #e91e63;
-
-        }
-
-
-        .botao-perfil {
-
+            background: #fce4ec;
             color: #e91e63;
-
-            border: 1px solid #e91e63;
-
-            background: white;
-
         }
 
-
-        .botao-sair {
-
-            color: white;
-
-            background: #555;
-
-            border: none;
-
-        }
-
+        /* CONTEÚDO */
 
         .container {
-
             width: 100%;
-
             max-width: 1100px;
-
-            margin: 35px auto;
-
-            padding: 0 15px;
-
+            margin: auto;
+            padding: 25px 15px 90px;
         }
-
 
         .titulo {
-
             text-align: center;
-
             margin-bottom: 8px;
-
-            font-size: 30px;
-
+            color: #333;
+            font-size: 27px;
         }
-
 
         .subtitulo {
-
             text-align: center;
-
             color: #777;
-
             margin-top: 0;
-
-            margin-bottom: 30px;
-
+            margin-bottom: 28px;
+            font-size: 15px;
         }
 
+        /* GRID */
 
         .grid {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
-
         }
-
 
         .card {
-
             background: white;
-
-            border-radius: 14px;
-
+            border-radius: 15px;
             overflow: hidden;
-
-            box-shadow:
-                0 4px 15px rgba(0,0,0,0.08);
-
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
             cursor: pointer;
-
-            transition: transform 0.2s;
-
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
 
         .card:hover {
-
             transform: translateY(-3px);
-
+            box-shadow: 0 7px 22px rgba(0,0,0,0.13);
         }
-
 
         .foto-container {
-
             width: 100%;
-
-            height: 330px;
-
-            background: #f1f1f1;
-
+            height: 300px;
+            background: #eee;
             overflow: hidden;
-
         }
-
 
         .foto-container img {
-
             width: 100%;
-
             height: 100%;
-
             object-fit: cover;
-
             display: block;
-
         }
-
 
         .sem-foto {
-
             width: 100%;
-
             height: 100%;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             color: #999;
-
-            font-size: 18px;
-
+            font-size: 14px;
         }
-
 
         .informacoes {
-
             padding: 14px;
-
         }
-
 
         .nome {
-
-            font-size: 18px;
-
+            font-size: 19px;
             font-weight: bold;
-
             color: #333;
-
+            margin-bottom: 4px;
         }
-
 
         .idade {
-
             color: #e91e63;
-
+            font-size: 14px;
             font-weight: bold;
-
-            margin-top: 4px;
-
         }
 
-
-        .descricao {
-
-            color: #777;
-
-            font-size: 13px;
-
-            margin-top: 8px;
-
-            line-height: 1.4;
-
-        }
-
+        /* CARREGANDO */
 
         .carregando {
-
             text-align: center;
-
-            padding: 40px;
-
+            padding: 50px 20px;
             color: #777;
-
+            font-size: 16px;
         }
 
+        /* NENHUM PERFIL */
 
         .nenhum {
-
-            background: white;
-
-            padding: 30px;
-
-            border-radius: 12px;
-
             text-align: center;
-
+            background: white;
+            border-radius: 15px;
+            padding: 40px 20px;
             color: #777;
-
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
         }
 
+        /* ERRO */
 
         .erro {
-
-            background: #ffe5e5;
-
-            color: #c62828;
-
-            padding: 15px;
-
-            border-radius: 10px;
-
             text-align: center;
-
+            background: #ffe5e5;
+            color: #c62828;
+            border-radius: 10px;
+            padding: 15px;
             margin-bottom: 20px;
-
         }
 
+        /* RODAPÉ */
 
         .rodape {
-
             position: fixed;
-
             bottom: 0;
-
             left: 0;
-
             width: 100%;
-
             background: white;
-
             border-top: 1px solid #eee;
-
             padding: 10px;
-
             z-index: 20;
-
         }
-
 
         .rodape-conteudo {
-
             max-width: 500px;
-
             margin: auto;
-
             display: flex;
-
             justify-content: center;
-
             gap: 15px;
-
         }
-
 
         .link-rodape {
-
             color: #e91e63;
-
             text-decoration: none;
-
             font-size: 13px;
-
             font-weight: bold;
-
             padding: 8px 15px;
-
         }
 
+        /* RESPONSIVO */
 
         @media (max-width: 900px) {
 
             .grid {
-
-                grid-template-columns:
-                    repeat(3, 1fr);
-
+                grid-template-columns: repeat(3, 1fr);
             }
 
         }
-
 
         @media (max-width: 650px) {
 
             .grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
-
             }
-
 
             .foto-container {
-
                 height: 250px;
-
             }
-
 
             .logo {
-
-                font-size: 20px;
-
+                font-size: 21px;
             }
-
 
             .botao-header {
-
                 padding: 8px 9px;
-
                 font-size: 12px;
-
             }
 
-
             .titulo {
-
                 font-size: 23px;
-
             }
 
         }
 
-
         @media (max-width: 420px) {
 
             .grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+                grid-template-columns: repeat(2, 1fr);
             }
-
 
             .foto-container {
-
                 height: 210px;
-
             }
-
 
             .informacoes {
-
                 padding: 10px;
-
             }
-
 
             .nome {
-
                 font-size: 16px;
-
-            }
-
-
-            .descricao {
-
-                font-size: 12px;
-
             }
 
         }
@@ -518,6 +290,8 @@
 <body>
 
 
+<!-- CABEÇALHO -->
+
 <header>
 
     <div class="header-conteudo">
@@ -526,13 +300,21 @@
             AcompanhanteVirtual
         </div>
 
+        <div class="botoes-header">
 
-        <div
-            id="botoesHeader"
-            class="botoes-header"
-        >
+            <a
+                href="index.html"
+                class="botao-header botao-login"
+            >
+                Entrar
+            </a>
 
-            <!-- preenchido pelo JavaScript -->
+            <a
+                href="index.html"
+                class="botao-header botao-cadastro"
+            >
+                Criar conta
+            </a>
 
         </div>
 
@@ -541,6 +323,7 @@
 </header>
 
 
+<!-- CONTEÚDO -->
 
 <main class="container">
 
@@ -569,7 +352,9 @@
         class="nenhum"
         style="display:none;"
     >
+
         Nenhum perfil disponível no momento.
+
     </div>
 
 
@@ -581,24 +366,24 @@
 </main>
 
 
+<!-- RODAPÉ -->
 
 <div class="rodape">
 
     <div class="rodape-conteudo">
 
         <a
-            href="inicio.html"
+            href="index.html"
             class="link-rodape"
         >
-            Início
+            Minha conta
         </a>
 
-
         <a
-            href="perfil.html"
+            href="index.html"
             class="link-rodape"
         >
-            Meu Perfil
+            Entrar
         </a>
 
     </div>
@@ -606,132 +391,10 @@
 </div>
 
 
+<script src="supabase.js"></script>
+
 
 <script>
-
-
-    // ==========================================
-    // CONFIGURAR MENU
-    // ==========================================
-
-    async function configurarMenu() {
-
-        const botoes =
-            document.getElementById(
-                "botoesHeader"
-            );
-
-
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.getSession();
-
-
-            if (error) {
-
-                throw error;
-
-            }
-
-
-            const sessao =
-                data.session;
-
-
-            if (sessao) {
-
-                botoes.innerHTML = `
-
-                    <a
-                        href="inicio.html"
-                        class="botao-header botao-perfil"
-                    >
-                        Início
-                    </a>
-
-                    <a
-                        href="perfil.html"
-                        class="botao-header botao-perfil"
-                    >
-                        Meu Perfil
-                    </a>
-
-                    <button
-                        onclick="sair()"
-                        class="botao-header botao-sair"
-                    >
-                        Sair
-                    </button>
-
-                `;
-
-            } else {
-
-                botoes.innerHTML = `
-
-                    <a
-                        href="index.html"
-                        class="botao-header botao-login"
-                    >
-                        Entrar
-                    </a>
-
-                    <a
-                        href="index.html?cadastro=1"
-                        class="botao-header botao-cadastro"
-                    >
-                        Criar conta
-                    </a>
-
-                `;
-
-            }
-
-
-        } catch (erro) {
-
-            console.error(
-                "Erro ao verificar sessão:",
-                erro
-            );
-
-        }
-
-    }
-
-
-
-    // ==========================================
-    // SAIR
-    // ==========================================
-
-    async function sair() {
-
-        const {
-            error
-        } =
-            await supabaseClient.auth.signOut();
-
-
-        if (error) {
-
-            console.error(error);
-
-            return;
-
-        }
-
-
-        window.location.href =
-            "index.html";
-
-    }
-
-
 
     // ==========================================
     // CARREGAR ACOMPANHANTES
@@ -740,45 +403,32 @@
     async function carregarAcompanhantes() {
 
         const carregando =
-            document.getElementById(
-                "carregando"
-            );
-
+            document.getElementById("carregando");
 
         const lista =
-            document.getElementById(
-                "listaAcompanhantes"
-            );
-
+            document.getElementById("listaAcompanhantes");
 
         const nenhum =
-            document.getElementById(
-                "nenhum"
-            );
-
+            document.getElementById("nenhum");
 
         const mensagemErro =
-            document.getElementById(
-                "mensagemErro"
-            );
+            document.getElementById("mensagemErro");
 
 
         try {
 
-            const {
-                data,
-                error
-            } =
+            const { data, error } =
                 await supabaseClient
+
                     .from("acompanhantes")
+
                     .select("*")
+
                     .eq("ativo", true)
-                    .order(
-                        "criado_em",
-                        {
-                            ascending: false
-                        }
-                    );
+
+                    .order("criado_em", {
+                        ascending: false
+                    });
 
 
             if (error) {
@@ -788,17 +438,12 @@
             }
 
 
-            carregando.style.display =
-                "none";
+            carregando.style.display = "none";
 
 
-            if (
-                !data ||
-                data.length === 0
-            ) {
+            if (!data || data.length === 0) {
 
-                nenhum.style.display =
-                    "block";
+                nenhum.style.display = "block";
 
                 return;
 
@@ -808,15 +453,11 @@
             lista.innerHTML = "";
 
 
-            data.forEach(
-                function(acompanhante) {
+            data.forEach(function(acompanhante) {
 
-                    criarCard(
-                        acompanhante
-                    );
+                criarCard(acompanhante);
 
-                }
-            );
+            });
 
 
         } catch (erro) {
@@ -827,8 +468,7 @@
             );
 
 
-            carregando.style.display =
-                "none";
+            carregando.style.display = "none";
 
 
             mensagemErro.innerHTML =
@@ -839,10 +479,7 @@
 
                 '<small>' +
 
-                (
-                    erro.message ||
-                    "Erro desconhecido"
-                ) +
+                (erro.message || "Erro desconhecido") +
 
                 '</small>' +
 
@@ -873,27 +510,23 @@
         card.className = "card";
 
 
-        card.onclick =
-            function() {
+        card.onclick = function() {
 
-                abrirPerfil(
-                    acompanhante.id
-                );
+            abrirPerfil(acompanhante.id);
 
-            };
+        };
 
+
+        // FOTO
 
         const fotoContainer =
             document.createElement("div");
-
 
         fotoContainer.className =
             "foto-container";
 
 
-        if (
-            acompanhante.foto_principal
-        ) {
+        if (acompanhante.foto_principal) {
 
             const imagem =
                 document.createElement("img");
@@ -907,13 +540,10 @@
                 acompanhante.nome;
 
 
-            imagem.loading =
-                "lazy";
+            imagem.loading = "lazy";
 
 
-            fotoContainer.appendChild(
-                imagem
-            );
+            fotoContainer.appendChild(imagem);
 
 
         } else {
@@ -937,9 +567,10 @@
         }
 
 
+        // INFORMAÇÕES
+
         const informacoes =
             document.createElement("div");
-
 
         informacoes.className =
             "informacoes";
@@ -948,10 +579,8 @@
         const nome =
             document.createElement("div");
 
-
         nome.className =
             "nome";
-
 
         nome.textContent =
             acompanhante.nome;
@@ -960,66 +589,41 @@
         const idade =
             document.createElement("div");
 
-
         idade.className =
             "idade";
 
-
         idade.textContent =
-            acompanhante.idade +
-            " anos";
+            acompanhante.idade + " anos";
 
 
-        const descricao =
-            document.createElement("div");
+        /*
+         * IMPORTANTE:
+         * A descrição NÃO é adicionada aqui.
+         * Ela será exibida somente dentro de pessoa.html.
+         */
 
+        informacoes.appendChild(nome);
 
-        descricao.className =
-            "descricao";
-
-
-        descricao.textContent =
-
-            acompanhante.descricao ||
-
-            "Confira o perfil para mais informações.";
-
-
-        informacoes.appendChild(
-            nome
-        );
-
-
-        informacoes.appendChild(
-            idade
-        );
-
-
-        informacoes.appendChild(
-            descricao
-        );
+        informacoes.appendChild(idade);
 
 
         card.appendChild(
             fotoContainer
         );
 
-
         card.appendChild(
             informacoes
         );
 
 
-        lista.appendChild(
-            card
-        );
+        lista.appendChild(card);
 
     }
 
 
 
     // ==========================================
-    // ABRIR PERFIL DO ACOMPANHANTE
+    // ABRIR PERFIL
     // ==========================================
 
     function abrirPerfil(id) {
@@ -1036,10 +640,7 @@
     // INICIAR
     // ==========================================
 
-    configurarMenu();
-
     carregarAcompanhantes();
-
 
 </script>
 
